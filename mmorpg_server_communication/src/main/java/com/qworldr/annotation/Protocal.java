@@ -1,7 +1,11 @@
 package com.qworldr.annotation;
 
-import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
+import java.lang.annotation.*;
 
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
 public @interface Protocal {
     //protocalID
     short value();

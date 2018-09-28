@@ -63,12 +63,12 @@
                     <!--<filterClassPackage>com.baidu</filterClassPackage>-->
                 </configuration>
                 <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>precompile</goal>
-                        </goals>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<phase>compile</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>precompile</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>

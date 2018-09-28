@@ -5,10 +5,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.qworldr" />
+    <context:component-scan base-package="com.qworldr" >
+        <context:include-filter type="annotation" expression="com.qworldr.annotation.Protocal"/>
+    </context:component-scan>
     <!-- 处理器-->
-    <bean id="limitFlowHandler" class="com.qworldr.handler.LimitFlowHandler"/>
-    <bean id="packetCodec" class="com.qworldr.handler.PacketCodec"/>
+    <bean id="limitFlowHandler" class="com.qworldr.handler.LimitFlowHandler"  scope="prototype"/>
+    <bean id="packetCodec" class="com.qworldr.handler.PacketCodec" scope="prototype"/>
     <bean class="com.qworldr.server.GameServer">
         <property name="inboundHandlerList">
             <list>
