@@ -7,11 +7,15 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Client {
 
 
     public static void main(String[] args) {
+        ApplicationContext  applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ((ClassPathXmlApplicationContext) applicationContext).start();
         new Client().start();
     }
 

@@ -8,6 +8,4 @@
     <context:component-scan base-package="com.qworldr" >
         <context:include-filter type="annotation" expression="com.qworldr.annotation.Protocal"/>
     </context:component-scan>
-    <!-- 处理器-->
-    <bean class="com.qworldr.server.GameServer"/>
 </beans>
