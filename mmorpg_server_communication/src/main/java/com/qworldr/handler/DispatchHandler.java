@@ -1,7 +1,9 @@
 package com.qworldr.handler;
 
+import com.qworldr.bean.IdentityProvide;
 import com.qworldr.dispatcher.InvokerDefinition;
 import com.qworldr.dispatcher.InvokerManager;
+import com.qworldr.exception.PrivilegeException;
 import com.qworldr.thread.DispatcherExecutor;
 import com.qworldr.thread.HashDispatcherTask;
 import com.qworldr.utils.ChannelUtils;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Component;
 public class DispatchHandler extends ChannelInboundHandlerAdapter {
     @Autowired
     private InvokerManager invokerManager;
-
     private DispatcherExecutor dispatcherExecutor;
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -29,7 +30,11 @@ public class DispatchHandler extends ChannelInboundHandlerAdapter {
 
             @Override
             public void run() {
-                invokerDefintion.invoke(ChannelUtils.getSession(ctx.channel()),msg);
+                try {
+                    invokerDefintion.invoke(ChannelUtils.getSession(ctx.channel()),msg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

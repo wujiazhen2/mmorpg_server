@@ -12,6 +12,9 @@ public class TcpSession implements Session {
     public Object getId() {
         return id;
     }
+    public void setId(Object id){
+        this.id=id;
+    }
     public Map<String,String> params= new HashMap<>();
     public String getParam(String id){
         return params.get(id);

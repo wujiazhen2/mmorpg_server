@@ -6,4 +6,6 @@ import io.netty.channel.Channel;
 
 public interface Session extends Identity {
     Channel getChannel();
+
+    void setId(Object id);
 }

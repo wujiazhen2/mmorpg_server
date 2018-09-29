@@ -4,13 +4,18 @@ import com.google.common.collect.Maps;
 import com.qworldr.annotation.Protocal;
 import com.qworldr.annotation.SocketController;
 import com.qworldr.annotation.SocketRequest;
+import com.qworldr.bean.IdentityProvide;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
+import javax.annotation.PostConstruct;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Map;
 
 @Component
@@ -22,7 +27,22 @@ public class InvokerManager implements BeanPostProcessor {
     public InvokerDefinition getInvokerDefintion(Class protocal) {
         return protocal2Invoker.get(protocal);
     }
+    @Autowired(required = false)
+    private IdentityProvide identityProvide;
 
+    @PostConstruct
+    public void init(){
+        if(identityProvide!=null){
+            try {
+                Type[] genericInterfaces = identityProvide.getClass().getGenericInterfaces();
+                Type actualTypeArguments = ((ParameterizedType) genericInterfaces[0]).getActualTypeArguments()[0];
+                InvokerDefinition.setIdentifyClass(actualTypeArguments.getTypeName());
+                InvokerDefinition.setProvide(identityProvide);
+            }catch (Exception e){
+                LOGGER.debug("identityProvide缺少泛型");
+            }
+        }
+    }
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         Class<?> aClass = bean.getClass();

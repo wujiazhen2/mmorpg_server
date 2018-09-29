@@ -11,7 +11,6 @@ public class AccountController {
 
     @SocketRequest
     public void login(Session session, LoginReq loginReq){
-        System.out.println(loginReq.getAccount());
-        System.out.println(loginReq.getSign());
+        session.setId(12345);
     }
 }
