@@ -30,11 +30,11 @@ public class PacketCodec extends ByteToMessageCodec {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List out) throws Exception {
-        int len = in.getInt(0);
-        if(in.readableBytes()<len){
+        int len = in.readInt();
+        if(in.readableBytes()<len-4){
+            in.readableBytes();
             return;
         }
-        len = in.readInt();
         short protocalId = in.readShort();
         byte[] data= new byte[len-6];
         in.readBytes(data);
@@ -42,7 +42,6 @@ public class PacketCodec extends ByteToMessageCodec {
         if(codecs==null){
             throw new ProtocalNotExists(String.format("协议号 %d 不存在",protocalId));
         }
-        System.out.println(2222222);
         Object decode = codec.decode(data);
         out.add(decode);
     }
