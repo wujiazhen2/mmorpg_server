@@ -9,6 +9,7 @@
         <module name="mmorpg_client" />
         <module name="mmorpg_server_common" />
         <module name="mmorpg_server_communication" />
+        <module name="mmorpg_server_dao" />
         <module name="mmorpg_server_legend" />
       </profile>
     </annotationProcessing>
