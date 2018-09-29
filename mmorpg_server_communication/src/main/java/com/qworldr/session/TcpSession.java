@@ -6,13 +6,13 @@ import io.netty.channel.Channel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TcpSession implements Session {
+public class TcpSession<T> implements Session<T> {
     private Channel channel;
-    private Object id;
-    public Object getId() {
+    private T id;
+    public T getId() {
         return id;
     }
-    public void setId(Object id){
+    public void setId(T id){
         this.id=id;
     }
     public Map<String,String> params= new HashMap<>();

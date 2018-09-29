@@ -4,8 +4,8 @@ import com.qworldr.bean.Identity;
 import io.netty.channel.Channel;
 
 
-public interface Session extends Identity {
+public interface Session<T> extends Identity<T> {
     Channel getChannel();
 
-    void setId(Object id);
+    void setId(T id);
 }
