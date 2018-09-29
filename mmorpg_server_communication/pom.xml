@@ -21,14 +21,14 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.29.Final</version>
+            <version>${netty.version}</version>
         </dependency>
 
         <!-- protobuf -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.5.1</version>
+            <version>${protobuf.version}</version>
         </dependency>
 
         <dependency>

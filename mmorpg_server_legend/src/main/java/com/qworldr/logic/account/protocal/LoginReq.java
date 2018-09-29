@@ -8,7 +8,9 @@ import com.qworldr.common.protocal.ProtocalId;
 @Protocal(ProtocalId.LoginReq)
 @ProtobufClass
 public class LoginReq {
+    @Protobuf
     private String account;
+    @Protobuf
     private String sign;
 
     public String getAccount() {

@@ -1,5 +1,6 @@
 package com.qworldr.logic.player.protocal;
 
+import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.annotation.Protocal;
 import com.qworldr.common.protocal.ProtocalId;
