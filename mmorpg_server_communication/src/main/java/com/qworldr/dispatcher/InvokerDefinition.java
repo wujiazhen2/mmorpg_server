@@ -1,7 +1,6 @@
 package com.qworldr.dispatcher;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.qworldr.annotation.Protocal;
 import com.qworldr.bean.Identity;
 import com.qworldr.bean.IdentityProvide;
@@ -10,7 +9,6 @@ import com.qworldr.session.Session;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.PrivilegedActionException;
 import java.util.List;
 
 public class InvokerDefinition {
@@ -34,14 +32,14 @@ public class InvokerDefinition {
                 params.add(protocal);
             } else if (type.getName().equals(identifyClass)) {
                 Object id = session.getId();
-                if(id==null){
-                    throw new PrivilegeException(String.format("%s 参数%s需要seesion提供id获取，但是session.id为null",method.toString(),identifyClass));
+                if (id == null) {
+                    throw new PrivilegeException(String.format("%s 参数%s需要seesion提供id获取，但是session.id为null", method.toString(), identifyClass));
                 }
-                Identity identity=null;
+                Identity identity = null;
                 try {
-                    identity = provide.getIdentity(id);
-                }catch (Exception e){
-                   throw e;
+                    identity = provide.getIdentity(session);
+                } catch (Exception e) {
+                    throw e;
                 }
                 params.add(identity);
             } else {

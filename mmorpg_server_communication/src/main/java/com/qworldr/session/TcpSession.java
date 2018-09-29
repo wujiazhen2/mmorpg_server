@@ -5,16 +5,16 @@ import io.netty.channel.Channel;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class TcpSession<T> implements Session<T> {
+public class TcpSession<T> implements Session {
     private Channel channel;
-    private T id;
-    public T getId() {
+    private int id;
+    private static  final AtomicInteger SEQ = new AtomicInteger(1);
+    public int getId() {
         return id;
     }
-    public void setId(T id){
-        this.id=id;
-    }
+
     public Map<String,String> params= new HashMap<>();
     public String getParam(String id){
         return params.get(id);
@@ -26,6 +26,7 @@ public class TcpSession<T> implements Session<T> {
     public static Session valueOf(Channel channel){
         TcpSession tcpSession = new TcpSession();
         tcpSession.channel=channel;
+        tcpSession.id=SEQ.getAndIncrement();
         return  tcpSession;
     }
     @Override

@@ -1,11 +1,10 @@
 package com.qworldr.session;
 
-import com.qworldr.bean.Identity;
 import io.netty.channel.Channel;
 
 
-public interface Session<T> extends Identity<T> {
+public interface Session {
     Channel getChannel();
 
-    void setId(T id);
+    int getId();
 }

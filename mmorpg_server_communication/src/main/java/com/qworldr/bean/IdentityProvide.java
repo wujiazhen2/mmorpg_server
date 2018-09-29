@@ -1,12 +1,14 @@
 package com.qworldr.bean;
 
+import com.qworldr.session.Session;
+
 import java.security.spec.PKCS8EncodedKeySpec;
 
 /**
- * 提供该会话用户的唯一表示对象。例如Player
+ * 会话转化为标识用户对象。例如Player
  * @param <T>
  */
-public interface IdentityProvide<T extends Identity,PK> {
+public interface IdentityProvide<T extends Identity> {
 
-    T  getIdentity(PK id);
+    T  getIdentity(Session session);
 }

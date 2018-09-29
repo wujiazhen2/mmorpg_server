@@ -10,7 +10,7 @@ import com.qworldr.session.Session;
 public class AccountController {
 
     @SocketRequest
-    public void login(Session<Long> session, LoginReq loginReq){
-        session.setId(12345L);
+    public void login(Session session, LoginReq loginReq){
+
     }
 }
