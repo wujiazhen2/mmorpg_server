@@ -10,13 +10,15 @@ public class GenericUtils {
 
     public static Class<?> getGenericType(Class clazz){
         ResolvableType resolvableType = ResolvableType.forClass(clazz);
-        Class<?> resolve = resolvableType.getInterfaces()[0].getGeneric(0).resolve();
+        Class<?> resolve = resolvableType.getSuperType().getGeneric(0).resolve();
         return resolve;
     }
 
-    public static Type getSuperGenericType(Class clazz){
-        Type types = clazz.getGenericSuperclass();
-        Type actualTypeArgument = ((ParameterizedType) types).getActualTypeArguments()[0];
-        return actualTypeArgument;
+    public static Class<?> getSuperGenericType(Class clazz){
+        ResolvableType resolvableType = ResolvableType.forClass(clazz);
+        Class<?> resolve = resolvableType.getSuperType().getGeneric(0).resolve();
+        return resolve;
     }
+
+
 }
