@@ -3,7 +3,7 @@ package com.qworldr.mmorpg.dispatcher;
 import com.google.common.collect.Maps;
 import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.annotation.SocketController;
-import com.qworldr.mmorpg.bean.IdentityProvide;
+import com.qworldr.mmorpg.bean.IdentityProvider;
 import com.qworldr.mmorpg.annotation.SocketRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class InvokerManager implements BeanPostProcessor {
         return protocal2Invoker.get(protocal);
     }
     @Autowired(required = false)
-    private IdentityProvide identityProvide;
+    private IdentityProvider identityProvide;
 
     @PostConstruct
     public void init(){

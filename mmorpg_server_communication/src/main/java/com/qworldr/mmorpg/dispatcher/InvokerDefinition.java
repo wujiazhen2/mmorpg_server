@@ -3,7 +3,7 @@ package com.qworldr.mmorpg.dispatcher;
 import com.google.common.collect.Lists;
 import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.exception.PrivilegeException;
-import com.qworldr.mmorpg.bean.IdentityProvide;
+import com.qworldr.mmorpg.bean.IdentityProvider;
 import com.qworldr.mmorpg.session.Session;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class InvokerDefinition {
     private static String identifyClass;
-    private static IdentityProvide provide;
+    private static IdentityProvider provide;
     private Object instance;
     private Method method;
 
@@ -59,7 +59,7 @@ public class InvokerDefinition {
         InvokerDefinition.identifyClass = identifyClass;
     }
 
-    public static void setProvide(IdentityProvide provide) {
+    public static void setProvide(IdentityProvider provide) {
         InvokerDefinition.provide = provide;
     }
 }
