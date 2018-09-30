@@ -6,17 +6,17 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.qworldr">
-        <context:include-filter type="annotation" expression="com.qworldr.annotation.Protocal"/>
-        <context:include-filter type="annotation" expression="com.qworldr.annotation.SocketController"/>
+        <context:include-filter type="annotation" expression="com.qworldr.mmorpg.annotation.Protocal"/>
+        <context:include-filter type="annotation" expression="com.qworldr.mmorpg.annotation.SocketController"/>
     </context:component-scan>
 
 
     <!-- 处理线程池-->
-    <bean name="hashDispatcherThreadPool" class="com.qworldr.thread.HashDispatcherThreadPool">
+    <bean name="hashDispatcherThreadPool" class="com.qworldr.mmorpg.thread.HashDispatcherThreadPool">
         <constructor-arg value="8"/>
     </bean>
     <!-- 游戏服务器-->
-    <bean class="com.qworldr.server.GameServer">
+    <bean class="com.qworldr.mmorpg.server.GameServer">
         <property name="dispatcherExecutor" ref="hashDispatcherThreadPool"></property>
     </bean>
 
@@ -29,26 +29,26 @@
         </property>
     </bean>
 
-    <!-- 定义数据源 -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-      destroy-method="close">
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-    </bean>
+    <!--&lt;!&ndash; 定义数据源 &ndash;&gt;-->
+    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"-->
+      <!--destroy-method="close">-->
+        <!--<property name="url" value="${jdbc.url}"/>-->
+        <!--<property name="username" value="${jdbc.username}"/>-->
+        <!--<property name="password" value="${jdbc.password}"/>-->
+        <!--<property name="driverClassName" value="${jdbc.driverClassName}"/>-->
+    <!--</bean>-->
 
-    <!-- session工厂 -->
-    <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
-        <!-- 自动扫描注解方式配置的hibernate类文件 -->
-        <property name="packagesToScan">
-            <list>
-                <value>com.qworldr.**.entity</value>
-            </list>
-        </property>
-    </bean>
+    <!--&lt;!&ndash; session工厂 &ndash;&gt;-->
+    <!--<bean id="sessionFactory"-->
+          <!--class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="configLocation" value="classpath:hibernate.cfg.xml"/>-->
+        <!--&lt;!&ndash; 自动扫描注解方式配置的hibernate类文件 &ndash;&gt;-->
+        <!--<property name="packagesToScan">-->
+            <!--<list>-->
+                <!--<value>com.qworldr.mmorpg.**.entity</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
 </beans>
