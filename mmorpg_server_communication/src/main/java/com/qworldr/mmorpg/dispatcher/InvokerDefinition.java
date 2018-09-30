@@ -2,7 +2,6 @@ package com.qworldr.mmorpg.dispatcher;
 
 import com.google.common.collect.Lists;
 import com.qworldr.mmorpg.annotation.Protocal;
-import com.qworldr.mmorpg.bean.Identity;
 import com.qworldr.mmorpg.exception.PrivilegeException;
 import com.qworldr.mmorpg.bean.IdentityProvide;
 import com.qworldr.mmorpg.session.Session;
@@ -35,13 +34,13 @@ public class InvokerDefinition {
                 if (id == null) {
                     throw new PrivilegeException(String.format("%s 参数%s需要seesion提供id获取，但是session.id为null", method.toString(), identifyClass));
                 }
-                Identity identity = null;
+                Object object = null;
                 try {
-                    identity = provide.getIdentity(session);
+                    object = provide.getIdentity(session);
                 } catch (Exception e) {
                     throw e;
                 }
-                params.add(identity);
+                params.add(object);
             } else {
                 throw new IllegalArgumentException("SocketRequest方法参数只能是Session子类，Protocal类或提供了IdentityProvide获取的类型");
             }

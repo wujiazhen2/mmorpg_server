@@ -1,9 +1,7 @@
 package com.qworldr.mmorpg.logic.player;
 
 
-import com.qworldr.mmorpg.bean.Identity;
-
-public class Player implements Identity<Long> {
+public class Player  {
     private long id;
     private String name;
     public Long getId() {
