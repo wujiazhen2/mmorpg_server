@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
@@ -44,24 +45,13 @@ public class InvokerManager implements BeanPostProcessor {
         }
     }
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> aClass = bean.getClass();
         SocketController annotation = aClass.getAnnotation(SocketController.class);
         if (annotation == null) {
             return bean;
         }
         InvokerDefinition invokerDefinition;
-        Object instance;
-        try {
-            instance = aClass.newInstance();
-        } catch (IllegalAccessException e) {
-            LOGGER.debug("类 {} 构造函数无权访问", aClass.getName());
-            return bean;
-        } catch (InstantiationException e) {
-            LOGGER.debug("类 {} 实例化失败", aClass.getName());
-            e.printStackTrace();
-            return bean;
-        }
         ReflectionUtils.doWithMethods(aClass, method -> {
             Class<?>[] parameterTypes = method.getParameterTypes();
             Class protoType = null;
@@ -75,7 +65,7 @@ public class InvokerManager implements BeanPostProcessor {
                 LOGGER.debug("{}的{}方法没有协议参数,不是SocketRequest", aClass.getName(), method.getName());
                 return;
             }
-            protocal2Invoker.put(protoType, new InvokerDefinition(instance, method));
+            protocal2Invoker.put(protoType, new InvokerDefinition(bean, method));
         }, method -> method.getAnnotation(SocketRequest.class) != null);
         return null;
     }
