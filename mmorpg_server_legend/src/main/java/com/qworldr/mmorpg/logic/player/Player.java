@@ -1,22 +1,17 @@
 package com.qworldr.mmorpg.logic.player;
 
 
+import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
+
 public class Player  {
-    private long id;
-    private String name;
-    public Long getId() {
-        return null;
+
+    private PlayerEntity playerEntity;
+
+    public PlayerEntity getPlayerEntity() {
+        return playerEntity;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setPlayerEntity(PlayerEntity playerEntity) {
+        this.playerEntity = playerEntity;
     }
 }

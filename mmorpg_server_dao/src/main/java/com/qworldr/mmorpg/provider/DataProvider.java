@@ -1,4 +1,4 @@
-package com.qworldr.mmorpg.provide;
+package com.qworldr.mmorpg.provider;
 
 public interface DataProvider<T,ID> {
 

@@ -1,15 +1,12 @@
 package com.qworldr.mmorpg.protocal;
 
-import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.mmorpg.annotation.Protocal;
 
-@Protocal(ProtocalId.LoginReq)
+@Protocal(ProtocalId.RegisterAccountReq)
 @ProtobufClass
-public class LoginReq {
-    @Protobuf
+public class RegisterAccountReq {
     private String account;
-    @Protobuf
     private String pwd;
 
     public String getAccount() {

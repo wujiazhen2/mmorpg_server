@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TcpSession<T> implements Session {
+public class TcpSession implements Session {
     private Channel channel;
     private int id;
     private static  final AtomicInteger SEQ = new AtomicInteger(1);
@@ -16,10 +16,10 @@ public class TcpSession<T> implements Session {
     }
 
     public Map<String,String> params= new HashMap<>();
-    public String getParam(String id){
+    public String get(String id){
         return params.get(id);
     }
-    public void  setParam(String id,String value){
+    public void put(String id, String value){
         params.put(id,value);
     }
 

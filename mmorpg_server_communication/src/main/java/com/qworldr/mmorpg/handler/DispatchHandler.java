@@ -10,16 +10,20 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @ChannelHandler.Sharable
-public class DispatchHandler extends ChannelInboundHandlerAdapter {
+public class DispatchHandler extends ChannelInboundHandlerAdapter implements BeanFactoryAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(DispatchHandler.class);
     @Autowired
     private InvokerManager invokerManager;
     private DispatcherExecutor dispatcherExecutor;
+    private BeanFactory beanFactory;
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         InvokerDefinition invokerDefintion = invokerManager.getInvokerDefintion(msg.getClass());
@@ -43,5 +47,10 @@ public class DispatchHandler extends ChannelInboundHandlerAdapter {
 
     public void setDispatcherExecutor(DispatcherExecutor dispatcherExecutor){
         this.dispatcherExecutor=dispatcherExecutor;
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory=beanFactory;
     }
 }

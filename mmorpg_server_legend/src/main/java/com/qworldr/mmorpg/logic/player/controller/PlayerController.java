@@ -11,6 +11,5 @@ public class PlayerController {
 
     @SocketRequest
     public void test(Player player, TestPlayerReq testPlayerReq){
-        System.out.println(player.getName());
     }
 }

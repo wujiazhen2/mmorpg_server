@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+<beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.qworldr">
-        <context:include-filter type="annotation" expression="com.qworldr.mmorpg.annotation.Protocal"/>
+    <context:component-scan base-package="com.qworldr" >
         <context:include-filter type="annotation" expression="com.qworldr.mmorpg.annotation.SocketController"/>
+        <context:include-filter type="annotation" expression="com.qworldr.mmorpg.annotation.Protocal"/>
     </context:component-scan>
 
 
@@ -21,7 +16,7 @@
         <constructor-arg value="8"/>
     </bean>
     <!-- 游戏服务器-->
-    <bean class="com.qworldr.mmorpg.server.GameServer">
+    <bean class="com.qworldr.mmorpg.server.GameServer" depends-on="sessionFactory">
         <property name="dispatcherExecutor" ref="hashDispatcherThreadPool"></property>
     </bean>
 
@@ -34,50 +29,32 @@
         </property>
     </bean>
 
-    <!--&lt;!&ndash; 定义数据源 &ndash;&gt;-->
+    <!-- 定义数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-      destroy-method="close">
+          destroy-method="close">
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="validationQuery" value="${jdbc.validateQuery}"/>
     </bean>
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <!-- 指定数据源 -->
+
+    <!-- session工厂 -->
+    <bean id="sessionFactory"
+          class="com.qworldr.mmorpg.EntityProviderSessionFactoryBean" >
+        <property name="entityProviderName" value="com.qworldr.mmorpg.provider.CacheEntityProvider"></property>
         <property name="dataSource" ref="dataSource"/>
-        <!-- 指定Jpa持久化实现厂商类,这里以Hibernate为例 -->
-        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
-        <!-- 指定Entity实体类包路径 -->
-        <property name="packagesToScan" >
-            <array>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+        <!-- 自动扫描注解方式配置的hibernate类文件 -->
+        <property name="packagesToScan">
+            <list>
                 <value>com.qworldr.mmorpg.**.entity</value>
-            </array>
-        </property>
-        <!-- 指定JPA属性；如Hibernate中指定是否显示SQL的是否显示、方言等 -->
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
-                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
-            </props>
+            </list>
         </property>
     </bean>
-    <!-- 重要配置：启用扫描并自动创建代理的功能  -->
-    <jpa:repositories base-package="com.qworldr.mmorpg"  transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory"/>
 
-    <!-- Hibernate对Jpa的实现 -->
-    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
-
-    <!-- Jpa 事务管理器  -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <constructor-arg index="0" ref="sessionFactory"></constructor-arg>
     </bean>
-
-    <!-- 开启注解事务 -->
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
-
 
 </beans>

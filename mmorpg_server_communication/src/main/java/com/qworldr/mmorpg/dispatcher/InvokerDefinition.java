@@ -25,7 +25,7 @@ public class InvokerDefinition {
         Class<?>[] parameterTypes = method.getParameterTypes();
         List<Object> params = Lists.newArrayList();
         for (Class type : parameterTypes) {
-            if (type.isAssignableFrom(Session.class)) {
+            if (type.newInstance() instanceof Session) {
                 params.add(session);
             } else if (type.getAnnotation(Protocal.class) != null) {
                 params.add(protocal);

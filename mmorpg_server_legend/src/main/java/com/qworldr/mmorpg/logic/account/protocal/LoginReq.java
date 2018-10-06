@@ -11,13 +11,13 @@ public class LoginReq {
     @Protobuf
     private String account;
     @Protobuf
-    private String sign;
+    private String pwd;
 
     public String getAccount() {
         return account;
     }
 
-    public String getSign() {
-        return sign;
+    public String getPwd() {
+        return pwd;
     }
 }

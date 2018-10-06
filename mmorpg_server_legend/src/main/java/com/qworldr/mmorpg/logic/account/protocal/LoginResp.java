@@ -1,12 +1,13 @@
-package com.qworldr.mmorpg.protocal;
+package com.qworldr.mmorpg.logic.account.protocal;
 
 import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.mmorpg.annotation.Protocal;
+import com.qworldr.mmorpg.common.protocal.ProtocalId;
 
-@Protocal(ProtocalId.LoginReq)
+@Protocal(ProtocalId.LoginResp)
 @ProtobufClass
-public class LoginReq {
+public class LoginResp {
     @Protobuf
     private String account;
     @Protobuf
