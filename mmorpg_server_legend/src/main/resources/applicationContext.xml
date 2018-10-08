@@ -52,9 +52,4 @@
             </list>
         </property>
     </bean>
-
-    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
-        <constructor-arg index="0" ref="sessionFactory"></constructor-arg>
-    </bean>
-
 </beans>

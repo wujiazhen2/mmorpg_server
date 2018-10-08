@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class HashDispatcherThreadPool  extends DispatcherExecutor{
 
     private ScheduledExecutorService[] threadPool;
-    private HashDispatcherThreadPool(int threadSize) {
+    public HashDispatcherThreadPool(int threadSize) {
         threadPool=new ScheduledExecutorService[threadSize];
         for(int i=0;i<threadSize;i++){
             threadPool[i]=Executors.newSingleThreadScheduledExecutor();
