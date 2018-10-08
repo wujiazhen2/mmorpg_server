@@ -9,7 +9,6 @@ public class GameStart {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        EntityProviderSessionFactoryBean bean1 = applicationContext.getAutowireCapableBeanFactory().getBean(EntityProviderSessionFactoryBean.class);
         IServer gameServer = applicationContext.getBean(IServer.class);
         try {
             gameServer.start(4010);
