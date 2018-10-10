@@ -1,7 +1,6 @@
 package com.qworldr.mmorpg.provider;
 
 import com.qworldr.mmorpg.entity.IEntity;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

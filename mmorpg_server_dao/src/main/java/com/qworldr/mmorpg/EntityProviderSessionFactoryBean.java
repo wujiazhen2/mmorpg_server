@@ -1,6 +1,7 @@
 package com.qworldr.mmorpg;
 
 import com.qworldr.mmorpg.entity.IEntity;
+import com.qworldr.mmorpg.identify.IdentifyGenerator;
 import com.qworldr.mmorpg.provider.EntityProvider;
 import com.qworldr.mmorpg.provider.HibernateEntityProvider;
 import com.qworldr.mmorpg.provider.ProviderProxyFactory;
@@ -8,26 +9,21 @@ import com.qworldr.mmorpg.utils.ReflectUtils;
 import org.hibernate.boot.MetadataSources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
-import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
-import org.springframework.lang.Nullable;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.util.StringUtils;
 
-import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 
 
 public class EntityProviderSessionFactoryBean extends LocalSessionFactoryBean implements InstantiationAwareBeanPostProcessor,  PriorityOrdered {

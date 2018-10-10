@@ -1,27 +1,43 @@
 package com.qworldr.mmorpg.provider;
 
+import com.qworldr.mmorpg.anno.Generator;
 import com.qworldr.mmorpg.entity.IEntity;
+import com.qworldr.mmorpg.exception.GeneratorException;
+import com.qworldr.mmorpg.identify.GeneratorStrategy;
+import com.qworldr.mmorpg.identify.IdentifyGenerator;
 import com.qworldr.mmorpg.utils.ReflectUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
+import javax.persistence.Id;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.List;
 
 public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable> extends HibernateDaoSupport implements EntityProvider<T,ID> {
     private Class<T> entityClass;
-    @Autowired
-    public  void setSessionFactoryValue(SessionFactory sessionFactory) {
-        super.setSessionFactory(sessionFactory);
-    }
-    public HibernateEntityProvider(){
+    private String keyGenerator;
+    public HibernateEntityProvider() {
         this.entityClass= (Class<T>) ReflectUtils.getSuperGenericType(getClass());
+        Field[] declaredFields = entityClass.getDeclaredFields();
+        Field declaredField=null;
+        for (int i = 0; i < declaredFields.length; i++) {
+             declaredField = declaredFields[i];
+            if(declaredField.getAnnotation(Id.class)!=null){
+                Generator annotation = declaredField.getAnnotation(Generator.class);
+                if(annotation!=null){
+                    keyGenerator=annotation.value();
+                }
+            }
+        }
+    }
+    protected String getKeyGenerator(){
+        return keyGenerator;
     }
     public T get(ID id) {
         return this.getHibernateTemplate().get(entityClass,id);
@@ -73,31 +89,41 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
     @Override
     public List<T> query(String nameQuery, Object... params) {
         return getHibernateTemplate().execute((HibernateCallback<List<T>>) session -> {
+            Transaction transaction = session.beginTransaction();
             Query namedQuery = buildNameQuery(nameQuery,session, params);
             List list = namedQuery.list();
+            transaction.commit();
             return list;
         });
     }
     @Override
     public T queryForSingle(String nameQuery, Object... params) {
         return getHibernateTemplate().execute((HibernateCallback<T>) session -> {
+            Transaction transaction = session.beginTransaction();
             Query<T> namedQuery = buildNameQuery(nameQuery, session, params);
-            return namedQuery.uniqueResult();
+            T t = namedQuery.uniqueResult();
+            transaction.commit();
+            return t;
         });
     }
     @Override
     public <E> List<E> query(String nameQuery, Class<E> clazz, Object... params) {
         return getHibernateTemplate().execute((HibernateCallback<List<E>>) session -> {
+            Transaction transaction = session.beginTransaction();
             Query namedQuery = buildNameQuery(nameQuery,session, params);
             List list = namedQuery.list();
+            transaction.commit();
             return list;
         });
     }
     @Override
     public <E> E queryForSingle(String nameQuery, Class<E> clazz, Object... params) {
         return getHibernateTemplate().execute((HibernateCallback<E>) session -> {
+            Transaction transaction = session.beginTransaction();
             Query<E> namedQuery = buildNameQuery(nameQuery, session, params);
-            return namedQuery.uniqueResult();
+            E e = namedQuery.uniqueResult();
+            transaction.commit();
+            return e;
         });
     }
 

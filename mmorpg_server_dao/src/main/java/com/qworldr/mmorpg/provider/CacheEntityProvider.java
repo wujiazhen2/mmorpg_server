@@ -3,10 +3,11 @@ package com.qworldr.mmorpg.provider;
 
 import com.github.benmanes.caffeine.cache.*;
 import com.qworldr.mmorpg.entity.IEntity;
+import com.qworldr.mmorpg.exception.GeneratorException;
+import com.qworldr.mmorpg.identify.IdentifyGenerator;
 import com.qworldr.mmorpg.thread.DispatcherExecutor;
 import com.qworldr.mmorpg.thread.DispatcherTask;
 import com.qworldr.mmorpg.thread.HashDispatcherThreadPool;
-import jdk.internal.org.objectweb.asm.ClassWriter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +26,7 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
             dispatcherExecutor.submit(new DispatcherTask() {
                 @Override
                 public int getDispatchCode() {
-                    return key.hashCode();
+                    return Math.abs(key.hashCode());
                 }
 
                 @Override
@@ -57,6 +58,11 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
 
     @Override
     public void save(T entity) {
+        try {
+            entity.setId((ID) IdentifyGenerator.getInstance().getGeneratorStrategy(getKeyGenerator()).generatorKey());
+        }catch (Exception e){
+            throw new GeneratorException(String.format("类型转化错误,id生产策略 %s 生产id和实体id类型不一致"));
+        }
         cache.put(entity.getId(),entity);
     }
 
