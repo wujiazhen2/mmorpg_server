@@ -1,4 +1,4 @@
-package com.qworldr.mmorpg;
+package com.qworldr.mmorpg.meta;
 
 public class EntityMetaData {
 
