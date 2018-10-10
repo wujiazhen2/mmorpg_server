@@ -8,8 +8,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.Attribute;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 @Component
+@Controller
 @ChannelHandler.Sharable
 public class SessionHandler extends ChannelInboundHandlerAdapter {
     @Override

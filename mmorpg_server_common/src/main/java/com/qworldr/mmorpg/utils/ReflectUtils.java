@@ -30,6 +30,11 @@ public class ReflectUtils {
         Class<?> resolve = resolvableType.getSuperType().getGeneric(0).resolve();
         return resolve;
     }
+    public static Class<?> getSuperGenericType(Class clazz,int i){
+        ResolvableType resolvableType = ResolvableType.forClass(clazz);
+        Class<?> resolve = resolvableType.getSuperType().getGeneric(i).resolve();
+        return resolve;
+    }
 
     public static boolean isSuperInterface(Class sub,Class sup){
         Class[] interfaces = sub.getInterfaces();

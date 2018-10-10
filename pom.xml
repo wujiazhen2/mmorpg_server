@@ -13,6 +13,7 @@
         <module>mmorpg_server_legend</module>
         <module>mmorpg_client</module>
         <module>mmorpg_server_dao</module>
+        <module>mmorpg_protocal</module>
     </modules>
     <properties>
         <mmorpg_version>1.0-SNAPSHOT</mmorpg_version>
@@ -23,7 +24,7 @@
         <netty.version>4.1.29.Final</netty.version>
         <protobuf.version>3.5.1</protobuf.version>
         <druid.version>1.0.11</druid.version>
-        <mysql.version>6.0.6</mysql.version>
+        <mysql.version>8.0.11</mysql.version>
         <caffeine.version>2.6.2</caffeine.version>
         <spring.data.jpa.version>2.1.0.RELEASE</spring.data.jpa.version>
     </properties>
@@ -54,4 +55,23 @@
             <version>${logback.version}</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArguments>
+                        <verbose />
+                        <bootclasspath>C:/Program Files/Java/jdk1.8.0_181/jre/lib/rt.jar${path.separator}C:/Program Files/Java/jdk1.8.0_181/jre/lib/jce.jar</bootclasspath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

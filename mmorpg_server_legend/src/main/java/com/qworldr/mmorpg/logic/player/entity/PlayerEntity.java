@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.logic.player.entity;
 
+import com.qworldr.mmorpg.anno.Generator;
 import com.qworldr.mmorpg.entity.IEntity;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,8 +11,8 @@ import javax.persistence.Id;
 @Entity
 public class PlayerEntity implements IEntity<String> {
     @Id
-    @Column(length = 32)
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(length = 36)
+    @Generator
     private String id;
     public String getId() {
         return id;

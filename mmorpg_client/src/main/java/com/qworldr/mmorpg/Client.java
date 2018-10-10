@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg;
 
+import com.qworldr.mmorpg.handler.PacketCodec;
 import com.qworldr.mmorpg.handler.SimulationSendPacket;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -14,7 +15,7 @@ public class Client {
 
 
     public static void main(String[] args) {
-        ApplicationContext  applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ApplicationContext  applicationContext = new ClassPathXmlApplicationContext("applicationContext-client.xml");
         ((ClassPathXmlApplicationContext) applicationContext).start();
         new Client().start();
     }
@@ -28,6 +29,7 @@ public class Client {
                     .remoteAddress("127.0.0.1", 4010)
                     .handler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
+                            socketChannel.pipeline().addLast(new PacketCodec());
                             socketChannel.pipeline().addLast(new SimulationSendPacket());
                         }
                     });

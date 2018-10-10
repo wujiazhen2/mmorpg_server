@@ -2,15 +2,14 @@ package com.qworldr.mmorpg.dispatcher;
 
 import com.google.common.collect.Maps;
 import com.qworldr.mmorpg.annotation.Protocal;
+import com.qworldr.mmorpg.annotation.SocketRequest;
 import com.qworldr.mmorpg.annotation.SocketController;
 import com.qworldr.mmorpg.bean.IdentityProvider;
-import com.qworldr.mmorpg.annotation.SocketRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 

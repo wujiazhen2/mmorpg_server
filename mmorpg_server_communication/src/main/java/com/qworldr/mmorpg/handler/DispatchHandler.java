@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.handler;
 
+import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.dispatcher.InvokerDefinition;
 import com.qworldr.mmorpg.dispatcher.InvokerManager;
 import com.qworldr.mmorpg.thread.DispatcherExecutor;
@@ -36,7 +37,10 @@ public class DispatchHandler extends ChannelInboundHandlerAdapter implements Bea
             @Override
             public void run() {
                 try {
-                    invokerDefintion.invoke(ChannelUtils.getSession(ctx.channel()),msg);
+                    Object invoke = invokerDefintion.invoke(ChannelUtils.getSession(ctx.channel()), msg);
+                    if(invoke!=null && invoke.getClass().getAnnotation(Protocal.class)!=null){
+                        ctx.channel().write(invoke);
+                    }
                 } catch (Exception e) {
                     LOGGER.debug("调用错误",e);
                 }

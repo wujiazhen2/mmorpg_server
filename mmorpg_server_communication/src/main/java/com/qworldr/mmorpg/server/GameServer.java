@@ -2,9 +2,9 @@ package com.qworldr.mmorpg.server;
 
 import com.qworldr.mmorpg.exception.ServerOpenException;
 import com.qworldr.mmorpg.handler.DispatchHandler;
-import com.qworldr.mmorpg.handler.SessionHandler;
 import com.qworldr.mmorpg.handler.LimitFlowHandler;
 import com.qworldr.mmorpg.handler.PacketCodec;
+import com.qworldr.mmorpg.handler.SessionHandler;
 import com.qworldr.mmorpg.thread.DispatcherExecutor;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -20,7 +20,7 @@ import java.util.List;
 public class GameServer implements IServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameServer.class);
     private List<ChannelHandler> channelHandlers;
-    private DispatcherExecutor  dispatcherExecutor;
+    private DispatcherExecutor dispatcherExecutor;
     private ChannelFuture future;
     @Autowired
     private DispatchHandler dispatchHandler;

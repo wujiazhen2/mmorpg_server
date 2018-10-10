@@ -1,11 +1,9 @@
 package com.qworldr.mmorpg.logic.player;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.qworldr.mmorpg.bean.IdentityProvider;
-import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
 import com.qworldr.mmorpg.provider.EntityProvider;
 import com.qworldr.mmorpg.session.Session;
+import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

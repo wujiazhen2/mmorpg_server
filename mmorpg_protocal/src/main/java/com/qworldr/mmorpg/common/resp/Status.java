@@ -4,18 +4,18 @@ import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 
 @ProtobufClass
 public class Status {
-    private short code;
+    private int code;
     private int messageId;
-    public static Status valueOf(short code,int messageId){
+    public static Status valueOf(int code,int messageId){
         Status o = new Status();
         o.setCode(code);
         o.setMessageId(messageId);
         return o;
     }
-    public short getCode() {
+    public int getCode() {
         return code;
     }
-    public void setCode(short code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

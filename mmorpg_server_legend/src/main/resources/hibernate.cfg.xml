@@ -7,11 +7,12 @@
     <session-factory>
         <!--方言-->
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-
         <!-- 显示sql语句 -->
         <property name="show_sql">true</property>
-
+        <property name="current_session_context_class">thread</property>
+        <property name="cache.use_second_level_cache">false</property>
         <!-- 自动更新 -->
         <property name="hbm2ddl.auto">update</property>
+        <property name="format_sql">true</property>
     </session-factory>
 </hibernate-configuration>

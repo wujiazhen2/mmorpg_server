@@ -3,8 +3,6 @@ package com.qworldr.mmorpg.handler;
 import com.baidu.bjf.remoting.protobuf.Codec;
 import com.qworldr.mmorpg.codec.CodecManager;
 import com.qworldr.mmorpg.convert.DefaultConvert;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -27,71 +25,70 @@ public class SimulationSendPacket extends ChannelInboundHandlerAdapter {
 
     @Autowired
     private DefaultConvert defaultConvert;
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
-        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
             PropertyDescriptor[] propertyDescriptors;
-            while(true) {
-                System.out.println("输入协议id:");
-                String s = bufferedReader.readLine();
-                short id = Short.parseShort(s);
-                System.out.println("协议字段-----------------------------------");
-                List<String> strs = new ArrayList<>();
-                Codec codec = CodecManager.getInstance().getCodec(id);
-                Class clazz = getProtocalClass(codec);
-                Field[] declaredFields = clazz.getDeclaredFields();
-                for (Field field :declaredFields){
-                    System.out.println(field.getName()+":");
-                    s = bufferedReader.readLine();
-                    strs.add(s);
-                }
-                if (strs.size() > 0) {
-                    ByteBuf packet = encode(id,codec ,strs);
-                    ctx.channel().writeAndFlush(packet);
+            while (true) {
+                try {
+                    System.out.println("输入协议id:");
+                    String s = bufferedReader.readLine();
+                    short id = Short.parseShort(s);
+                    System.out.println("协议字段-----------------------------------");
+                    List<String> strs = new ArrayList<>();
+                    Codec codec = CodecManager.getInstance().getCodec(id);
+                    Class clazz = getProtocalClass(codec);
+                    Field[] declaredFields = clazz.getDeclaredFields();
+                    for (Field field : declaredFields) {
+                        System.out.println(field.getName() + ":");
+                        s = bufferedReader.readLine();
+                        strs.add(s);
+                    }
+                    if (strs.size() > 0) {
+                        Object resp = createResp(id, codec, strs);
+                        ctx.channel().writeAndFlush(resp);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        }catch (IOException e){
+        } catch (IOException e) {
 
         }
     }
 
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println(msg);
+    }
 
-    /**
-     * 简单测试，数据基本数据类型
-     *  \--4字节--\-2字节-\-------data-------\
-     *   协议长度  协议id     协议数据
-     */
-    private ByteBuf encode(short id,Codec codec, List<String> strs) {
-        ByteBuf byteBuf = Unpooled.buffer();
-        int len=6;
+
+    private Object createResp(short id, Codec codec, List<String> strs) {
         Class clazz = getProtocalClass(codec);
+        Object o=null;
         try {
-            Object o = clazz.newInstance();
+            o = clazz.newInstance();
             Field[] declaredFields = clazz.getDeclaredFields();
-            int i=0;
-            for (Field field :declaredFields){
+            int i = 0;
+            for (Field field : declaredFields) {
                 field.setAccessible(true);
-                if(field.getType().equals(String.class)){
-                   field.set(o,strs.get(i++));
-                }else {
-                    field.set(o, defaultConvert.covert(strs.get(i++),field.getType()));
+                if (field.getType().equals(String.class)) {
+                    field.set(o, strs.get(i++));
+                } else {
+                    field.set(o, defaultConvert.covert(strs.get(i++), field.getType()));
                 }
             }
-            byte[] data = codec.encode(o);
-            len+=data.length;
-            byteBuf.writeInt(len);
-            byteBuf.writeShort(id);
-            byteBuf.writeBytes(data);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return byteBuf;
+        return o;
     }
 
     private Class getProtocalClass(Codec codec) {
         Type type = codec.getClass().getGenericInterfaces()[0];
-        Type[] params = ((ParameterizedType)type).getActualTypeArguments();
+        Type[] params = ((ParameterizedType) type).getActualTypeArguments();
         Type param = params[0];
         return (Class) param;
     }

@@ -12,6 +12,11 @@
 
     <dependencies>
         <dependency>
+            <artifactId>mmorpg_protocal</artifactId>
+            <groupId>com.qworldr</groupId>
+            <version>${mmorpg_version}</version>
+        </dependency>
+        <dependency>
             <artifactId>mmorpg_server_common</artifactId>
             <groupId>com.qworldr</groupId>
             <version>${mmorpg_version}</version>
@@ -27,5 +32,27 @@
             <version>${mmorpg_version}</version>
         </dependency>
     </dependencies>
-
+    <build>
+        <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.4.0</version>
+            <executions>
+                <execution>
+                    <phase>deploy</phase>
+                    <goals>
+                        <goal>java</goal>
+                    </goals>
+                    <configuration>
+                        <mainClass>com.qworldr.mmorpg.GameStart</mainClass>
+                        <arguments>
+                            <argument>4010</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        </plugins>
+    </build>
 </project>

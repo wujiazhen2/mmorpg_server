@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.qworldr" >
+    <context:component-scan base-package="com.qworldr">
         <context:include-filter type="annotation" expression="com.qworldr.mmorpg.annotation.SocketController"/>
         <context:include-filter type="annotation" expression="com.qworldr.mmorpg.annotation.Protocal"/>
     </context:component-scan>
@@ -41,7 +41,7 @@
 
     <!-- session工厂 -->
     <bean id="sessionFactory"
-          class="com.qworldr.mmorpg.EntityProviderSessionFactoryBean" >
+          class="com.qworldr.mmorpg.EntityProviderSessionFactoryBean">
         <property name="entityProviderName" value="com.qworldr.mmorpg.provider.CacheEntityProvider"></property>
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
