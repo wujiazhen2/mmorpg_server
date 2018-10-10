@@ -39,7 +39,7 @@ public class DispatchHandler extends ChannelInboundHandlerAdapter implements Bea
                 try {
                     Object invoke = invokerDefintion.invoke(ChannelUtils.getSession(ctx.channel()), msg);
                     if(invoke!=null && invoke.getClass().getAnnotation(Protocal.class)!=null){
-                        ctx.channel().write(invoke);
+                        ctx.channel().writeAndFlush(invoke);
                     }
                 } catch (Exception e) {
                     LOGGER.debug("调用错误",e);

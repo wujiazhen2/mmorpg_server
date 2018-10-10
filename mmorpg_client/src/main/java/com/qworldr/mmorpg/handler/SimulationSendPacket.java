@@ -29,34 +29,7 @@ public class SimulationSendPacket extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
-            PropertyDescriptor[] propertyDescriptors;
-            while (true) {
-                try {
-                    System.out.println("输入协议id:");
-                    String s = bufferedReader.readLine();
-                    short id = Short.parseShort(s);
-                    System.out.println("协议字段-----------------------------------");
-                    List<String> strs = new ArrayList<>();
-                    Codec codec = CodecManager.getInstance().getCodec(id);
-                    Class clazz = getProtocalClass(codec);
-                    Field[] declaredFields = clazz.getDeclaredFields();
-                    for (Field field : declaredFields) {
-                        System.out.println(field.getName() + ":");
-                        s = bufferedReader.readLine();
-                        strs.add(s);
-                    }
-                    if (strs.size() > 0) {
-                        Object resp = createResp(id, codec, strs);
-                        ctx.channel().writeAndFlush(resp);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (IOException e) {
 
-        }
     }
 
     @Override
@@ -65,31 +38,7 @@ public class SimulationSendPacket extends ChannelInboundHandlerAdapter {
     }
 
 
-    private Object createResp(short id, Codec codec, List<String> strs) {
-        Class clazz = getProtocalClass(codec);
-        Object o=null;
-        try {
-            o = clazz.newInstance();
-            Field[] declaredFields = clazz.getDeclaredFields();
-            int i = 0;
-            for (Field field : declaredFields) {
-                field.setAccessible(true);
-                if (field.getType().equals(String.class)) {
-                    field.set(o, strs.get(i++));
-                } else {
-                    field.set(o, defaultConvert.covert(strs.get(i++), field.getType()));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return o;
-    }
 
-    private Class getProtocalClass(Codec codec) {
-        Type type = codec.getClass().getGenericInterfaces()[0];
-        Type[] params = ((ParameterizedType) type).getActualTypeArguments();
-        Type param = params[0];
-        return (Class) param;
-    }
+
+
 }
