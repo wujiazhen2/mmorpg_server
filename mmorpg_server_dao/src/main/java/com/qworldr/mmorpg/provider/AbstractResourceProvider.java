@@ -26,5 +26,5 @@ public abstract class AbstractResourceProvider<T,ID> implements ResourceProvider
         return resourceMap.get(id);
     }
 
-    public abstract Map<ID,T> loadAll(ResourceMetaData resourceMetaData);
+    protected abstract Map<ID,T> loadAll(ResourceMetaData resourceMetaData);
 }

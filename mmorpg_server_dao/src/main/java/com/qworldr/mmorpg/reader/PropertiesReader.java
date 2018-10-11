@@ -1,0 +1,37 @@
+package com.qworldr.mmorpg.reader;
+
+
+import com.qworldr.mmorpg.enu.ReaderType;
+import com.qworldr.mmorpg.meta.ResourceMetaData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+public class PropertiesReader implements   Reader {
+
+    private final Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
+    @Override
+    public Map<String,String> read(ResourceMetaData resourceMetaData) {
+        Properties properties= new Properties();
+        Map<String,String> map = new HashMap<String, String>();
+        try {
+            properties.load(resourceMetaData.getInputStream());
+            properties.forEach((a,b)->{
+                map.put(String.valueOf(a),String.valueOf(b));
+            });
+        } catch (IOException e) {
+            logger.error(String.format("%s配置文件读取失败",resourceMetaData.getPath()));
+            e.printStackTrace();
+        }
+        return map;
+    }
+    @Override
+    public ReaderType getReaderType() {
+        return ReaderType.PROPERTIES;
+    }
+}
