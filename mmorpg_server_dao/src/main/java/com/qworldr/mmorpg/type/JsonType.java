@@ -1,8 +1,6 @@
 package com.qworldr.mmorpg.type;
 
 import com.alibaba.druid.support.json.JSONUtils;
-import com.mysql.cj.jdbc.Clob;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
@@ -13,13 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class JsonType implements UserType {
     @Override
     public int[] sqlTypes() {
-        return new int[] {Types.CLOB};
+        return new int[]{Types.CLOB};
     }
 
     @Override
@@ -40,17 +36,17 @@ public class JsonType implements UserType {
     @Override
     public Object nullSafeGet(ResultSet resultSet, String[] strings, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException, SQLException {
         String json = resultSet.getString(strings[0]);
-        if(StringUtils.isEmpty(json)){
-           return null;
+        if (StringUtils.isEmpty(json)) {
+            return null;
         }
         return JSONUtils.parse(json);
     }
 
     @Override
     public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i, SharedSessionContractImplementor sharedSessionContractImplementor) throws HibernateException, SQLException {
-        if(o==null) {
+        if (o == null) {
             preparedStatement.setString(i, "");
-        }else {
+        } else {
             preparedStatement.setString(i, JSONUtils.toJSONString(o));
         }
     }
@@ -68,16 +64,16 @@ public class JsonType implements UserType {
 
     @Override
     public Serializable disassemble(Object o) throws HibernateException {
-        return (Serializable)o;
+        return (Serializable) deepCopy(o);
     }
 
     @Override
     public Object assemble(Serializable serializable, Object o) throws HibernateException {
-        return serializable;
+        return deepCopy(serializable);
     }
 
     @Override
     public Object replace(Object o, Object o1, Object o2) throws HibernateException {
-        return o;
+        return deepCopy(o);
     }
 }
