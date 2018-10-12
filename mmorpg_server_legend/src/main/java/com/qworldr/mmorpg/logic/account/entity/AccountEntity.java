@@ -2,16 +2,17 @@ package com.qworldr.mmorpg.logic.account.entity;
 
 import com.qworldr.mmorpg.anno.Generator;
 import com.qworldr.mmorpg.entity.IEntity;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
+import com.qworldr.mmorpg.type.JsonType;
+import org.hibernate.annotations.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.List;
 
 @Entity
+@TypeDef(name = "json",typeClass = JsonType.class)
 @NamedQueries({@NamedQuery(name = "countByAccountAndPwd", query = "select count(*) from AccountEntity where account = ? and pwd=?")
 ,@NamedQuery(name = "countByAccount", query = "select count(*) from AccountEntity where account = ?")})
 public class AccountEntity implements IEntity<String> {
@@ -28,6 +29,18 @@ public class AccountEntity implements IEntity<String> {
     private String account;
     @Column(length = 64)
     private String pwd;
+
+    @Type(type = "json")
+    private List<Integer> ids;
+
+
+    public List<Integer> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
+    }
 
     public String getAccount() {
         return account;

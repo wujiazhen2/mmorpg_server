@@ -40,11 +40,22 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
         return keyGenerator;
     }
     public T get(ID id) {
-        return this.getHibernateTemplate().get(entityClass,id);
+        return this.getHibernateTemplate().execute(session -> {
+            Transaction transaction = session.beginTransaction();
+            T t = session.get(entityClass, id);
+            transaction.commit();
+            return t;
+        });
     }
 
     public List<T> load(){
-        return  this.getHibernateTemplate().loadAll(entityClass);
+        return this.getHibernateTemplate().execute(session -> {
+            Transaction transaction = session.beginTransaction();
+            Query query = session.createQuery("from " + entityClass.getSimpleName());
+            List<T> list = query.list();
+            transaction.commit();
+            return list;
+        });
     }
     @Override
     public void saveOrUpdate(T entity){

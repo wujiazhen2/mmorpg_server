@@ -10,6 +10,8 @@ import com.qworldr.mmorpg.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class AccountService  {
 
@@ -30,6 +32,11 @@ public class AccountService  {
     }
 
     public Status register(AccountEntity accountEntity) {
+        AccountEntity accountEntity1 = accountProvider.get("a9d6164d-ecc7-466f-b280-acb3160947ae");
+        ArrayList<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        accountEntity.setIds(ids);
         //验证帐号格式
         if(!isLegalAccount(accountEntity.getAccount())){
             return Status.valueOf(StatusCode.ERROR,MessageId.ACCOUNT_ILLEGAL);
