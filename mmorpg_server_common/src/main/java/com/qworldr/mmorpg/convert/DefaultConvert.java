@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.convert;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.PropertyEditorRegistrySupport;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,14 @@ public class DefaultConvert extends PropertyEditorRegistrySupport {
         if(defaultEditor==null){
             defaultEditor=this.findCustomEditor(clazz,null);
         }
+        //不是注册类型，就是枚举或者json
         if(defaultEditor==null){
-            throw new RuntimeException(String.format("缺少%d类型ProertyeEditor",clazz));
+            if(clazz.isEnum()){
+                return (T) Enum.valueOf((Class<Enum>)clazz,value);
+            }else {
+                T parse = (T) JSON.parse(value);
+                return parse;
+            }
         }
         defaultEditor.setAsText(value);
         return (T) defaultEditor.getValue();

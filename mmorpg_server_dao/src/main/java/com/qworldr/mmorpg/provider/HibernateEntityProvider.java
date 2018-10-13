@@ -2,15 +2,10 @@ package com.qworldr.mmorpg.provider;
 
 import com.qworldr.mmorpg.anno.Generator;
 import com.qworldr.mmorpg.entity.IEntity;
-import com.qworldr.mmorpg.exception.GeneratorException;
-import com.qworldr.mmorpg.identify.GeneratorStrategy;
-import com.qworldr.mmorpg.identify.IdentifyGenerator;
 import com.qworldr.mmorpg.utils.ReflectUtils;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
@@ -19,26 +14,29 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
 
-public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable> extends HibernateDaoSupport implements EntityProvider<T,ID> {
+public class HibernateEntityProvider<T extends IEntity, ID extends Serializable> extends HibernateDaoSupport implements EntityProvider<T, ID> {
     private Class<T> entityClass;
     private String keyGenerator;
+
     public HibernateEntityProvider() {
-        this.entityClass= (Class<T>) ReflectUtils.getSuperGenericType(getClass());
+        this.entityClass = (Class<T>) ReflectUtils.getSuperGenericType(getClass());
         Field[] declaredFields = entityClass.getDeclaredFields();
-        Field declaredField=null;
+        Field declaredField = null;
         for (int i = 0; i < declaredFields.length; i++) {
-             declaredField = declaredFields[i];
-            if(declaredField.getAnnotation(Id.class)!=null){
+            declaredField = declaredFields[i];
+            if (declaredField.getAnnotation(Id.class) != null) {
                 Generator annotation = declaredField.getAnnotation(Generator.class);
-                if(annotation!=null){
-                    keyGenerator=annotation.value();
+                if (annotation != null) {
+                    keyGenerator = annotation.value();
                 }
             }
         }
     }
-    protected String getKeyGenerator(){
+
+    protected String getKeyGenerator() {
         return keyGenerator;
     }
+
     public T get(ID id) {
         return this.getHibernateTemplate().execute(session -> {
             Transaction transaction = session.beginTransaction();
@@ -48,7 +46,7 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
         });
     }
 
-    public List<T> load(){
+    public List<T> load() {
         return this.getHibernateTemplate().execute(session -> {
             Transaction transaction = session.beginTransaction();
             Query query = session.createQuery("from " + entityClass.getSimpleName());
@@ -57,9 +55,10 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
             return list;
         });
     }
+
     @Override
-    public void saveOrUpdate(T entity){
-        this.getHibernateTemplate().execute(session->{
+    public void saveOrUpdate(T entity) {
+        this.getHibernateTemplate().execute(session -> {
             Transaction transaction = session.beginTransaction();
             session.saveOrUpdate(entity);
             session.flush();
@@ -67,9 +66,10 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
             return entity;
         });
     }
+
     @Override
-    public void save(final T entity){
-        this.getHibernateTemplate().execute(session->{
+    public void save(final T entity) {
+        this.getHibernateTemplate().execute(session -> {
             Transaction transaction = session.beginTransaction();
             session.save(entity);
             session.flush();
@@ -77,9 +77,10 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
             return entity;
         });
     }
+
     @Override
-    public void update(T entity){
-        this.getHibernateTemplate().execute(session->{
+    public void update(T entity) {
+        this.getHibernateTemplate().execute(session -> {
             Transaction transaction = session.beginTransaction();
             session.update(entity);
             session.flush();
@@ -87,9 +88,10 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
             return entity;
         });
     }
+
     @Override
-    public void delete(T entity){
-        this.getHibernateTemplate().execute(session->{
+    public void delete(T entity) {
+        this.getHibernateTemplate().execute(session -> {
             Transaction transaction = session.beginTransaction();
             session.delete(entity);
             session.flush();
@@ -97,16 +99,18 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
             return entity;
         });
     }
+
     @Override
     public List<T> query(String nameQuery, Object... params) {
         return getHibernateTemplate().execute((HibernateCallback<List<T>>) session -> {
             Transaction transaction = session.beginTransaction();
-            Query namedQuery = buildNameQuery(nameQuery,session, params);
+            Query namedQuery = buildNameQuery(nameQuery, session, params);
             List list = namedQuery.list();
             transaction.commit();
             return list;
         });
     }
+
     @Override
     public T queryForSingle(String nameQuery, Object... params) {
         return getHibernateTemplate().execute((HibernateCallback<T>) session -> {
@@ -117,16 +121,18 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
             return t;
         });
     }
+
     @Override
     public <E> List<E> query(String nameQuery, Class<E> clazz, Object... params) {
         return getHibernateTemplate().execute((HibernateCallback<List<E>>) session -> {
             Transaction transaction = session.beginTransaction();
-            Query namedQuery = buildNameQuery(nameQuery,session, params);
+            Query namedQuery = buildNameQuery(nameQuery, session, params);
             List list = namedQuery.list();
             transaction.commit();
             return list;
         });
     }
+
     @Override
     public <E> E queryForSingle(String nameQuery, Class<E> clazz, Object... params) {
         return getHibernateTemplate().execute((HibernateCallback<E>) session -> {
@@ -138,7 +144,7 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
         });
     }
 
-    private  Query buildNameQuery(String nameQuery, Session session, Object[] params) {
+    private Query buildNameQuery(String nameQuery, Session session, Object[] params) {
         Query namedQuery = session.getNamedQuery(nameQuery);
         int i = 0;
         for (Object param : params) {
@@ -148,8 +154,8 @@ public  class HibernateEntityProvider<T extends IEntity,ID extends Serializable>
     }
 
     @Override
-    public void delete(ID id){
-        this.getHibernateTemplate().execute(session->{
+    public void delete(ID id) {
+        this.getHibernateTemplate().execute(session -> {
             Transaction transaction = session.beginTransaction();
             session.delete(id);
             session.flush();

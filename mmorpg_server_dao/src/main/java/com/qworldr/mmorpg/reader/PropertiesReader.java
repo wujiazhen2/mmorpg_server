@@ -8,17 +8,15 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class PropertiesReader implements   Reader {
 
     private final Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
     @Override
-    public Map<String,String> read(ResourceMetaData resourceMetaData) {
+    public Map<Object,Object> read(ResourceMetaData resourceMetaData) {
         Properties properties= new Properties();
-        Map<String,String> map = new HashMap<String, String>();
+        Map<Object,Object> map = new HashMap<>();
         try {
             properties.load(resourceMetaData.getInputStream());
             properties.forEach((a,b)->{

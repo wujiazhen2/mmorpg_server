@@ -1,4 +1,6 @@
 package com.qworldr.mmorpg.logic.account.service;
+import com.qworldr.mmorpg.logic.monster.resource.MonsterResource;
+import com.qworldr.mmorpg.provider.ResourceProvider;
 import com.qworldr.mmorpg.session.TcpSession;
 import com.qworldr.mmorpg.common.constants.MessageId;
 import com.qworldr.mmorpg.common.constants.SessionKey;
@@ -15,9 +17,10 @@ import java.util.ArrayList;
 @Component
 public class AccountService  {
 
-    @Autowired(required = false)
+    @Autowired
     private  EntityProvider<AccountEntity,String>  accountProvider;
-
+    @Autowired
+    private ResourceProvider<MonsterResource,Integer> monsterResourceIntegerResourceProvider;
     public boolean loginCheck(String account,String pwd){
         //TODO 验证登录
         Long count = accountProvider.queryForSingle("countByAccountAndPwd",Long.class, account, SecurityUtils.md5(pwd));
@@ -32,11 +35,6 @@ public class AccountService  {
     }
 
     public Status register(AccountEntity accountEntity) {
-        AccountEntity accountEntity1 = accountProvider.get("a9d6164d-ecc7-466f-b280-acb3160947ae");
-        ArrayList<Integer> ids = new ArrayList<>();
-        ids.add(1);
-        ids.add(2);
-        accountEntity.setIds(ids);
         //验证帐号格式
         if(!isLegalAccount(accountEntity.getAccount())){
             return Status.valueOf(StatusCode.ERROR,MessageId.ACCOUNT_ILLEGAL);

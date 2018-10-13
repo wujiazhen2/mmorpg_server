@@ -54,8 +54,9 @@
     </bean>
 
     <bean id="resourceProviderManager" class="com.qworldr.mmorpg.ConfigurationResourceProviderManager">
-        <property name="suffix" value=".xlsx"/>
-        <property name="path" value="configuration"/>
+        <property name="suffix" value="xlsx"/>
+        <property name="path" value="resource"/>
+        <property name="readerType" value="EXCEL"/>
         <property name="scanPackage" value="com.qworldr.mmorpg.**.resource"/>
     </bean>
 </beans>

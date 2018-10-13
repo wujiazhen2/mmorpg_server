@@ -1,5 +1,7 @@
 package com.qworldr.mmorpg.anno;
 
+import com.qworldr.mmorpg.enu.ReaderType;
+
 import java.lang.annotation.*;
 
 @Target({ElementType.TYPE})
@@ -8,6 +10,6 @@ import java.lang.annotation.*;
 public @interface Resource {
     String value() default "";
     String suffix() default "";
-    String reader() default "";
+    ReaderType reader() default ReaderType.NONE;
     String path() default  "";
 }

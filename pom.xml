@@ -27,6 +27,8 @@
         <mysql.version>8.0.11</mysql.version>
         <caffeine.version>2.6.2</caffeine.version>
         <spring.data.jpa.version>2.1.0.RELEASE</spring.data.jpa.version>
+        <poi.version>3.17</poi.version>
+        <fastjson.version>1.2.47</fastjson.version>
     </properties>
     <packaging>pom</packaging>
     <dependencies>
