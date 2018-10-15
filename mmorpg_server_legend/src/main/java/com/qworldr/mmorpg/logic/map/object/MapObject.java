@@ -6,9 +6,22 @@ import com.qworldr.mmorpg.logic.map.Position;
  * 地图上的对象
  */
 public  class  MapObject {
+    /**
+     * 地图上对象Id
+     */
     private long id;
+    /**
+     *  对象地图上的位置
+     */
     private Position position;
+    /**
+     *  对象是否可视化
+     */
     private boolean visible;
+
+    /**
+     * 对象类型
+     */
     private ObjectType type;
 
     public long getId() {

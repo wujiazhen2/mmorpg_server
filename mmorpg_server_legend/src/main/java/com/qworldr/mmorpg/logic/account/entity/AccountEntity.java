@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import java.util.List;
 
 @Entity
-@TypeDef(name = "json",typeClass = JsonType.class)
 @NamedQueries({@NamedQuery(name = "countByAccountAndPwd", query = "select count(*) from AccountEntity where account = ? and pwd=?")
 ,@NamedQuery(name = "countByAccount", query = "select count(*) from AccountEntity where account = ?")})
 public class AccountEntity implements IEntity<String> {

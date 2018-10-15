@@ -2,6 +2,7 @@ package com.qworldr.mmorpg.logic.player.entity;
 
 import com.qworldr.mmorpg.anno.Generator;
 import com.qworldr.mmorpg.entity.IEntity;
+import com.qworldr.mmorpg.logic.player.enu.RoleType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -27,12 +28,23 @@ public class PlayerEntity implements IEntity<String> {
     @Column
     private short level;
 
+    /**
+     *
+     */
     @Column(length = 1)
-    private byte role;
+    private RoleType role;
 
+    /**
+     *  0 男  1 女
+     */
     @Column(length = 1)
     private byte sex;
 
+    @Column
+    private int hp;
+
+    @Column
+    private int mp;
     public String getName() {
         return name;
     }
@@ -57,12 +69,28 @@ public class PlayerEntity implements IEntity<String> {
         this.level = level;
     }
 
-    public byte getRole() {
+    public RoleType getRole() {
         return role;
     }
 
-    public void setRole(byte role) {
+    public void setRole(RoleType role) {
         this.role = role;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getMp() {
+        return mp;
+    }
+
+    public void setMp(int mp) {
+        this.mp = mp;
     }
 
     public byte getSex() {
