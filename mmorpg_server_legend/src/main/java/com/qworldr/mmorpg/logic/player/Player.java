@@ -6,6 +6,10 @@ import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
 
 public class Player extends BiologyObject {
 
+    public Player(PlayerEntity playerEntity) {
+        this.playerEntity = playerEntity;
+    }
+
     private PlayerEntity playerEntity;
 
     public PlayerEntity getPlayerEntity() {

@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @Author wujiazhen
  */
-@Resource
+//@Resource
 public class PlayerLevelResource {
     /**
      *  roleType.ordinal() *1000 +level

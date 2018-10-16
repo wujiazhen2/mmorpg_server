@@ -27,7 +27,12 @@ public class PlayerEntity implements IEntity<Long> {
     private int level;
 
     /**
-     *
+     *  属性点
+     */
+    @Column
+    private int statPoint;
+    /**
+     * 根据枚举的or
      */
     @Column(length = 1)
     private RoleType role;

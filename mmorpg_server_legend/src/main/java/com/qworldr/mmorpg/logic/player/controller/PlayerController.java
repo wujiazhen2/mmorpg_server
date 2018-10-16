@@ -28,7 +28,7 @@ public class PlayerController {
             return createRoleResp;
         }
         try {
-            createRoleResp.setStatus(playerService.createRole(SessionUtils.getAccount(session), req));
+            createRoleResp.setStatus(playerService.createRole(session, req));
         } catch (MessageException e) {
             createRoleResp.setStatus(e.getStatus());
         }
