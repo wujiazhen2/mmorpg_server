@@ -57,6 +57,17 @@ public class HibernateEntityProvider<T extends IEntity, ID extends Serializable>
     }
 
     @Override
+    public T loadAndCreate(ID id,ICreator<T,ID> creator) {
+        T t = get(id);
+        if(t!=null){
+            return t;
+        }
+        t = creator.create(id);
+        save(t);
+        return t;
+    }
+
+    @Override
     public void saveOrUpdate(T entity) {
         this.getHibernateTemplate().execute(session -> {
             Transaction transaction = session.beginTransaction();

@@ -11,6 +11,7 @@ public interface EntityProvider<T extends IEntity, ID> extends DataProvider<T, I
 
     List<T> load();
 
+    T loadAndCreate(ID id,ICreator<T,ID> creator);
     void saveOrUpdate(T entity);
 
     void save(T entity);

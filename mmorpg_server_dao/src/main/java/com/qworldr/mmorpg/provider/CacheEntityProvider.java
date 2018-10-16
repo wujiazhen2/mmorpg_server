@@ -85,4 +85,15 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
     public void delete(T entity) {
         cache.invalidate(entity.getId());
     }
+
+    @Override
+    public T loadAndCreate(ID id, ICreator<T, ID> creator) {
+        T t = get(id);
+        if(t!=null){
+            return t;
+        }
+        T t1 = creator.create(id);
+        save(t1);
+        return t1;
+    }
 }
