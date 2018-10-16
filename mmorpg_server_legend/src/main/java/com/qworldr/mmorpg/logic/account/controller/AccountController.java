@@ -3,9 +3,12 @@ package com.qworldr.mmorpg.logic.account.controller;
 
 import com.qworldr.mmorpg.annotation.SocketController;
 import com.qworldr.mmorpg.annotation.SocketRequest;
+import com.qworldr.mmorpg.common.constants.MessageId;
+import com.qworldr.mmorpg.common.constants.StatusCode;
 import com.qworldr.mmorpg.logic.account.protocal.LoginReq;
 import com.qworldr.mmorpg.common.resp.Status;
 import com.qworldr.mmorpg.logic.account.entity.AccountEntity;
+import com.qworldr.mmorpg.logic.account.protocal.LoginResp;
 import com.qworldr.mmorpg.logic.account.protocal.RegisterAccountReq;
 import com.qworldr.mmorpg.logic.account.protocal.RegisterAccountResp;
 import com.qworldr.mmorpg.logic.account.service.AccountService;
@@ -18,10 +21,15 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @SocketRequest
-    public void login(TcpSession session, LoginReq loginReq){
+    public LoginResp login(TcpSession session, LoginReq loginReq){
+        LoginResp loginResp = new LoginResp();
         if(accountService.loginCheck(loginReq.getAccount(),loginReq.getPwd())){
-           accountService.handlerLogin(session,loginReq.getAccount());
+             accountService.handlerLogin(session,loginReq.getAccount());
+            loginResp.setStatus(Status.valueOf(StatusCode.SUCCESS, MessageId.AUTH_SUCCESS));
+        }else {
+            loginResp.setStatus(Status.valueOf(StatusCode.ERROR, MessageId.AUTH_FAIL));
         }
+        return loginResp;
     }
 
     @SocketRequest

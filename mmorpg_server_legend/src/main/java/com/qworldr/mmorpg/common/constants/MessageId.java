@@ -7,6 +7,8 @@ public interface MessageId {
     int REGISTER_SUCCESS = 10001;
     @Desc("创建角色成功")
     int CREATE_ROLE_SUCCESS = 10002;
+    @Desc("登录认证成功")
+    int AUTH_SUCCESS = 10003;
     @Desc("非法帐号")
     int ACCOUNT_ILLEGAL = 20001;
     @Desc("帐号已存在")
@@ -14,5 +16,7 @@ public interface MessageId {
     @Desc("账号未登录")
     int NO_LOGIN = 20003;
 
+    @Desc("认证失败")
+    int AUTH_FAIL = 20004 ;
 
 }
