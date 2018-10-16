@@ -13,14 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class SpringTest {
 
-    @Autowired
-    private SessionFactory req;
-    @Autowired
-    private EntityProvider<PlayerEntity,String> playerEntity;
-    @Test
-    public void test(){
-        System.out.println(req);
-        System.out.println(playerEntity);
-    }
+
 
 }

@@ -9,5 +9,7 @@ public interface MessageId {
     int ACCOUNT_ILLEGAL = 20001;
 
     @Desc("帐号已存在")
-    int ACCOUNT_EXIST = 20001;
+    int ACCOUNT_EXIST = 20002;
+    @Desc("账号未登录")
+    int NO_LOGIN = 20003;
 }

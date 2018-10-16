@@ -10,14 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class PlayerEntity implements IEntity<String> {
+public class PlayerEntity implements IEntity<Long> {
     @Id
     @Column(length = 36)
-    @Generator
-    private String id;
-    public String getId() {
-        return id;
-    }
+    @Generator("snowflake")
+    private Long id;
+
 
     @Column(length = 32)
     private String name;
@@ -26,7 +24,7 @@ public class PlayerEntity implements IEntity<String> {
     private String account;
 
     @Column
-    private short level;
+    private int level;
 
     /**
      *
@@ -38,7 +36,7 @@ public class PlayerEntity implements IEntity<String> {
      *  0 男  1 女
      */
     @Column(length = 1)
-    private byte sex;
+    private int sex;
 
     @Column
     private int hp;
@@ -61,13 +59,6 @@ public class PlayerEntity implements IEntity<String> {
         this.account = account;
     }
 
-    public short getLevel() {
-        return level;
-    }
-
-    public void setLevel(short level) {
-        this.level = level;
-    }
 
     public RoleType getRole() {
         return role;
@@ -93,15 +84,29 @@ public class PlayerEntity implements IEntity<String> {
         this.mp = mp;
     }
 
-    public byte getSex() {
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(byte sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
-    public void setId(String id) {
-        this.id=id;
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 }

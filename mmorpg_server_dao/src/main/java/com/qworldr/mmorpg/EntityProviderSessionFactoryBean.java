@@ -1,16 +1,16 @@
 package com.qworldr.mmorpg;
 
 import com.qworldr.mmorpg.entity.IEntity;
-import com.qworldr.mmorpg.identify.IdentifyGenerator;
 import com.qworldr.mmorpg.provider.EntityProvider;
 import com.qworldr.mmorpg.provider.HibernateEntityProvider;
 import com.qworldr.mmorpg.provider.ProviderProxyFactory;
+import com.qworldr.mmorpg.type.JsonType;
 import com.qworldr.mmorpg.utils.ReflectUtils;
 import org.hibernate.boot.MetadataSources;
+import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.core.Ordered;
@@ -34,6 +34,10 @@ public class EntityProviderSessionFactoryBean extends LocalSessionFactoryBean im
     @Override
     public void afterPropertiesSet() throws IOException {
         super.afterPropertiesSet();
+        Configuration configuration = getConfiguration();
+        configuration.registerTypeOverride(new JsonType(),new String[]{"json"});
+
+
         Map<String, EntityProvider> beansOfType = beanFactory.getBeansOfType(EntityProvider.class);
         Set<Class> classes = new HashSet<>();
 

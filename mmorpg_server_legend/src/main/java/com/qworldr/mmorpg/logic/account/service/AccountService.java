@@ -19,8 +19,6 @@ public class AccountService  {
 
     @Autowired
     private  EntityProvider<AccountEntity,String>  accountProvider;
-    @Autowired
-    private ResourceProvider<MonsterResource,Integer> monsterResourceIntegerResourceProvider;
     public boolean loginCheck(String account,String pwd){
         //TODO 验证登录
         Long count = accountProvider.queryForSingle("countByAccountAndPwd",Long.class, account, SecurityUtils.md5(pwd));

@@ -15,4 +15,5 @@
         <property name="hbm2ddl.auto">update</property>
         <property name="format_sql">true</property>
     </session-factory>
+
 </hibernate-configuration>
