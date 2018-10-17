@@ -43,10 +43,11 @@ public class PlayerController {
     @SocketRequest
     public PlayerLoginResp roleLogin(TcpSession session, RoleLoginReq req){
         try{
-            return playerService.roleLogin(session,req.getPlayerId());
+             playerService.roleLogin(session,req.getPlayerId());
         }catch (MessageException e){
             return new PlayerLoginResp(req.getPlayerId(),e.getStatus());
         }
+        return null;
     }
 
     @SocketRequest

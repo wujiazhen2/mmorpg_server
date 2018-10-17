@@ -2,10 +2,13 @@ package com.qworldr.mmorpg.logic.player.manager;
 
 import com.qworldr.mmorpg.bean.IdentityProvider;
 import com.qworldr.mmorpg.common.utils.EventPublisher;
+import com.qworldr.mmorpg.logic.attribute.enu.AttributeSourceType;
+import com.qworldr.mmorpg.logic.attribute.enu.AttributeType;
 import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
 import com.qworldr.mmorpg.logic.player.enu.RoleType;
 import com.qworldr.mmorpg.logic.player.event.PlayerLoginEvent;
+import com.qworldr.mmorpg.logic.player.resource.PlayerInitializationResource;
 import com.qworldr.mmorpg.logic.player.resource.PlayerLevelResource;
 import com.qworldr.mmorpg.provider.EntityProvider;
 import com.qworldr.mmorpg.provider.ResourceProvider;
@@ -26,7 +29,8 @@ public class PlayerManager implements IdentityProvider<Player> {
     private EntityProvider<PlayerEntity,Long> playerEntityProvider;
     @Autowired
     private ResourceProvider<PlayerLevelResource,Integer> playerLevelResourceResourceProvider;
-
+    @Autowired
+    private ResourceProvider<PlayerInitializationResource,RoleType> playerInitializationResourceProvider;
     @Autowired
     private EventPublisher eventPublisher;
     public Player createPlayer(String account, String name, RoleType role, int sex){
@@ -38,9 +42,15 @@ public class PlayerManager implements IdentityProvider<Player> {
         playerEntity.setLevel(1);
         PlayerLevelResource playerLevelResource = playerLevelResourceResourceProvider.get(1);
         playerEntity.setStatPoint(playerLevelResource.getStatPoint());
-        //TODO 初始化属性 hp mp
+        //设置出生地 初始化属性 hp mp
+        PlayerInitializationResource playerInitializationResource = playerInitializationResourceProvider.get(playerEntity.getRole());
+        playerEntity.setSceneId(playerInitializationResource.getSceneId());
+        playerEntity.setX(playerInitializationResource.getPosition().getX());
+        playerEntity.setY(playerInitializationResource.getPosition().getY());
+        playerEntity.setHp(playerInitializationResource.getAttrs().get(AttributeType.HP));
         playerEntityProvider.save(playerEntity);
         Player player =new Player(playerEntity);
+        player.setAttr(AttributeSourceType.INIT,playerInitializationResource.getAttrs());
         return player;
     }
 

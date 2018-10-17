@@ -4,6 +4,7 @@ import com.qworldr.mmorpg.common.constants.MessageId;
 import com.qworldr.mmorpg.common.constants.StatusCode;
 import com.qworldr.mmorpg.common.exception.MessageException;
 import com.qworldr.mmorpg.common.resp.Status;
+import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.common.utils.SessionUtils;
 import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
@@ -12,7 +13,7 @@ import com.qworldr.mmorpg.logic.player.protocal.CreateRoleReq;
 import com.qworldr.mmorpg.logic.player.protocal.CreateRoleResp;
 import com.qworldr.mmorpg.logic.player.protocal.PlayerLoginResp;
 import com.qworldr.mmorpg.logic.player.protocal.RoleListResp;
-import com.qworldr.mmorpg.logic.player.protocal.bean.PlayerInfo;
+import com.qworldr.mmorpg.logic.player.protocal.vo.PlayerInfo;
 import com.qworldr.mmorpg.provider.EntityProvider;
 import com.qworldr.mmorpg.session.TcpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class PlayerService {
         return createRoleResp;
     }
 
-    public PlayerLoginResp roleLogin(TcpSession session, long playerId) {
+    public void roleLogin(TcpSession session, long playerId) {
         //判断账号是否登录
         if (!SessionUtils.isLogin(session)) {
             throw new MessageException(MessageId.NO_LOGIN);
@@ -51,11 +52,10 @@ public class PlayerService {
             throw new MessageException(MessageId.PlAYER_NOT_EXISTS);
         }
         Player player = new Player(playerEntity);
-        player.initPlayer();
         //登录
         playerManager.loginPlayer(session, player);
-        //TODO 进入初始场景
-        return new PlayerLoginResp(playerId,Status.valueOf(StatusCode.SUCCESS,MessageId.ROLE_LOGIN_SUCCESS));
+        PacketUtils.sendPacket(session,new PlayerLoginResp(playerId,Status.valueOf(StatusCode.SUCCESS,MessageId.ROLE_LOGIN_SUCCESS)));
+        //TODO 进入场景
     }
 
     public RoleListResp roleList(String account) {

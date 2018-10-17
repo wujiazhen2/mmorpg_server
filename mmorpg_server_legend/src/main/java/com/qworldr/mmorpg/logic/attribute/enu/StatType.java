@@ -1,9 +1,10 @@
-package com.qworldr.mmorpg.logic.attribute;
+package com.qworldr.mmorpg.logic.attribute.enu;
 
 /**
  * @Author wujiazhen
+ * 属性点类型
  */
-public enum AttributeType {
+public enum  StatType {
     /**
      * 力量
      */
