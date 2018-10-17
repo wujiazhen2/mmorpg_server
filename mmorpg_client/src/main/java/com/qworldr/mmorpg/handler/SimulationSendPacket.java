@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.handler;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.bjf.remoting.protobuf.Codec;
 import com.qworldr.mmorpg.codec.CodecManager;
 import com.qworldr.mmorpg.convert.DefaultConvert;
@@ -34,7 +35,7 @@ public class SimulationSendPacket extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(msg);
+        System.out.println(JSON.toJSONString(msg));
     }
 
 

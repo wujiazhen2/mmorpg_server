@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Objects;
 
 public class JsonType implements UserType {
     @Override
@@ -25,12 +26,12 @@ public class JsonType implements UserType {
 
     @Override
     public boolean equals(Object o, Object o1) throws HibernateException {
-        return JSONUtils.toJSONString(o).equals(o1);
+        return Objects.equals(o,o1);
     }
 
     @Override
     public int hashCode(Object o) throws HibernateException {
-        return JSONUtils.toJSONString(o).hashCode();
+        return o.hashCode();
     }
 
     @Override

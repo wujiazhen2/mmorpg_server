@@ -1,11 +1,17 @@
-package com.qworldr.mmorpg.logic.player;
+package com.qworldr.mmorpg.logic.player.manager;
 
 import com.qworldr.mmorpg.bean.IdentityProvider;
-import com.qworldr.mmorpg.logic.player.enu.RoleType;
-import com.qworldr.mmorpg.provider.EntityProvider;
-import com.qworldr.mmorpg.session.Session;
+import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
+import com.qworldr.mmorpg.logic.player.enu.RoleType;
+import com.qworldr.mmorpg.logic.player.event.PlayerLoginEvent;
+import com.qworldr.mmorpg.logic.player.resource.PlayerLevelResource;
+import com.qworldr.mmorpg.provider.EntityProvider;
+import com.qworldr.mmorpg.provider.ResourceProvider;
+import com.qworldr.mmorpg.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -17,8 +23,11 @@ public class PlayerManager implements IdentityProvider<Player> {
     private Map<Player,Session> playerSessionMap =new ConcurrentHashMap<>();
     @Autowired
     private EntityProvider<PlayerEntity,Long> playerEntityProvider;
+    @Autowired
+    private ResourceProvider<PlayerLevelResource,Integer> playerLevelResourceResourceProvider;
 
-
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
     public Player createPlayer(String account, String name, RoleType role, int sex){
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setAccount(account);
@@ -26,13 +35,20 @@ public class PlayerManager implements IdentityProvider<Player> {
         playerEntity.setSex(sex);
         playerEntity.setName(name);
         playerEntity.setLevel(1);
+        PlayerLevelResource playerLevelResource = playerLevelResourceResourceProvider.get(1);
+        playerEntity.setStatPoint(playerLevelResource.getStatPoint());
+        //TODO 初始化属性 hp mp
         playerEntityProvider.save(playerEntity);
         Player player =new Player(playerEntity);
         return player;
     }
+
+
     public void loginPlayer(Session session,Player player){
         sessionPlayerMap.put(session,player);
         playerSessionMap.put(player,session);
+        //发布玩家登录事件
+        applicationEventPublisher.publishEvent(new PlayerLoginEvent(player));
     }
     public Session getSession(Player player){
         Session session = playerSessionMap.get(player);
@@ -47,4 +63,6 @@ public class PlayerManager implements IdentityProvider<Player> {
     public Player getIdentity(Session session) {
         return getPlayer(session);
     }
+
+
 }

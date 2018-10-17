@@ -12,9 +12,12 @@ import com.qworldr.mmorpg.logic.account.protocal.LoginResp;
 import com.qworldr.mmorpg.logic.account.protocal.RegisterAccountReq;
 import com.qworldr.mmorpg.logic.account.protocal.RegisterAccountResp;
 import com.qworldr.mmorpg.logic.account.service.AccountService;
+import com.qworldr.mmorpg.logic.player.Player;
+import com.qworldr.mmorpg.logic.player.event.PlayerLoginEvent;
 import com.qworldr.mmorpg.session.TcpSession;
 import com.qworldr.mmorpg.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 
 @SocketController
 public class AccountController {
@@ -42,4 +45,8 @@ public class AccountController {
         registerAccountResp.setStatus(status);
         return  registerAccountResp;
     }
+
+
+
+
 }

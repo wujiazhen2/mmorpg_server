@@ -7,16 +7,16 @@ import com.qworldr.mmorpg.common.resp.Status;
  * @Author wujiazhen
  */
 public class MessageException extends RuntimeException {
-    private short messageId;
-    public MessageException(short messageId){
+    private int messageId;
+    public MessageException(int messageId){
         this.messageId=messageId;
     }
-    public MessageException(short messageId,Exception e){
+    public MessageException(int messageId,Exception e){
         super(e);
         this.messageId=messageId;
     }
 
-    public short getMessageId() {
+    public int getMessageId() {
         return messageId;
     }
 

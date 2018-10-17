@@ -87,10 +87,8 @@ public class Client {
                         s = bufferedReader.readLine();
                         strs.add(s);
                     }
-                    if (strs.size() > 0) {
-                        Object resp = createResp(id, codec, strs);
-                        channel.writeAndFlush(resp);
-                    }
+                    Object resp = createResp(id, codec, strs);
+                   channel.writeAndFlush(resp);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
