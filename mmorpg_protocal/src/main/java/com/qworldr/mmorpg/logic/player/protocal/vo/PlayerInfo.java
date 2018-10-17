@@ -1,6 +1,5 @@
-package com.qworldr.mmorpg.logic.player.protocal.bean;
+package com.qworldr.mmorpg.logic.player.protocal.vo;
 
-import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.mmorpg.logic.player.enu.RoleType;
 
