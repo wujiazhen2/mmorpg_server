@@ -1,6 +1,7 @@
 package com.qworldr.mmorpg.logic.player.manager;
 
 import com.qworldr.mmorpg.bean.IdentityProvider;
+import com.qworldr.mmorpg.common.utils.EventPublisher;
 import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
 import com.qworldr.mmorpg.logic.player.enu.RoleType;
@@ -27,7 +28,7 @@ public class PlayerManager implements IdentityProvider<Player> {
     private ResourceProvider<PlayerLevelResource,Integer> playerLevelResourceResourceProvider;
 
     @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private EventPublisher eventPublisher;
     public Player createPlayer(String account, String name, RoleType role, int sex){
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setAccount(account);
@@ -48,7 +49,7 @@ public class PlayerManager implements IdentityProvider<Player> {
         sessionPlayerMap.put(session,player);
         playerSessionMap.put(player,session);
         //发布玩家登录事件
-        applicationEventPublisher.publishEvent(new PlayerLoginEvent(player));
+        eventPublisher.publishEvent(new PlayerLoginEvent(player));
     }
     public Session getSession(Player player){
         Session session = playerSessionMap.get(player);
