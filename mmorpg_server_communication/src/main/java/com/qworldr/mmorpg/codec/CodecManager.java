@@ -2,6 +2,7 @@ package com.qworldr.mmorpg.codec;
 
 import com.baidu.bjf.remoting.protobuf.Codec;
 import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.qworldr.mmorpg.annotation.Protocal;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +17,7 @@ import java.util.Map;
 public class CodecManager implements ApplicationListener<ContextRefreshedEvent> {
 
     private static CodecManager seft;
-    private static final Map<Short,Codec> codecs = Maps.newHashMap();
+    private static Map<Short,Codec> codecs = Maps.newHashMap();
     public static  CodecManager getInstance(){
         return seft;
     }
@@ -34,6 +35,7 @@ public class CodecManager implements ApplicationListener<ContextRefreshedEvent> 
             Codec<?> codec = ProtobufProxy.create(aClass);
             codecs.put(annotation.value(),codec);
         });
+        codecs = ImmutableMap.copyOf(codecs);
     }
     public Codec getCodec(Short protocalId){
         return codecs.get(protocalId);

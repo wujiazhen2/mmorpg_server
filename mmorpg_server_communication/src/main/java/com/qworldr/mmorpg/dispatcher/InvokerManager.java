@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.dispatcher;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.annotation.SocketRequest;
@@ -10,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
@@ -21,7 +25,7 @@ import java.util.Map;
 @Component
 public class InvokerManager implements BeanPostProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(InvokerManager.class);
-    //spring初始化结束后就不会再写只读，应该没线程安全问题
+
     private Map<Class, InvokerDefinition> protocal2Invoker = Maps.newHashMap();
 
     public InvokerDefinition getInvokerDefintion(Class protocal) {
@@ -42,6 +46,11 @@ public class InvokerManager implements BeanPostProcessor {
                 LOGGER.debug("identityProvide缺少泛型");
             }
         }
+    }
+    @EventListener
+    public void started(ContextRefreshedEvent contextRefreshedEvent){
+        //初始化完成后将map转为不可变map
+        protocal2Invoker=ImmutableMap.copyOf(protocal2Invoker);
     }
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
@@ -66,6 +75,6 @@ public class InvokerManager implements BeanPostProcessor {
             }
             protocal2Invoker.put(protoType, new InvokerDefinition(bean, method));
         }, method -> method.getAnnotation(SocketRequest.class) != null);
-        return null;
+        return bean;
     }
 }
