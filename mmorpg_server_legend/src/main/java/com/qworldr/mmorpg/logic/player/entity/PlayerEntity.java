@@ -51,7 +51,7 @@ public class PlayerEntity implements IEntity<Long> {
     private Integer mp;
 
     @Column
-    private Integer sceneId;
+    private Integer mapId;
 
     @Column
     private Integer x;
@@ -133,12 +133,12 @@ public class PlayerEntity implements IEntity<Long> {
         this.mp = mp;
     }
 
-    public Integer getSceneId() {
-        return sceneId;
+    public Integer getMapId() {
+        return mapId;
     }
 
-    public void setSceneId(Integer sceneId) {
-        this.sceneId = sceneId;
+    public void setMapId(Integer mapId) {
+        this.mapId = mapId;
     }
 
     public Integer getX() {

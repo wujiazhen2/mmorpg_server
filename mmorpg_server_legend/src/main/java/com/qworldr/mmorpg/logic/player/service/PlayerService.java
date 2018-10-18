@@ -6,6 +6,8 @@ import com.qworldr.mmorpg.common.exception.MessageException;
 import com.qworldr.mmorpg.common.resp.Status;
 import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.common.utils.SessionUtils;
+import com.qworldr.mmorpg.logic.map.Position;
+import com.qworldr.mmorpg.logic.map.SceneManager;
 import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
 import com.qworldr.mmorpg.logic.player.manager.PlayerManager;
@@ -32,7 +34,8 @@ public class PlayerService {
     private PlayerManager playerManager;
     @Autowired
     private EntityProvider<PlayerEntity, Long> playerEntityProvider;
-
+    @Autowired
+    private SceneManager sceneManager;
     public CreateRoleResp createRole(TcpSession session, CreateRoleReq req) {
         Player player = playerManager.createPlayer(SessionUtils.getAccount(session), req.getPlayerName(), req.getRole(), req.getSex());
         CreateRoleResp createRoleResp = new CreateRoleResp();
@@ -56,6 +59,7 @@ public class PlayerService {
         playerManager.loginPlayer(session, player);
         PacketUtils.sendPacket(session,new PlayerLoginResp(playerId,Status.valueOf(StatusCode.SUCCESS,MessageId.ROLE_LOGIN_SUCCESS)));
         //TODO 进入场景
+        sceneManager.enter(player);
     }
 
     public RoleListResp roleList(String account) {

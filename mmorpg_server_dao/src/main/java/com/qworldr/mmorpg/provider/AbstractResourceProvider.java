@@ -1,5 +1,7 @@
 package com.qworldr.mmorpg.provider;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.qworldr.mmorpg.anno.Resource;
 import com.qworldr.mmorpg.meta.ResourceMetaData;
 import com.qworldr.mmorpg.reader.Reader;
@@ -22,7 +24,7 @@ public abstract class AbstractResourceProvider<T,ID> implements ResourceProvider
         if(resourceMetaData.getResources()==null || resourceMetaData.getResources().length==0){
             throw new FileNotFoundException(resourceMetaData.getPath());
         }
-        resourceMap = loadAll(resourceMetaData);
+        resourceMap = ImmutableMap.copyOf(loadAll(resourceMetaData));
         afterLoad();
     }
 
@@ -30,6 +32,12 @@ public abstract class AbstractResourceProvider<T,ID> implements ResourceProvider
     public T get(ID id) {
         return resourceMap.get(id);
     }
+
+    @Override
+    public Map<ID,T> asMap() {
+        return resourceMap;
+    }
+
     protected void afterLoad(){}
     protected abstract Map<ID,T> loadAll(ResourceMetaData resourceMetaData) throws Exception;
 

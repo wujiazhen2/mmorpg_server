@@ -10,6 +10,8 @@ public  class  MapObject {
      * 地图上对象Id
      */
     private long id;
+
+    private int mapId;
     /**
      *  对象地图上的位置
      */
@@ -17,12 +19,20 @@ public  class  MapObject {
     /**
      *  对象是否可视化
      */
-    private boolean visible;
+    private boolean visible=true;
 
     /**
      * 对象类型
      */
     private ObjectType type;
+
+    public int getMapId() {
+        return mapId;
+    }
+
+    public void setMapId(int mapId) {
+        this.mapId = mapId;
+    }
 
     public long getId() {
         return id;

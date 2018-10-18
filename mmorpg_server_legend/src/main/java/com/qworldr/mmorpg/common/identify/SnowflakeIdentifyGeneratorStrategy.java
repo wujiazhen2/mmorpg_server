@@ -54,6 +54,7 @@ public class SnowflakeIdentifyGeneratorStrategy implements GeneratorStrategy<Lon
         return "snowflake";
     }
 
-
-
+    public void setServerId(long serverId) {
+        this.serverId = serverId;
+    }
 }
