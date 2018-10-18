@@ -19,7 +19,7 @@ public abstract class AbstractResourceProvider<T,ID> implements ResourceProvider
     }
     @Override
     public void reload() throws Exception {
-        if(!resourceMetaData.getFile().exists()){
+        if(resourceMetaData.getResources()==null || resourceMetaData.getResources().length==0){
             throw new FileNotFoundException(resourceMetaData.getPath());
         }
         resourceMap = loadAll(resourceMetaData);

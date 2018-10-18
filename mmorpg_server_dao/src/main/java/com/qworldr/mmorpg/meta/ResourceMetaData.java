@@ -2,18 +2,24 @@ package com.qworldr.mmorpg.meta;
 
 import com.qworldr.mmorpg.anno.Resource;
 import com.qworldr.mmorpg.enu.ReaderType;
+import com.sun.javafx.scene.shape.PathUtils;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.Id;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 
 /**
  * 路径从ClassPath开始
  */
-public class ResourceMetaData extends ClassPathResource {
-
+public class ResourceMetaData  {
+    private static final ResourcePatternResolver resolver=new PathMatchingResourcePatternResolver();
+    private static final String CLASS_PATH="classpath*:";
     private String fileName;
     private String suffix;
     private ReaderType readerType;
@@ -21,7 +27,8 @@ public class ResourceMetaData extends ClassPathResource {
     private String keyCol;
     private Class reourceClass;
     private Class keyClass;
-
+    private String location;
+    private org.springframework.core.io.Resource[] resources;
     public static ResourceMetaData valueOf(Class resourceClass, ResourceFormat resourceFormat) {
         Resource annotation = (Resource) resourceClass.getAnnotation(Resource.class);
         //文件名为空，默认使用类名作为文件名
@@ -55,13 +62,17 @@ public class ResourceMetaData extends ClassPathResource {
     }
 
     public ResourceMetaData(String location, String filePath, String fileName, String suffix, ReaderType readerType, Class reourceClass) {
-        super(location);
+        try {
+           resources = resolver.getResources(CLASS_PATH + location);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        this.location=location;
         this.filePath = filePath;
         this.fileName = fileName;
         this.suffix = suffix;
         this.readerType = readerType;
         this.reourceClass = reourceClass;
-
         Field[] declaredFields = reourceClass.getDeclaredFields();
         for (Field declaredField : declaredFields) {
             if (declaredField.getAnnotation(Id.class) != null) {
@@ -74,6 +85,13 @@ public class ResourceMetaData extends ClassPathResource {
             throw new IllegalArgumentException(String.format("%s资源类没有id字段，请通过@Id标识id字段", reourceClass.getName()));
         }
     }
+    public String getPath(){
+        return StringUtils.cleanPath(location);
+    }
+    public org.springframework.core.io.Resource[] getResources() throws IOException {
+       return  resources;
+    }
+
     public String getKeyCol() {
         return keyCol;
     }
