@@ -1,5 +1,8 @@
 package com.qworldr.mmorpg.logic.player.manager;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Maps;
 import com.qworldr.mmorpg.bean.IdentityProvider;
 import com.qworldr.mmorpg.common.utils.EventPublisher;
 import com.qworldr.mmorpg.logic.attribute.enu.AttributeSourceType;
@@ -23,8 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class PlayerManager implements IdentityProvider<Player> {
-    private Map<Session,Player> sessionPlayerMap =new ConcurrentHashMap<>();
-    private Map<Player,Session> playerSessionMap =new ConcurrentHashMap<>();
+    private BiMap<Session,Player> sessionPlayerMap = Maps.synchronizedBiMap(HashBiMap.create());
     @Autowired
     private EntityProvider<PlayerEntity,Long> playerEntityProvider;
     @Autowired
@@ -57,12 +59,11 @@ public class PlayerManager implements IdentityProvider<Player> {
 
     public void loginPlayer(Session session,Player player){
         sessionPlayerMap.put(session,player);
-        playerSessionMap.put(player,session);
         //发布玩家登录事件
         eventPublisher.publishEvent(new PlayerLoginEvent(player));
     }
     public Session getSession(Player player){
-        Session session = playerSessionMap.get(player);
+        Session session = sessionPlayerMap.inverse().get(player);
         return session;
     }
 
