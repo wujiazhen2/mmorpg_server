@@ -29,6 +29,7 @@
         <spring.data.jpa.version>2.1.0.RELEASE</spring.data.jpa.version>
         <poi.version>3.17</poi.version>
         <fastjson.version>1.2.47</fastjson.version>
+        <commons.version>3.4</commons.version>
     </properties>
     <packaging>pom</packaging>
     <dependencies>

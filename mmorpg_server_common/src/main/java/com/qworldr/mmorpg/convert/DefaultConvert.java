@@ -15,6 +15,9 @@ public class DefaultConvert extends PropertyEditorRegistrySupport {
     }
 
     public <T>  T  covert(String value,Class<T> clazz)  {
+        if(clazz.equals(String.class)){
+            return (T) value;
+        }
         PropertyEditor defaultEditor = this.getDefaultEditor(clazz);
         if(defaultEditor==null){
             defaultEditor=this.findCustomEditor(clazz,null);
@@ -24,7 +27,7 @@ public class DefaultConvert extends PropertyEditorRegistrySupport {
             if(clazz.isEnum()){
                 return (T) Enum.valueOf((Class<Enum>)clazz,value);
             }else {
-                T parse = (T) JSON.parse(value);
+                T parse = (T) JSON.parseObject(value,clazz);
                 return parse;
             }
         }

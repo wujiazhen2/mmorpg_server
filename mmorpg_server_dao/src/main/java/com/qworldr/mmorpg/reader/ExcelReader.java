@@ -30,6 +30,8 @@ public class ExcelReader implements Reader {
     public Map read(ResourceMetaData resourceMetaData) throws Exception {
         Resource[] resources = resourceMetaData.getResources();
         Map map = new HashMap<>();
+        Class resourceClass = resourceMetaData.getReourceClass();
+        DefaultConvert convert = new DefaultConvert();
         Arrays.stream(resources).forEach(resource -> {
             XSSFWorkbook wb = null;
             try {
@@ -42,8 +44,6 @@ public class ExcelReader implements Reader {
             XSSFCell cell = null;
             Map<Integer, Field> keys = null;
             String key;
-            Class resourceClass = resourceMetaData.getReourceClass();
-            DefaultConvert convert = new DefaultConvert();
             Object object;
             Field field;
             Field keyField = null;

@@ -35,7 +35,8 @@ public class Player extends BiologyObject {
 
 
     public void setAttr(AttributeSourceType sourceType, Map<AttributeType,Integer> attrs){
-        //TODO
+        //TODO 属性加减
+        attributeManager.setAttr(sourceType,attrs);
     }
     @Override
     public long getId() {
