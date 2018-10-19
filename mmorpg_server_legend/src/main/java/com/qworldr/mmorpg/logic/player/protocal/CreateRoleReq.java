@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.logic.player.protocal;
 
+import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.common.protocal.ProtocalId;
@@ -9,13 +10,12 @@ import com.qworldr.mmorpg.logic.player.enu.RoleType;
  * @Author wujiazhen
  */
 @Protocal(ProtocalId.CreateRoleReq)
-@ProtobufClass
 public class CreateRoleReq {
-
+    @Protobuf
     private RoleType role;
-
+    @Protobuf
     private int sex;
-
+    @Protobuf
     private String playerName;
 
     public RoleType getRole() {

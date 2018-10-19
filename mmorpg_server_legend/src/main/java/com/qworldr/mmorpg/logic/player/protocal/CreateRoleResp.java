@@ -7,10 +7,11 @@ import com.qworldr.mmorpg.common.protocal.ProtocalId;
 import com.qworldr.mmorpg.common.resp.Status;
 
 @Protocal(ProtocalId.CreateRoleResp)
-@ProtobufClass
 public class CreateRoleResp {
+    @Protobuf
     private Status status;
-    private long  id;
+    @Protobuf
+    private long id;
 
     public long getId() {
         return id;

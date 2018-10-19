@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.logic.player.protocal;
 
+import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.common.protocal.ProtocalId;
@@ -8,10 +9,15 @@ import com.qworldr.mmorpg.common.resp.Status;
 @Protocal(ProtocalId.PlayerLoginResp)
 @ProtobufClass
 public class PlayerLoginResp {
+    @Protobuf
     private Status status;
-    private long  id;
-    public PlayerLoginResp(){}
-    public PlayerLoginResp(long id,Status status) {
+    @Protobuf
+    private long id;
+
+    public PlayerLoginResp() {
+    }
+
+    public PlayerLoginResp(long id, Status status) {
         this.status = status;
         this.id = id;
     }

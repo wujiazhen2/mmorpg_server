@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.logic.player.protocal;
 
+import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.common.protocal.ProtocalId;
@@ -9,12 +10,17 @@ import com.qworldr.mmorpg.common.resp.Status;
  * @Author wujiazhen
  */
 @Protocal(ProtocalId.PlayerEnterWorldResp)
-@ProtobufClass
 public class PlayerEnterWorldResp {
+    @Protobuf
     private int sceneId;
+    @Protobuf
     private int x;
+    @Protobuf
     private int y;
-    public PlayerEnterWorldResp(){}
+
+    public PlayerEnterWorldResp() {
+    }
+
     public PlayerEnterWorldResp(int sceneId, int x, int y) {
         this.sceneId = sceneId;
         this.x = x;
