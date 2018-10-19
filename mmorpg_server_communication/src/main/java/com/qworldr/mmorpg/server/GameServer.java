@@ -11,6 +11,10 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.stream.ChunkedWriteHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +44,7 @@ public class GameServer implements IServer {
                 .channel(NioServerSocketChannel.class)
                 .group(bossGroup, workGroup)
                 .localAddress(port)
-                .childHandler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
-                        //TODO 加解密
-                        ch.pipeline().addLast(sessionHandler);
-                        ch.pipeline().addLast(limitFlowHandler);
-                        //ByteToMessageCodec 不能加@Sharable,因为内部存在共享变量
-                        ch.pipeline().addLast(new PacketCodec());
-                        ch.pipeline().addLast(dispatchHandler);
-                    }
-                });
+                .childHandler(buildChannelInitializer());
         try {
             future = serverBootstrap.bind().sync();
             LOGGER.debug("game server started ----- port:{}", port);
@@ -59,7 +53,19 @@ public class GameServer implements IServer {
             throw new ServerOpenException(e);
         }
     }
-
+    public ChannelInitializer buildChannelInitializer() {
+        return new ChannelInitializer<SocketChannel>() {
+            @Override
+            protected void initChannel(SocketChannel ch) throws Exception {
+                //TODO 加解密
+                ch.pipeline().addLast(sessionHandler);
+                ch.pipeline().addLast(limitFlowHandler);
+                //ByteToMessageCodec 不能加@Sharable,因为内部存在共享变量
+                ch.pipeline().addLast(new PacketCodec());
+                ch.pipeline().addLast(dispatchHandler);
+            }
+        };
+    }
     public void setDispatcherExecutor(DispatcherExecutor dispatcherExecutor) {
         this.dispatcherExecutor = dispatcherExecutor;
     }
@@ -78,5 +84,21 @@ public class GameServer implements IServer {
 
     public void shutdown() {
         future.channel().close();
+    }
+
+    protected List<ChannelHandler> getChannelHandlers() {
+        return channelHandlers;
+    }
+
+    protected DispatchHandler getDispatchHandler() {
+        return dispatchHandler;
+    }
+
+    protected LimitFlowHandler getLimitFlowHandler() {
+        return limitFlowHandler;
+    }
+
+    protected SessionHandler getSessionHandler() {
+        return sessionHandler;
     }
 }
