@@ -1,5 +1,8 @@
 package com.qworldr.mmorpg.logic.map;
 
+import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
+
+@ProtobufClass
 public class Position {
     private int x;
     private int y;

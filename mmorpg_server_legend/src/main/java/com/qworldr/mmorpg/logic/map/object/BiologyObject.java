@@ -22,4 +22,8 @@ public class BiologyObject extends MapObject {
      *  属性管理器，管理生物属性
      */
     private AttributeManager attributeManager;
+
+    public void see(MapObject mapObject){
+
+    }
 }

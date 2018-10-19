@@ -1,6 +1,7 @@
 package com.qworldr.mmorpg.logic.player.protocal.vo;
 
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
+import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.player.enu.RoleType;
 
 /**
@@ -13,13 +14,23 @@ public class PlayerInfo {
     private RoleType role;
     private int sex;
     private String name;
+    private Position position;
     public PlayerInfo(){};
+
     public PlayerInfo(long playerId,String name, int level, RoleType role, int sex) {
         this.playerId = playerId;
         this.name=name;
         this.level = level;
         this.role = role;
         this.sex = sex;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public long getPlayerId() {

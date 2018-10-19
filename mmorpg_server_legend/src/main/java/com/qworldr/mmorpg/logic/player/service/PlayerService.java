@@ -6,7 +6,6 @@ import com.qworldr.mmorpg.common.exception.MessageException;
 import com.qworldr.mmorpg.common.resp.Status;
 import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.common.utils.SessionUtils;
-import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.SceneManager;
 import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
@@ -37,10 +36,10 @@ public class PlayerService {
     @Autowired
     private SceneManager sceneManager;
     public CreateRoleResp createRole(TcpSession session, CreateRoleReq req) {
-        Player player = playerManager.createPlayer(SessionUtils.getAccount(session), req.getPlayerName(), req.getRole(), req.getSex());
+        PlayerEntity playerEnttiy = playerManager.createPlayerEnttiy(SessionUtils.getAccount(session), req.getPlayerName(), req.getRole(), req.getSex());
         CreateRoleResp createRoleResp = new CreateRoleResp();
         createRoleResp.setStatus(Status.valueOf(StatusCode.SUCCESS, MessageId.CREATE_ROLE_SUCCESS));
-        createRoleResp.setId(player.getId());
+        createRoleResp.setId(playerEnttiy.getId());
         return createRoleResp;
     }
 

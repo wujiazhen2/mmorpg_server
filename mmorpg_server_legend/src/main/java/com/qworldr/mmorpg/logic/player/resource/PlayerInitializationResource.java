@@ -24,7 +24,7 @@ public class PlayerInitializationResource {
     /**
      * 初始场景
      */
-    private int sceneId;
+    private int mapId;
 
     /**
      *  初始位置
@@ -47,12 +47,12 @@ public class PlayerInitializationResource {
         this.attrs = attrs;
     }
 
-    public int getSceneId() {
-        return sceneId;
+    public int getMapId() {
+        return mapId;
     }
 
-    public void setSceneId(int sceneId) {
-        this.sceneId = sceneId;
+    public void setMapId(int mapId) {
+        this.mapId = mapId;
     }
 
     public Position getPosition() {

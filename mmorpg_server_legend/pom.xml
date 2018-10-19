@@ -12,11 +12,6 @@
 
     <dependencies>
         <dependency>
-            <artifactId>mmorpg_protocal</artifactId>
-            <groupId>com.qworldr</groupId>
-            <version>${mmorpg_version}</version>
-        </dependency>
-        <dependency>
             <artifactId>mmorpg_server_common</artifactId>
             <groupId>com.qworldr</groupId>
             <version>${mmorpg_version}</version>

@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mmorpg_client" />
-        <module name="mmorpg_protocal" />
         <module name="mmorpg_server_common" />
         <module name="mmorpg_server_communication" />
         <module name="mmorpg_server_dao" />
         <module name="mmorpg_server_legend" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mmorpg_protocal" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

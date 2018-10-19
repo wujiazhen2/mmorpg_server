@@ -16,6 +16,7 @@ import com.qworldr.mmorpg.logic.player.resource.PlayerLevelResource;
 import com.qworldr.mmorpg.provider.EntityProvider;
 import com.qworldr.mmorpg.provider.ResourceProvider;
 import com.qworldr.mmorpg.session.Session;
+import com.qworldr.mmorpg.session.TcpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
@@ -35,7 +36,7 @@ public class PlayerManager implements IdentityProvider<Player> {
     private ResourceProvider<PlayerInitializationResource,RoleType> playerInitializationResourceProvider;
     @Autowired
     private EventPublisher eventPublisher;
-    public Player createPlayer(String account, String name, RoleType role, int sex){
+    public PlayerEntity createPlayerEnttiy(String account, String name, RoleType role, int sex){
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setAccount(account);
         playerEntity.setRole(role);
@@ -46,18 +47,17 @@ public class PlayerManager implements IdentityProvider<Player> {
         playerEntity.setStatPoint(playerLevelResource.getStatPoint());
         //设置出生地 初始化属性 hp mp
         PlayerInitializationResource playerInitializationResource = playerInitializationResourceProvider.get(playerEntity.getRole());
-        playerEntity.setSceneId(playerInitializationResource.getSceneId());
+        playerEntity.setMapId(playerInitializationResource.getMapId());
         playerEntity.setX(playerInitializationResource.getPosition().getX());
         playerEntity.setY(playerInitializationResource.getPosition().getY());
         playerEntity.setHp(playerInitializationResource.getAttrs().get(AttributeType.HP));
         playerEntityProvider.save(playerEntity);
-        Player player =new Player(playerEntity);
-        player.setAttr(AttributeSourceType.INIT,playerInitializationResource.getAttrs());
-        return player;
+        return playerEntity;
     }
 
 
     public void loginPlayer(Session session,Player player){
+        player.setSession((TcpSession) session);
         sessionPlayerMap.put(session,player);
         //发布玩家登录事件
         eventPublisher.publishEvent(new PlayerLoginEvent(player));
