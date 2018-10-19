@@ -14,6 +14,8 @@ import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
 import com.qworldr.mmorpg.logic.player.protocal.vo.PlayerInfo;
 import com.qworldr.mmorpg.session.TcpSession;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Player extends BiologyObject {
@@ -67,11 +69,10 @@ public class Player extends BiologyObject {
         // 进去区域后，获取区域内情况
         //1. 玩家
         Map<Long, Player> players = this.getRegion().getPlayers();
-        ObjectInfo[] objectInfos = new ObjectInfo[players.size()];
+        List<ObjectInfo> objectInfos = new ArrayList<>();
         players.forEach((k,player)->{
             PlayerEntity playerEntity = player.getPlayerEntity();
-            ObjectInfo objectInfo  =ObjectInfo.valueOf(player);
-            objectInfos[objectInfos.length]=objectInfo;
+            objectInfos.add(ObjectInfo.valueOf(player));
         });
         // TODO 怪物，物品，NPC,.....
         RegionEnterResp regionEnterResp=new RegionEnterResp();

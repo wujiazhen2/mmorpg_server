@@ -5,6 +5,8 @@ import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.common.protocal.ProtocalId;
 import com.qworldr.mmorpg.logic.map.Position;
 
+import java.util.List;
+
 /**
  * @Author wujiazhen
  */
@@ -13,13 +15,21 @@ import com.qworldr.mmorpg.logic.map.Position;
 public class MoveReq {
 
     private Position position;
-    private Position[] path;
+    private List<Position> path;
 
     public Position getPosition() {
         return position;
     }
 
-    public Position[] getPath() {
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public List<Position> getPath() {
         return path;
+    }
+
+    public void setPath(List<Position> path) {
+        this.path = path;
     }
 }

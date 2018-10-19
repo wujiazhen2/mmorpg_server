@@ -16,7 +16,7 @@
         <constructor-arg value="8"/>
     </bean>
     <!-- 游戏服务器-->
-    <bean class="com.qworldr.mmorpg.server.GameServer" >
+    <bean class="com.qworldr.mmorpg.server.WebSocketGameServer" >
         <property name="dispatcherExecutor" ref="hashDispatcherThreadPool"></property>
     </bean>
 

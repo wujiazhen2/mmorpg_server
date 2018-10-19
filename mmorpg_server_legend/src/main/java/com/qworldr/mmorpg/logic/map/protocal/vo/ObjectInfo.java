@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.logic.map.protocal.vo;
 
+import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.object.ObjectType;
 import com.qworldr.mmorpg.logic.player.Player;
@@ -8,6 +9,7 @@ import com.qworldr.mmorpg.logic.player.enu.RoleType;
 /**
  * @Author wujiazhen
  */
+@ProtobufClass
 public class ObjectInfo {
     private long objectId;
     private int level;

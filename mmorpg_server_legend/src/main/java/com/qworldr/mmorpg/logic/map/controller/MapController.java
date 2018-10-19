@@ -6,6 +6,8 @@ import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.protocal.MoveReq;
 import com.qworldr.mmorpg.logic.player.Player;
 
+import java.util.List;
+
 /**
  * @Author wujiazhen
  */
@@ -15,6 +17,6 @@ public class MapController {
     @SocketRequest
     public void move(Player player, MoveReq req){
         Position position = req.getPosition();
-        Position[] path = req.getPath();
+        List<Position> path = req.getPath();
     }
 }

@@ -34,6 +34,7 @@ public class SceneManager {
     }
     @PostConstruct
     public void init(){
+        sceneManager=this;
         Map<Integer, MapResource> MapResourceMap = mapResourceProvider.asMap();
         MapResourceMap.forEach((k,v)->{
             //初始化序号
@@ -41,7 +42,7 @@ public class SceneManager {
             scenes.put(k, Collections.synchronizedList(new ArrayList<>()));
             createSence(k, v);
         });
-        sceneManager=this;
+
     }
 
     public Scene createSence(int mapId, MapResource mapResource) {
