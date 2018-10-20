@@ -46,6 +46,7 @@ public class WebSocketGameServer  extends GameServer{
                 //ByteToMessageCodec 不能加@Sharable,因为内部存在共享变量
                 ch.pipeline().addLast(new PacketCodec());
                 ch.pipeline().addLast(getDispatchHandler());
+
             }
         };
     }

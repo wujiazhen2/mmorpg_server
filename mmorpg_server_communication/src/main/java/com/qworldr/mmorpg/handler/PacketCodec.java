@@ -6,6 +6,7 @@ import com.qworldr.mmorpg.exception.ProtocalNotExists;
 import com.qworldr.mmorpg.codec.CodecManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.ByteToMessageCodec;
 
 import java.util.List;
@@ -15,6 +16,16 @@ import java.util.List;
  *   协议长度  协议id     协议数据
  */
 public class PacketCodec extends ByteToMessageCodec {
+    @Override
+    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+        Protocal annotation = msg.getClass().getAnnotation(Protocal.class);
+        if(annotation!=null) {
+            super.write(ctx, msg, promise);
+        }else {
+            ctx.write(msg,promise);
+        }
+    }
+
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
         int len = 6;
