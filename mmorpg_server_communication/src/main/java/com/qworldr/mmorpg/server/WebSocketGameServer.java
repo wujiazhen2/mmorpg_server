@@ -13,7 +13,6 @@ import io.netty.handler.stream.ChunkedWriteHandler;
  */
 public class WebSocketGameServer  extends GameServer{
 
-
     public ChannelInitializer buildChannelInitializer() {
         return new ChannelInitializer<SocketChannel>() {
             @Override

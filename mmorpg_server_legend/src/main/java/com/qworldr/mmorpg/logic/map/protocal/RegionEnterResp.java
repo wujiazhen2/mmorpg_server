@@ -1,5 +1,6 @@
 package com.qworldr.mmorpg.logic.map.protocal;
 
+import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.common.protocal.ProtocalId;
@@ -13,11 +14,11 @@ import java.util.List;
  * @Author wujiazhen
  */
 @Protocal(ProtocalId.RegionEnterResp)
-@ProtobufClass
 public class RegionEnterResp {
     /**
      *  区域内玩家信息
      */
+    @Protobuf
     private List<ObjectInfo> objectInfos;
     //TODO  怪物， 物品 。。。。
 

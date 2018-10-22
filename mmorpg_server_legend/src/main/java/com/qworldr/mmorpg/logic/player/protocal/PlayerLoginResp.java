@@ -7,7 +7,6 @@ import com.qworldr.mmorpg.common.protocal.ProtocalId;
 import com.qworldr.mmorpg.common.resp.Status;
 
 @Protocal(ProtocalId.PlayerLoginResp)
-@ProtobufClass
 public class PlayerLoginResp {
     @Protobuf
     private Status status;
