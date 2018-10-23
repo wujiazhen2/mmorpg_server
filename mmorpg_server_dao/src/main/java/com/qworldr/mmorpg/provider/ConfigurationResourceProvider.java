@@ -15,13 +15,13 @@ import java.util.Map;
 public class ConfigurationResourceProvider<T,ID>  extends  AbstractResourceProvider<T,ID>{
     private static  final Logger LOGGER = LoggerFactory.getLogger(ConfigurationResourceProvider.class);
     @Override
-    protected Map<ID, T> loadAll(ResourceMetaData resourceMetaData) throws Exception {
+    protected Map<ID, T> loadAll(ResourceMetaData resourceMetaData)  {
         Map<ID, T> data = null;
         try {
             data = (Map<ID, T>) ReaderManager.getInstance().read(resourceMetaData);
         } catch (Exception e) {
             LOGGER.error(String.format("%s读取失败",resourceMetaData.getPath()),e);
-            throw e;
+            throw new RuntimeException(e);
         }
         return data;
     }

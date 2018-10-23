@@ -32,6 +32,9 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ConfigurationResourceProviderManager implements InitializingBean, InstantiationAwareBeanPostProcessor, PriorityOrdered, BeanFactoryAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationResourceProviderManager.class);
@@ -64,13 +67,13 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
         resourceMetaDataField.setAccessible(true);
         Map<String, ResourceProvider> beansOfType = beanFactory.getBeansOfType(ResourceProvider.class);
         Set<Class> classes = new HashSet<>();
+        ExecutorService executorService = Executors.newFixedThreadPool(4 * Runtime.getRuntime().availableProcessors());
         for (ResourceProvider resourceProvider : beansOfType.values()) {
             Class<?> genericType = ReflectUtils.getGenericType(resourceProvider.getClass());
             if (genericType != null) {
                 classes.add(genericType);
                 injectResourceMetaData(resourceFormat, resourceMetaDataField, genericType, resourceProvider);
-                //TODO　多线程加载
-                resourceProvider.reload();
+                executorService.submit(resourceProvider::reload);
             }
         }
         if (StringUtils.isEmpty(scanPackage)) {
@@ -80,7 +83,6 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
         ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(patternResolver);
         Resource[] resources = patternResolver.getResources(scanPackage.replaceAll("\\.", "/")+ CLASS);
-
         MetadataReader metadataReader;
         Class resourceClass;
         Class keyClass=null;
@@ -109,11 +111,13 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
             injectResourceMetaData(resourceFormat, resourceMetaDataField, resourceClass, resourceProviderProxy);
             //注册进Spring容器
             this.beanFactory.registerSingleton(resourceProviderProxy.getClass().getName(),resourceProviderProxy);
-            //TODO　多线程加载
-            resourceProviderProxy.reload();
-
+            executorService.submit(resourceProviderProxy::reload);
         }
-
+        executorService.shutdown();
+        boolean flag;
+        do {
+            flag = executorService.awaitTermination(2000, TimeUnit.MILLISECONDS);
+        }while(!flag);
 
     }
 
