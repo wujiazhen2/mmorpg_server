@@ -34,12 +34,13 @@ public class ProtoBufFileGenerator {
         Class<?> cls;
         File file;
         String idl;
+        Set<Class<?>> types = new HashSet<>();
+        Set<Class<?>> sets = new HashSet<>();
         for (Resource resource : resources) {
             metadataReader = metadataReaderFactory.getMetadataReader(resource);
             if(metadataReader.getAnnotationMetadata().hasAnnotation(Protocal.class.getName())){
                 cls = Class.forName(metadataReader.getClassMetadata().getClassName());
-                Set<Class<?>> sets = new HashSet<>();
-                idl = ProtobufIDLGenerator.getIDL(cls,null,sets,true);
+                idl = ProtobufIDLGenerator.getIDL(cls,types,sets,true);
                 file =new File(PATH +File.separator+cls.getSimpleName()+".proto");
                 if(!file.getParentFile().exists()){
                     file.getParentFile().mkdirs();

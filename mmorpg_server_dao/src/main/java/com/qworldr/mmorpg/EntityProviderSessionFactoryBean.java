@@ -34,10 +34,6 @@ public class EntityProviderSessionFactoryBean extends LocalSessionFactoryBean im
     @Override
     public void afterPropertiesSet() throws IOException {
         super.afterPropertiesSet();
-        Configuration configuration = getConfiguration();
-        configuration.registerTypeOverride(new JsonType(),new String[]{"json"});
-
-
         Map<String, EntityProvider> beansOfType = beanFactory.getBeansOfType(EntityProvider.class);
         Set<Class> classes = new HashSet<>();
 

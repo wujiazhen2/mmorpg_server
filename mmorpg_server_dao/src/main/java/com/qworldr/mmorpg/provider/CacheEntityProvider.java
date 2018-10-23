@@ -31,6 +31,7 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
 
                 @Override
                 public void run() {
+                    //TODO 延时更新，将操作合并，减少对数据库的访问。--服务器挂了导致数据丢，通过日志记录操作，可以通过日志还原??
                     CacheEntityProvider.super.saveOrUpdate(value);
                 }
             });
