@@ -113,12 +113,13 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
             this.beanFactory.registerSingleton(resourceProviderProxy.getClass().getName(),resourceProviderProxy);
             executorService.submit(resourceProviderProxy::reload);
         }
+        // 等待任务执行完毕后关闭线程池。
         executorService.shutdown();
         boolean flag;
         do {
             flag = executorService.awaitTermination(2000, TimeUnit.MILLISECONDS);
         }while(!flag);
-
+        //TODO 热更
     }
 
     private void injectResourceMetaData(ResourceFormat resourceFormat, Field resourceMetaDataField, Class resourceClass, ResourceProvider resourceProviderProxy) {
