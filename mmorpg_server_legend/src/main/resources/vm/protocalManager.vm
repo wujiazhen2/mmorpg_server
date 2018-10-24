@@ -1,0 +1,30 @@
+global.proto=require("./proto_pb");
+class ProtocalManager{
+
+    constructor(){
+        this.idToType=new Map();
+        #foreach($PACKET in $PACKETS.entrySet())
+//$DESC.get($PACKET.key)
+        this.idToType.set(${PACKET.key},proto.${PACKET.value});
+        #end
+
+        this.nameToType=new Map();
+        let nameToType=this.nameToType;
+        this.idToType.forEach(function(v,k,map){
+            // nameToType.put
+            nameToType.set(v,k);
+        })
+    }
+    get(id){
+       return  this.idToType.get(id);
+    }
+    getId(type){
+        return this.nameToType.get(type);
+    }
+    create(type){
+        let o=new type()
+        o.messageId=this.getId(type);
+        return o;
+    }
+}
+export let protocalManager = new ProtocalManager();
