@@ -9,4 +9,6 @@ import com.qworldr.mmorpg.session.Session;
 public interface IdentityProvider<T> {
 
     T  getIdentity(Session session);
+
+    void clearIdentity(Session session);
 }

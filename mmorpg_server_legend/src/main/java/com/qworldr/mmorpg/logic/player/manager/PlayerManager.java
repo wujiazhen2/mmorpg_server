@@ -76,5 +76,10 @@ public class PlayerManager implements IdentityProvider<Player> {
         return getPlayer(session);
     }
 
+    @Override
+    public void clearIdentity(Session session) {
+        sessionPlayerMap.remove(session);
+    }
+
 
 }
