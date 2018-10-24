@@ -30,6 +30,7 @@
         <poi.version>3.17</poi.version>
         <fastjson.version>1.2.47</fastjson.version>
         <commons.version>3.4</commons.version>
+        <velocity.version>1.7</velocity.version>
     </properties>
     <packaging>pom</packaging>
     <dependencies>

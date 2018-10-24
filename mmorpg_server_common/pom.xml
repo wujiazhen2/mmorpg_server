@@ -36,6 +36,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
