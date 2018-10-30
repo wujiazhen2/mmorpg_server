@@ -4,6 +4,7 @@ import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.dispatcher.InvokerDefinition;
 import com.qworldr.mmorpg.dispatcher.InvokerManager;
 import com.qworldr.mmorpg.thread.DispatcherExecutor;
+import com.qworldr.mmorpg.thread.DispatcherTask;
 import com.qworldr.mmorpg.thread.HashDispatcherTask;
 import com.qworldr.mmorpg.utils.ChannelUtils;
 import io.netty.channel.ChannelHandler;
@@ -28,10 +29,10 @@ public class DispatchHandler extends ChannelInboundHandlerAdapter implements Bea
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         InvokerDefinition invokerDefintion = invokerManager.getInvokerDefintion(msg.getClass());
-        dispatcherExecutor.submit(new HashDispatcherTask() {
+        dispatcherExecutor.submit(new DispatcherTask() {
             @Override
-            public String getDispatcherString() {
-                return String.valueOf(ChannelUtils.getSession(ctx.channel()).getId());
+            public int getDispatchCode() {
+                return ChannelUtils.getSession(ctx.channel()).getId();
             }
 
             @Override

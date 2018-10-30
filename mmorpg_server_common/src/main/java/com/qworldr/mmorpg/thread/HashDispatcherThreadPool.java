@@ -1,6 +1,7 @@
 package com.qworldr.mmorpg.thread;
 
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -8,6 +9,14 @@ import java.util.concurrent.TimeUnit;
 
 public class HashDispatcherThreadPool  extends DispatcherExecutor{
 
+    private static HashDispatcherThreadPool hashDispatcherThreadPool;
+    @PostConstruct
+    public  void init(){
+        hashDispatcherThreadPool=this;
+    }
+    public static DispatcherExecutor getGlobalDispatcherExecutor(){
+        return hashDispatcherThreadPool;
+    }
     private ScheduledExecutorService[] threadPool;
     public HashDispatcherThreadPool(int threadSize) {
         threadPool=new ScheduledExecutorService[threadSize];

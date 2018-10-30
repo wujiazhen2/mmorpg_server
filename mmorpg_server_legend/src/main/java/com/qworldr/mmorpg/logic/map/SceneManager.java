@@ -81,6 +81,7 @@ public class SceneManager {
         }else {
             scene=createSence(player.getMapId(),mapResourceProvider.get(player.getMapId()));
         }
+        scene.enter(player);
     }
 
     public MapGridResource getMapGridResource(int mapId) {

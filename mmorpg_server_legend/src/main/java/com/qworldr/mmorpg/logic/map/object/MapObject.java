@@ -23,6 +23,7 @@ public  class  MapObject {
     private long id;
 
     private int mapId;
+
     /**
      *  对象地图上的位置
      */

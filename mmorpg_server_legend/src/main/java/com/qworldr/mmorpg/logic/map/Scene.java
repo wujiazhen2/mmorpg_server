@@ -70,6 +70,13 @@ public class Scene {
         return region;
     }
 
+    public int getSceneId() {
+        return sceneId;
+    }
+
+    public int getMapId() {
+        return mapId;
+    }
 //    public List<MapObject>
 
 }
