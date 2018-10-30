@@ -26,6 +26,7 @@ public class AccountController {
     @SocketRequest
     public LoginResp login(TcpSession session, LoginReq loginReq){
         LoginResp loginResp = new LoginResp();
+        //TODO 判断账号是否已经登录
         if(accountService.loginCheck(loginReq.getAccount(),loginReq.getPwd())){
              accountService.handlerLogin(session,loginReq.getAccount());
             loginResp.setStatus(Status.valueOf(StatusCode.SUCCESS, MessageId.AUTH_SUCCESS));

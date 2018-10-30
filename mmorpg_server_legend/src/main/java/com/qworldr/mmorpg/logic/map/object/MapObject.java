@@ -116,7 +116,9 @@ public  class  MapObject {
         Map<Long, Player> players = region.getPlayers();
 
         players.forEach((k,player)->{
-            player.see(this);
+            if(!player.equals(this)) {
+                player.see(this);
+            }
         });
     }
 }

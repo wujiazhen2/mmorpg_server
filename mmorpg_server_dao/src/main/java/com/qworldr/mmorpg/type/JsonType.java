@@ -4,6 +4,7 @@ import com.alibaba.druid.support.json.JSONUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
@@ -26,12 +27,12 @@ public class JsonType implements UserType {
 
     @Override
     public boolean equals(Object o, Object o1) throws HibernateException {
-        return Objects.equals(o,o1);
+        return ObjectUtils.nullSafeEquals(o,o1);
     }
 
     @Override
     public int hashCode(Object o) throws HibernateException {
-        return o.hashCode();
+        return ObjectUtils.nullSafeHashCode(o);
     }
 
     @Override

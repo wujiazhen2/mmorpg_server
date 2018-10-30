@@ -42,6 +42,7 @@ public class PlayerController {
 
     @SocketRequest
     public PlayerLoginResp roleLogin(TcpSession session, RoleLoginReq req){
+        //TODO 判断角色是否已经登录
         try{
              playerService.roleLogin(session,req.getPlayerId());
         }catch (MessageException e){
@@ -58,4 +59,5 @@ public class PlayerController {
     public void loginListener(PlayerLoginEvent event){
         System.out.println("PlayerLoginEvent"+event.getPlayer().getId());
     }
+
 }

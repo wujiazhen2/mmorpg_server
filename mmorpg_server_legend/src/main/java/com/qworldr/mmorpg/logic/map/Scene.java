@@ -3,10 +3,13 @@ package com.qworldr.mmorpg.logic.map;
 import com.google.common.collect.Maps;
 import com.qworldr.mmorpg.common.utils.EventPublisher;
 import com.qworldr.mmorpg.common.utils.MapUtils;
+import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.logic.map.evet.PlayerEnterSceneEvent;
+import com.qworldr.mmorpg.logic.map.object.BiologyObject;
 import com.qworldr.mmorpg.logic.map.object.MapObject;
 import com.qworldr.mmorpg.logic.map.resource.MapResource;
 import com.qworldr.mmorpg.logic.player.Player;
+import com.qworldr.mmorpg.logic.player.protocal.PlayerEnterWorldResp;
 
 import java.util.*;
 
@@ -16,7 +19,7 @@ public class Scene {
      * 通过区域id来划分地图上的对象。
      */
     private Map<Long, MapObject> mapObjectMap= Maps.newConcurrentMap();
-    private Map<Integer,Region> regionMap;
+    private Map<Integer,Region> regionMap=Maps.newConcurrentMap();
     /**
      * 场景地图格子
      */
@@ -36,10 +39,15 @@ public class Scene {
         //添加对象进入消息区域
         Region region = getRegion(MapUtils.createRegionId(position));
         region.addMapObject(mapObject);
-        mapObject.setRegion(region);
+        //如果是生物对象，开启心跳;
+        if(mapObject instanceof BiologyObject){
+            ((BiologyObject) mapObject).spawn();
+        }
         //触发进入场景事件
         if(mapObject instanceof Player) {
             EventPublisher.getInstance().publishEvent(new PlayerEnterSceneEvent((Player) mapObject));
+            //发包 进入场景
+            PacketUtils.sendPacket((Player) mapObject,new PlayerEnterWorldResp(this.sceneId,position.getX(),position.getY()));
         }
     }
 

@@ -7,7 +7,9 @@ import com.qworldr.mmorpg.logic.attribute.enu.AttributeSourceType;
 import com.qworldr.mmorpg.logic.attribute.enu.AttributeType;
 import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.object.BiologyObject;
+import com.qworldr.mmorpg.logic.map.object.MapObject;
 import com.qworldr.mmorpg.logic.map.object.ObjectType;
+import com.qworldr.mmorpg.logic.map.protocal.ObjectEnterSyncResp;
 import com.qworldr.mmorpg.logic.map.protocal.RegionEnterResp;
 import com.qworldr.mmorpg.logic.map.protocal.vo.ObjectInfo;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
@@ -78,5 +80,22 @@ public class Player extends BiologyObject {
         RegionEnterResp regionEnterResp=new RegionEnterResp();
         regionEnterResp.setObjectInfos(objectInfos);
         PacketUtils.sendPacket(session,regionEnterResp);
+    }
+
+    @Override
+    public void see(MapObject mapObject) {
+        super.see(mapObject);
+
+        //看到对象，发送包给客户端同步
+        ObjectInfo objectInfo=null;
+        //TODO 暂时只处理玩家，还有怪物，物品。。。。。
+        if(mapObject instanceof Player){
+             objectInfo = ObjectInfo.valueOf((Player) mapObject);
+        }
+        if(objectInfo!=null){
+            ObjectEnterSyncResp objectEnterSyncResp = new ObjectEnterSyncResp();
+            objectEnterSyncResp.setObjectInfo(objectInfo);
+            PacketUtils.sendPacket(this,objectEnterSyncResp);
+        }
     }
 }

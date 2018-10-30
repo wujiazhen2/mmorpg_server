@@ -45,6 +45,7 @@ public class Region {
     }
 
     public void addMapObject(MapObject mapObject) {
+        mapObject.setRegion(this);
         if(mapObject instanceof Player){
             players.put(mapObject.getId(),(Player)mapObject);
         }

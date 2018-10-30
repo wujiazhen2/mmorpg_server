@@ -57,13 +57,14 @@ public class PlayerManager implements IdentityProvider<Player> {
 
 
     public void loginPlayer(Session session,Player player){
-        player.setSession((TcpSession) session);
         sessionPlayerMap.put(session,player);
+        player.setSession((TcpSession) session);
         //发布玩家登录事件
         eventPublisher.publishEvent(new PlayerLoginEvent(player));
     }
     public Session getSession(Player player){
         Session session = sessionPlayerMap.inverse().get(player);
+
         return session;
     }
 
@@ -78,6 +79,8 @@ public class PlayerManager implements IdentityProvider<Player> {
 
     @Override
     public void clearIdentity(Session session) {
+        Player player = sessionPlayerMap.get(session);
+        player.setSession(null);
         sessionPlayerMap.remove(session);
     }
 

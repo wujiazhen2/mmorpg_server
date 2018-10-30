@@ -30,7 +30,7 @@ public interface ProtocalId {
     @Desc("移动请求")
     short MoveReq = 11122;
     @Desc("玩家进去消息区域广播")
-    short PlayerStatusResp = 11123;
+    short ObjectEnterSyncResp = 11123;
     @Desc("进入新区域同步")
     short RegionEnterResp = 11124;
     @Desc("退出区域")

@@ -7,7 +7,6 @@ import com.qworldr.mmorpg.logic.player.Player;
  * @Author wujiazhen
  */
 public class PlayerEnterSceneEvent extends PlayerEvent {
-
     public PlayerEnterSceneEvent(Player source) {
         super(source);
     }

@@ -1,8 +1,6 @@
 package com.qworldr.mmorpg.logic.map.object;
 
 import com.qworldr.mmorpg.logic.attribute.AttributeManager;
-import com.qworldr.mmorpg.thread.DispatcherExecutor;
-import com.qworldr.mmorpg.thread.HashDispatcherThreadPool;
 
 /**
  * 地图上的生物对象
@@ -21,19 +19,36 @@ public class BiologyObject extends MapObject {
     private int level;
 
     /**
-     *  属性管理器，管理生物属性
+     * 属性管理器，管理生物属性
      */
     private AttributeManager attributeManager;
     private HeartBeatManager heartBeatManager;
-    public BiologyObject(){
-        this.heartBeatManager=new HeartBeatManager(this);
-    }
-    public void see(MapObject mapObject){
 
+    public BiologyObject() {
+
+    }
+
+
+
+    public void see(MapObject mapObject) {
+
+    }
+
+    /**
+     * 出生
+     */
+    public void spawn() {
+
+        //出生才创建心跳管理器
+        if(this.heartBeatManager==null) {
+            this.heartBeatManager = new HeartBeatManager(this);
+        }
+        //心跳开始
+        this.heartBeatManager.start();
     }
 
     //生物心跳处理
-    public void heartbeat(){
+    public void heartbeat() {
 
 
     }
