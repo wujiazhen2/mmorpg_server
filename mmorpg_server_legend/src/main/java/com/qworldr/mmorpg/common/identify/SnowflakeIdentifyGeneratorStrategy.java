@@ -15,9 +15,9 @@ import java.util.concurrent.atomic.AtomicLong;
 public class SnowflakeIdentifyGeneratorStrategy implements GeneratorStrategy<Long> {
     //开始生成的时间戳，用当前时间戳-twepoch作为雪花算法的时间戳
     private final long twepoch = 1539658610050L;
-    private final long serverIdBits = 10L;
+    private final long serverIdBits = 12L;
     private final long maxServerId = 2 << serverIdBits -1;
-    private final long sequenceBits = 12L;
+    private final long sequenceBits = 10L;
     private final long serverIdShift = sequenceBits;
     private final long timestampLeftShift = sequenceBits + serverIdBits;
     private final long maxSequence = 2<< sequenceBits-1;
@@ -47,6 +47,11 @@ public class SnowflakeIdentifyGeneratorStrategy implements GeneratorStrategy<Lon
             sequence=0L;
         }
         lastTimestamp = timestamp;
+//        System.out.println(Long.toBinaryString((timestamp - twepoch) << timestampLeftShift));
+//        System.out.println(Long.toBinaryString(serverId << serverIdShift));
+//        System.out.println(Long.toBinaryString(sequence));
+//        System.out.println(((timestamp - twepoch) << timestampLeftShift)  | (serverId << serverIdShift) | sequence);
+//        System.out.println("--------------------------------------------------------------------------");
         return ((timestamp - twepoch) << timestampLeftShift)  | (serverId << serverIdShift) | sequence;
     }
     @Override
