@@ -13,7 +13,6 @@
         <module>mmorpg_server_legend</module>
         <module>mmorpg_client</module>
         <module>mmorpg_server_dao</module>
-        <module>mmorpg_protocal</module>
     </modules>
     <properties>
         <mmorpg_version>1.0-SNAPSHOT</mmorpg_version>
