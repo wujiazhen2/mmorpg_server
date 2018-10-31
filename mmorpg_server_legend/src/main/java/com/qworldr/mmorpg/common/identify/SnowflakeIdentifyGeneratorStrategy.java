@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @Author wujiazhen
@@ -25,6 +27,7 @@ public class SnowflakeIdentifyGeneratorStrategy implements GeneratorStrategy<Lon
     private long serverId;
     private long sequence = 0L;
     private long lastTimestamp = -1L;
+    private Lock  lock = new ReentrantLock();
     @PostConstruct
     public void init(){
         if((serverId=serverId-10000) > maxServerId){
@@ -32,27 +35,28 @@ public class SnowflakeIdentifyGeneratorStrategy implements GeneratorStrategy<Lon
         }
     }
     @Override
-    public synchronized Long generatorKey() {
+    public  Long generatorKey() {
         long timestamp = System.currentTimeMillis();
-        if (timestamp < lastTimestamp) {
-            throw new RuntimeException(String.format("时间被调整,上次时间戳 %d>%d", lastTimestamp,timestamp));
-        }
-        if (lastTimestamp == timestamp) {
-             sequence=(sequence+1)%maxSequence;
-            if (sequence==0) {
-                //如果这毫秒的序列号用完，自旋等待下以毫秒再生成
-                while ((timestamp=System.currentTimeMillis())<=lastTimestamp){}
+        lock.lock();
+        try {
+            if (timestamp < lastTimestamp) {
+                throw new RuntimeException(String.format("时间被调整,上次时间戳 %d>%d", lastTimestamp, timestamp));
             }
-        } else {
-            sequence=0L;
+            if (lastTimestamp == timestamp) {
+                sequence = (sequence + 1) % maxSequence;
+                if (sequence == 0) {
+                    //如果这毫秒的序列号用完，自旋等待下以毫秒再生成
+                    while ((timestamp = System.currentTimeMillis()) <= lastTimestamp) {
+                    }
+                }
+            } else {
+                sequence = 0L;
+            }
+            lastTimestamp = timestamp;
+            return ((timestamp - twepoch) << timestampLeftShift) | (serverId << serverIdShift) | sequence;
+        }finally {
+            lock.unlock();
         }
-        lastTimestamp = timestamp;
-//        System.out.println(Long.toBinaryString((timestamp - twepoch) << timestampLeftShift));
-//        System.out.println(Long.toBinaryString(serverId << serverIdShift));
-//        System.out.println(Long.toBinaryString(sequence));
-//        System.out.println(((timestamp - twepoch) << timestampLeftShift)  | (serverId << serverIdShift) | sequence);
-//        System.out.println("--------------------------------------------------------------------------");
-        return ((timestamp - twepoch) << timestampLeftShift)  | (serverId << serverIdShift) | sequence;
     }
     @Override
     public String getType() {
