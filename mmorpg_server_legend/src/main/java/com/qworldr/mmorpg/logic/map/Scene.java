@@ -36,18 +36,20 @@ public class Scene {
     public void enter(MapObject mapObject) {
         Position position = mapObject.getPosition();
         mapObjectMap.put(mapObject.getId(),mapObject);
-        //添加对象进入消息区域
-        Region region = getRegion(MapUtils.createRegionId(position));
-        region.addMapObject(mapObject);
-        //如果是生物对象，开启心跳;
-        if(mapObject instanceof BiologyObject){
-            ((BiologyObject) mapObject).spawn();
-        }
+
+        //进入场景包和进入可视区域包要有先后顺序，客户端要先进入地图，才能更新可视区域内容
         //触发进入场景事件
         if(mapObject instanceof Player) {
             EventPublisher.getInstance().publishEvent(new PlayerEnterSceneEvent((Player) mapObject));
             //发包 进入场景
             PacketUtils.sendPacket((Player) mapObject,new PlayerEnterWorldResp(this.sceneId,position.getX(),position.getY()));
+        }
+        //添加对象进入可视区域
+        Region region = getRegion(MapUtils.createRegionId(position));
+        region.addMapObject(mapObject);
+        //如果是生物对象，进入地图，触发出生行为;
+        if(mapObject instanceof BiologyObject){
+            ((BiologyObject) mapObject).spawn();
         }
     }
 

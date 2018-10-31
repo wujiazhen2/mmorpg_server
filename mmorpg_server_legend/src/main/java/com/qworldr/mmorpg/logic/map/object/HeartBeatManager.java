@@ -30,7 +30,7 @@ public class HeartBeatManager {
         }
     }
     public void start(){
-        //更新hash，关闭原来任务，再开启新的任务,因为切换地图后 hash不一样了。
+        //更新hash，关闭原来任务，再开启新的任务,因为切换地图后 hash不一样了。一般都是玩家宠物之类的才会开启多次
         refreshHash();
         stop();
         DispatcherExecutor globalDispatcherExecutor = HashDispatcherThreadPool.getGlobalDispatcherExecutor();

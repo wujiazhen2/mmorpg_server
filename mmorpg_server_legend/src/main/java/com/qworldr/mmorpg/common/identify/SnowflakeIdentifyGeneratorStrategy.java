@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -18,24 +17,26 @@ public class SnowflakeIdentifyGeneratorStrategy implements GeneratorStrategy<Lon
     //开始生成的时间戳，用当前时间戳-twepoch作为雪花算法的时间戳
     private final long twepoch = 1539658610050L;
     private final long serverIdBits = 12L;
-    private final long maxServerId = 2 << serverIdBits -1;
+    private final long maxServerId = 2 << serverIdBits - 1;
     private final long sequenceBits = 10L;
     private final long serverIdShift = sequenceBits;
     private final long timestampLeftShift = sequenceBits + serverIdBits;
-    private final long maxSequence = 2<< sequenceBits-1;
+    private final long maxSequence = 2 << sequenceBits - 1;
     @Value("${serverId}")
     private long serverId;
     private long sequence = 0L;
     private long lastTimestamp = -1L;
-    private Lock  lock = new ReentrantLock();
+    private Lock lock = new ReentrantLock();
+
     @PostConstruct
-    public void init(){
-        if((serverId=serverId-10000) > maxServerId){
-            throw new RuntimeException(String.format("serverId不能超过最大值%s",maxServerId));
+    public void init() {
+        if ((serverId = serverId - 10000) > maxServerId) {
+            throw new RuntimeException(String.format("serverId不能超过最大值%s", maxServerId));
         }
     }
+
     @Override
-    public  Long generatorKey() {
+    public Long generatorKey() {
         long timestamp = System.currentTimeMillis();
         lock.lock();
         try {
@@ -54,10 +55,11 @@ public class SnowflakeIdentifyGeneratorStrategy implements GeneratorStrategy<Lon
             }
             lastTimestamp = timestamp;
             return ((timestamp - twepoch) << timestampLeftShift) | (serverId << serverIdShift) | sequence;
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
+
     @Override
     public String getType() {
         return "snowflake";

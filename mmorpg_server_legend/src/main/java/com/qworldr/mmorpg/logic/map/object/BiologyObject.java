@@ -1,6 +1,7 @@
 package com.qworldr.mmorpg.logic.map.object;
 
 import com.qworldr.mmorpg.logic.attribute.AttributeManager;
+import com.qworldr.mmorpg.logic.map.manager.MoveManager;
 
 /**
  * 地图上的生物对象
@@ -24,9 +25,11 @@ public class BiologyObject extends MapObject {
      */
     private AttributeManager attributeManager;
     private HeartBeatManager heartBeatManager;
+    private MoveManager moveManager;
 
     public BiologyObject() {
         this.heartBeatManager = new HeartBeatManager(this);
+        this.moveManager = new MoveManager(this);
     }
 
 
@@ -54,5 +57,9 @@ public class BiologyObject extends MapObject {
     public void heartbeat() {
 
 
+    }
+
+    public MoveManager getMoveManager() {
+        return moveManager;
     }
 }
