@@ -13,6 +13,7 @@ public class BiologyObject extends MapObject {
     private int hp;
     private int mp;
 
+    private boolean isSpawn;
     /**
      * 游戏中 生物必须有级别
      */
@@ -25,7 +26,7 @@ public class BiologyObject extends MapObject {
     private HeartBeatManager heartBeatManager;
 
     public BiologyObject() {
-
+        this.heartBeatManager = new HeartBeatManager(this);
     }
 
 
@@ -39,12 +40,14 @@ public class BiologyObject extends MapObject {
      */
     public void spawn() {
 
-        //出生才创建心跳管理器
-        if(this.heartBeatManager==null) {
-            this.heartBeatManager = new HeartBeatManager(this);
-        }
+
         //心跳开始
         this.heartBeatManager.start();
+        isSpawn=true;
+    }
+
+    public boolean isSpawn() {
+        return isSpawn;
     }
 
     //生物心跳处理

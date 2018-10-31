@@ -15,20 +15,24 @@ import java.util.concurrent.TimeUnit;
  */
 public class HeartBeatManager {
     private BiologyObject own;
-    private final int hash;
+    private  int hash;
     private Future future;
     private ConcurrentLinkedQueue taskQueue= new ConcurrentLinkedQueue();
     public HeartBeatManager(BiologyObject own){
         this.own=own;
         //TODO hash决定心跳执行线程，是否应该在当前场景线程执行?
+    }
+    public void refreshHash(){
         if(own instanceof Player){
             this.hash=((Player) own).getSession().getId();
         }else{
             this.hash= HashUtils.hash(own.getRegion().getScene().getMapId());
         }
     }
-
     public void start(){
+        //更新hash，关闭原来任务，再开启新的任务,因为切换地图后 hash不一样了。
+        refreshHash();
+        stop();
         DispatcherExecutor globalDispatcherExecutor = HashDispatcherThreadPool.getGlobalDispatcherExecutor();
         this.future = globalDispatcherExecutor.scheduleAtFixedRate(new DispatcherTask() {
             @Override
@@ -49,7 +53,11 @@ public class HeartBeatManager {
     }
 
     public void stop(){
-        future.cancel(false);
+        if(this.future!=null){
+            future.cancel(false);
+            future=null;
+        }
+
     }
 
 
