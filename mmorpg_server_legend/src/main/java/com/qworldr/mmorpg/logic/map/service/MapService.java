@@ -33,7 +33,9 @@ public class MapService {
 
         //服务端玩家点和客户端点不一致的情况下，该怎么处理？？？？
         if (!player.getPosition().equals(cur)) {
+            //应该要验证是否在一定误差范围，不然拉扯回来。
 
+            //误差不大以客户端的为准
             player.setPosition(cur);
         }
         MapGridResource mapGridResource = mapGridResourceProvider.get(player.getMapId());

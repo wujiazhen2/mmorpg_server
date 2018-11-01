@@ -20,6 +20,11 @@ public class PacketUtils {
         sendPacket(player.getSession(), packet);
     }
 
+    /**
+     * 发送广播给九宫格区域中除了自己的所有玩家。
+     * @param mapObject  触发广播的对象，可能时是玩家，也可能是怪物等。
+     * @param packet
+     */
     public static void sendRegionPacket(MapObject mapObject, Object packet) {
         Map<Long, Player> players = mapObject.getRegion().getPlayers();
         players.forEach((k, p) -> {
