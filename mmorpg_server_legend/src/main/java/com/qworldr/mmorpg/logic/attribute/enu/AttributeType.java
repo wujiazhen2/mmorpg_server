@@ -28,7 +28,7 @@ public enum AttributeType {
      */
     WSP,
     /**
-     * 移动速度
+     * 移动速度  100 时 一步/s
      */
     MOV
     ;

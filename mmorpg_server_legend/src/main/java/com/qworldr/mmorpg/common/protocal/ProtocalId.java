@@ -35,4 +35,6 @@ public interface ProtocalId {
     short RegionEnterResp = 11124;
     @Desc("退出区域")
     short RegionLeaveResp = 11125;
+    @Desc("广播玩家移动")
+    short PlayerMoveResp = 11126;
 }

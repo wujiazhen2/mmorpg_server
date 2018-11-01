@@ -21,5 +21,8 @@ public interface MessageId {
     int AUTH_FAIL = 20004 ;
     @Desc("玩家不存在")
     int PlAYER_NOT_EXISTS = 20005;
-
+    @Desc("玩家未出生在地图上")
+    int PLAYER_NOT_SPAWN = 20006;
+    @Desc("路径非法")
+    int ROLD_ILLEGAL =20007 ;
 }

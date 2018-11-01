@@ -8,4 +8,7 @@ import java.util.Map;
 public class AttributeManager {
     public void setAttr(AttributeSourceType sourceType, Map<AttributeType, Integer> attrs) {
     }
+    public int getAttr(AttributeType type){
+        return 100;
+    }
 }

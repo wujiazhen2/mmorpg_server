@@ -1,8 +1,10 @@
 package com.qworldr.mmorpg.logic.map.object;
 
+import com.qworldr.mmorpg.common.utils.MapUtils;
 import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.Region;
+import com.qworldr.mmorpg.logic.map.SceneManager;
 import com.qworldr.mmorpg.logic.map.protocal.RegionEnterResp;
 import com.qworldr.mmorpg.logic.map.protocal.RegionLevelResp;
 import com.qworldr.mmorpg.logic.player.Player;
@@ -109,7 +111,7 @@ public  class  MapObject {
         // 广播离开协议包
         RegionLevelResp regionLevelResp = new RegionLevelResp();
         regionLevelResp.setObjectId(this.getId());
-        PacketUtils.sendRegionPacket(region,regionLevelResp);
+        PacketUtils.sendRegionPacket(this,regionLevelResp);
     }
 
     public void notifyIntoRegion() {

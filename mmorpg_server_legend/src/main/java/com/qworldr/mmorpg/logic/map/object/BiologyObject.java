@@ -1,6 +1,9 @@
 package com.qworldr.mmorpg.logic.map.object;
 
+import com.qworldr.mmorpg.common.utils.MapUtils;
 import com.qworldr.mmorpg.logic.attribute.AttributeManager;
+import com.qworldr.mmorpg.logic.map.Position;
+import com.qworldr.mmorpg.logic.map.Region;
 import com.qworldr.mmorpg.logic.map.manager.MoveManager;
 
 /**
@@ -49,6 +52,21 @@ public class BiologyObject extends MapObject {
         isSpawn=true;
     }
 
+    /**
+     * 生物移动
+     * @param position
+     */
+    public void move(Position position){
+        setPosition(position);
+        //移动位置，检查是否走出当前消息区域
+        int regionId = MapUtils.createRegionId(position);
+        if(regionId!=this.getRegion().getRegionId()){
+            this.getRegion().removeMapObject(this);
+            Region region = this.getRegion().getScene().getRegion(regionId);
+            region.addMapObject(this);
+        }
+    }
+
     public boolean isSpawn() {
         return isSpawn;
     }
@@ -57,6 +75,10 @@ public class BiologyObject extends MapObject {
     public void heartbeat() {
 
 
+    }
+
+    public AttributeManager getAttributeManager() {
+        return attributeManager;
     }
 
     public MoveManager getMoveManager() {

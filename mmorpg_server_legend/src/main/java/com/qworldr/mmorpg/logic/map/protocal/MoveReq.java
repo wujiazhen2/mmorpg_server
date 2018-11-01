@@ -12,7 +12,7 @@ import java.util.List;
  * @Author wujiazhen
  */
 @Protocal(ProtocalId.MoveReq)
-public class MoveReq {
+public class  MoveReq {
     @Protobuf
     private Position position;
     @Protobuf

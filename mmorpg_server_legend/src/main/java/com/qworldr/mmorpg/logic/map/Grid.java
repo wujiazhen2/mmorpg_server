@@ -4,6 +4,7 @@ package com.qworldr.mmorpg.logic.map;
  * @Author wujiazhen
  */
 public class Grid {
+    public static final int BLOCK=1;
     /**
      * 0 可走，1不可走
      */
