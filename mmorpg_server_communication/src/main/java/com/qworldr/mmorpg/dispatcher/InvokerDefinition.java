@@ -37,6 +37,9 @@ public class InvokerDefinition {
                 Object object = null;
                 try {
                     object = provide.getIdentity(session);
+                    if(object==null){
+                        throw new PrivilegeException(String.format("%s方法执行时，用户未登录，无法获取%s 参数", method.toString(), identifyClass));
+                    }
                 } catch (Exception e) {
                     throw e;
                 }
