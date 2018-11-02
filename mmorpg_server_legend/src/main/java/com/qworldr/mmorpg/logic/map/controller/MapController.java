@@ -2,6 +2,9 @@ package com.qworldr.mmorpg.logic.map.controller;
 
 import com.qworldr.mmorpg.annotation.SocketController;
 import com.qworldr.mmorpg.annotation.SocketRequest;
+import com.qworldr.mmorpg.common.exception.MessageException;
+import com.qworldr.mmorpg.common.resp.ErrorResp;
+import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.protocal.MoveReq;
 import com.qworldr.mmorpg.logic.map.service.MapService;
@@ -28,6 +31,10 @@ public class MapController {
          */
         Position position = req.getPosition();
         List<Position> path = req.getPath();
-        mapService.move(player,position,path);
+        try {
+            mapService.move(player, position, path);
+        }catch (MessageException e){
+            PacketUtils.sendPacket(player, ErrorResp.valueOf(e.getMessageId()));
+        }
     }
 }
