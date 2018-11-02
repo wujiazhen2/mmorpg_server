@@ -56,9 +56,9 @@ public class Player extends BiologyObject {
         playerEntity.setStatPoint(playerEntity.getStatPoint()+statPoint);
     }
 
-    public void setAttr(AttributeSourceType sourceType, Map<AttributeType,Integer> attrs){
+    public void updateAttr(AttributeSourceType sourceType, Map<AttributeType,Integer> attrs){
         //TODO 属性加减
-        attributeManager.setAttr(sourceType,attrs);
+        attributeManager.updateAttr(sourceType,attrs);
     }
     @Override
     public long getId() {

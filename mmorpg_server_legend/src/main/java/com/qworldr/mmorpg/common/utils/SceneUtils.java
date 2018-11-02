@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * @Author wujiazhen
  */
-public class MapUtils {
+public class SceneUtils {
     public final static int regionX;
     public final  static int regionY;
     public final  static int maxSize;

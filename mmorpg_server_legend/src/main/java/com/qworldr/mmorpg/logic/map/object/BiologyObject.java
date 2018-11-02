@@ -1,6 +1,6 @@
 package com.qworldr.mmorpg.logic.map.object;
 
-import com.qworldr.mmorpg.common.utils.MapUtils;
+import com.qworldr.mmorpg.common.utils.SceneUtils;
 import com.qworldr.mmorpg.logic.attribute.AttributeManager;
 import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.Region;
@@ -59,7 +59,7 @@ public class BiologyObject extends MapObject {
     public void move(Position position){
         setPosition(position);
         //移动位置，检查是否走出当前消息区域
-        int regionId = MapUtils.createRegionId(position);
+        int regionId = SceneUtils.createRegionId(position);
         if(regionId!=this.getRegion().getRegionId()){
             this.getRegion().removeMapObject(this);
             Region region = this.getRegion().getScene().getRegion(regionId);

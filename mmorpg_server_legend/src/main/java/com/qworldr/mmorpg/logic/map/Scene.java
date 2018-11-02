@@ -2,7 +2,7 @@ package com.qworldr.mmorpg.logic.map;
 
 import com.google.common.collect.Maps;
 import com.qworldr.mmorpg.common.utils.EventPublisher;
-import com.qworldr.mmorpg.common.utils.MapUtils;
+import com.qworldr.mmorpg.common.utils.SceneUtils;
 import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.logic.map.evet.PlayerEnterSceneEvent;
 import com.qworldr.mmorpg.logic.map.object.BiologyObject;
@@ -45,7 +45,7 @@ public class Scene {
             PacketUtils.sendPacket((Player) mapObject,new PlayerEnterWorldResp(this.sceneId,position.getX(),position.getY()));
         }
         //添加对象进入可视区域
-        Region region = getRegion(MapUtils.createRegionId(position));
+        Region region = getRegion(SceneUtils.createRegionId(position));
         region.addMapObject(mapObject);
         //如果是生物对象，进入地图，触发出生行为;
         if(mapObject instanceof BiologyObject){
@@ -69,7 +69,7 @@ public class Scene {
         Region region =new Region(regionId,this);
         regionMap.put(regionId,region);
         //设置九宫格
-        Set<Integer> nineBlockRegionIds = MapUtils.getNineBlockRegionIds(regionId);
+        Set<Integer> nineBlockRegionIds = SceneUtils.getNineBlockRegionIds(regionId);
         nineBlockRegionIds.forEach(id->{
             Region re = regionMap.get(id);
             if(re!=null){
