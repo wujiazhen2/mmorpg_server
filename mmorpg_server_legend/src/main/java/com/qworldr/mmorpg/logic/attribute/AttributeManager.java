@@ -1,8 +1,12 @@
 package com.qworldr.mmorpg.logic.attribute;
 
 import com.qworldr.mmorpg.logic.attribute.enu.AttributeType;
+import com.qworldr.mmorpg.utils.MapUtils;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author wujiazhen
