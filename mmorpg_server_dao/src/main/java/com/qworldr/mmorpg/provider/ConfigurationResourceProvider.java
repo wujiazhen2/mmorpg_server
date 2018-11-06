@@ -23,6 +23,12 @@ public class ConfigurationResourceProvider<T,ID>  extends  AbstractResourceProvi
             LOGGER.error(String.format("%s读取失败",resourceMetaData.getPath()),e);
             throw new RuntimeException(e);
         }
+        //如果实现了AfterLoad接口的资源类,加载完运行afterload方法
+        if(IAfterLoad.class.isAssignableFrom(this.entityClass)){
+            data.forEach((k,v)->{
+                ((IAfterLoad)v).afterLoad();
+            });
+        }
         return data;
     }
 }
