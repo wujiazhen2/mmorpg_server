@@ -9,13 +9,13 @@ import com.qworldr.mmorpg.logic.behaviortree.node.impl.BSequenceNode;
  */
 public enum  NodeType {
 
-    SELECTOR(){
+    SELECTOR(false){
         @Override
         public BCompositeNode createNode() {
             return new BSelectorNode();
         }
     },
-    SEQUENCE(){
+    SEQUENCE(false){
         @Override
         public BCompositeNode createNode() {
             return new BSequenceNode();
@@ -24,8 +24,20 @@ public enum  NodeType {
     /**
      * 叶子节点
      */
-    LEFT,
+    ACTION,
+    CONDITION
     ;
-
+    private boolean isLeaf;
+     NodeType(){
+        this.isLeaf=true;
+    }
+     NodeType(boolean isLeaf){
+        this.isLeaf=isLeaf;
+    }
     public  BCompositeNode createNode(){return null;};
+
+    public boolean isLeaf() {
+        return isLeaf;
+    }
+
 }
