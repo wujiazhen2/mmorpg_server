@@ -5,6 +5,7 @@ import com.qworldr.mmorpg.logic.attribute.AttributeManager;
 import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.Region;
 import com.qworldr.mmorpg.logic.map.manager.MoveManager;
+import com.qworldr.mmorpg.logic.skill.bean.Skill;
 
 /**
  * 地图上的生物对象
@@ -32,10 +33,13 @@ public class BiologyObject extends MapObject {
 
     public BiologyObject() {
         this.heartBeatManager = new HeartBeatManager(this);
+        this.attributeManager=new AttributeManager();
         this.moveManager = new MoveManager(this);
     }
 
+    public void fight(Skill skill){
 
+    }
 
     public void see(MapObject mapObject) {
 

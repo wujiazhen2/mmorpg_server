@@ -4,11 +4,13 @@ import com.qworldr.mmorpg.common.constants.MessageId;
 import com.qworldr.mmorpg.common.constants.StatusCode;
 import com.qworldr.mmorpg.common.exception.MessageException;
 import com.qworldr.mmorpg.common.resp.Status;
+import com.qworldr.mmorpg.common.utils.EventPublisher;
 import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.common.utils.SessionUtils;
 import com.qworldr.mmorpg.logic.map.SceneManager;
 import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
+import com.qworldr.mmorpg.logic.player.event.PlayerModuleInitializeEvent;
 import com.qworldr.mmorpg.logic.player.manager.PlayerManager;
 import com.qworldr.mmorpg.logic.player.protocal.CreateRoleReq;
 import com.qworldr.mmorpg.logic.player.protocal.CreateRoleResp;
@@ -54,6 +56,8 @@ public class PlayerService {
             throw new MessageException(MessageId.PlAYER_NOT_EXISTS);
         }
         Player player = new Player(playerEntity);
+        //玩家各个模块初始化，各个模块接受事件，对Player对象初始化
+        EventPublisher.getInstance().publishEvent(new PlayerModuleInitializeEvent(player));
         //登录
         playerManager.loginPlayer(session, player);
         PacketUtils.sendPacket(session,new PlayerLoginResp(playerId,Status.valueOf(StatusCode.SUCCESS,MessageId.ROLE_LOGIN_SUCCESS)));

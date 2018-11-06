@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @Author wujiazhen
@@ -22,25 +23,20 @@ public class SnowflakeIdentifyGeneratorStrategyTest  {
     public void test() throws InterruptedException {
         SnowflakeIdentifyGeneratorStrategy snowflakeIdentifyGeneratorStrategy=new SnowflakeIdentifyGeneratorStrategy();
         snowflakeIdentifyGeneratorStrategy.setServerId(1023);
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-        Set<Long> longs = Collections.synchronizedSet(new HashSet<>());
-        CountDownLatch countDownLatch =new CountDownLatch(30000);
-
+        ThreadPoolExecutor executorService = (ThreadPoolExecutor)Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        executorService.prestartAllCoreThreads();
+        CountDownLatch countDownLatch=new CountDownLatch(2000000-1);
         long start=System.currentTimeMillis();
-        for(int i=0;i<30000;i++){
-            executorService.submit(()->{
+        for(int i=0;i<2000000;i++){
+            executorService.execute(()->{
                 Long x = snowflakeIdentifyGeneratorStrategy.generatorKey();
-
-                if(longs.contains(x)){
-                    System.out.println("相同了------------------------------------------"+x);
-                }else {
-                    longs.add(x);
-                }
                 countDownLatch.countDown();
             });
         }
         countDownLatch.await();
         long end=System.currentTimeMillis();
         System.out.println((end-start));
+
+
     }
 }

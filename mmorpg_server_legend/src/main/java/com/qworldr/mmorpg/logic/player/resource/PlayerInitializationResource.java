@@ -7,6 +7,7 @@ import com.qworldr.mmorpg.logic.player.enu.RoleType;
 
 import javax.persistence.Id;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author wujiazhen
@@ -26,6 +27,10 @@ public class PlayerInitializationResource {
      */
     private int mapId;
 
+    /**
+     * 初始技能 skillId:level
+     */
+    private Map<Integer,Integer> skillIds;
     /**
      *  初始位置
      */
@@ -61,5 +66,13 @@ public class PlayerInitializationResource {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public Map<Integer, Integer> getSkillIds() {
+        return skillIds;
+    }
+
+    public void setSkillIds(Map<Integer, Integer> skillIds) {
+        this.skillIds = skillIds;
     }
 }

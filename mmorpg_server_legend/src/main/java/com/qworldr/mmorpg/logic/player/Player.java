@@ -2,7 +2,6 @@ package com.qworldr.mmorpg.logic.player;
 
 
 import com.qworldr.mmorpg.common.utils.PacketUtils;
-import com.qworldr.mmorpg.logic.attribute.AttributeManager;
 import com.qworldr.mmorpg.logic.attribute.enu.AttributeSourceType;
 import com.qworldr.mmorpg.logic.attribute.enu.AttributeType;
 import com.qworldr.mmorpg.logic.map.Position;
@@ -13,7 +12,7 @@ import com.qworldr.mmorpg.logic.map.protocal.ObjectEnterSyncResp;
 import com.qworldr.mmorpg.logic.map.protocal.RegionEnterResp;
 import com.qworldr.mmorpg.logic.map.protocal.vo.ObjectInfo;
 import com.qworldr.mmorpg.logic.player.entity.PlayerEntity;
-import com.qworldr.mmorpg.logic.player.protocal.vo.PlayerInfo;
+import com.qworldr.mmorpg.logic.skill.entity.SkillEntity;
 import com.qworldr.mmorpg.session.TcpSession;
 
 import java.util.ArrayList;
@@ -22,15 +21,16 @@ import java.util.Map;
 
 public class Player extends BiologyObject {
 
-
-    private AttributeManager attributeManager;
+    /**
+     *  各模块实体
+     */
+    private SkillEntity skillEntity;
     private TcpSession session;
     public Player(PlayerEntity playerEntity) {
         this.setId(playerEntity.getId());
         this.setPosition(new Position(playerEntity.getX(),playerEntity.getY()));
         this.setMapId(playerEntity.getMapId());
         this.playerEntity = playerEntity;
-        this.attributeManager=new AttributeManager();
         this.setType(ObjectType.PLAYER);
     }
 
@@ -58,7 +58,7 @@ public class Player extends BiologyObject {
 
     public void updateAttr(AttributeSourceType sourceType, Map<AttributeType,Integer> attrs){
         //TODO 属性加减
-        attributeManager.updateAttr(sourceType,attrs);
+        this.getAttributeManager().updateAttr(sourceType,attrs);
     }
     @Override
     public long getId() {
@@ -97,5 +97,13 @@ public class Player extends BiologyObject {
             objectEnterSyncResp.setObjectInfo(objectInfo);
             PacketUtils.sendPacket(this,objectEnterSyncResp);
         }
+    }
+
+    public SkillEntity getSkillEntity() {
+        return skillEntity;
+    }
+
+    public void setSkillEntity(SkillEntity skillEntity) {
+        this.skillEntity = skillEntity;
     }
 }

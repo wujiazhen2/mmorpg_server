@@ -12,8 +12,10 @@ import java.util.Set;
  * @Author wujiazhen
  * 影响属性的因素装备，称号。。。多个模块。以属性树的形式记录属性的起源。
  * 属性可以分为一级属性和二级属性，一级属性不直接做战斗计算，用于影响二级属性。
- * 二级属性是直接的战斗属性。只有在根节点再将一级属性转化为二级属性 合并在combatAttrs上。其他地方存的都是两种混合的属性。
+ * 二级属性是直接的战斗属性。这些在属性树中不区分，只有在根节点再将一级属性转化为二级属性 合并在combatAttrs上。其他地方存的都是两种混合的属性。
  * 属性操作的唯一入口
+ *
+ * TODO 再加一个树，旧的树按模块分节点，新加的树用来按属性区分（一级属性，二级属性，百分比属性）
  */
 public class AttributeManager extends AttrNode {
     public AttributeManager() {
