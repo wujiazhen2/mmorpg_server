@@ -1,6 +1,7 @@
 package com.qworldr.mmorpg.logic.skill.bean;
 
 import com.qworldr.mmorpg.logic.behaviortree.enu.NodeType;
+import com.qworldr.mmorpg.logic.skill.enu.EffectType;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class EffectTreeNode {
     private NodeType nodeType;
     private int effectId;
+    private EffectType effectType;
     private List<EffectTreeNode> childs;
 
 
