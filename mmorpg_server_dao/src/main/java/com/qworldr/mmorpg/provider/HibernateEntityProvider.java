@@ -4,8 +4,10 @@ import com.qworldr.mmorpg.anno.Generator;
 import com.qworldr.mmorpg.entity.IEntity;
 import com.qworldr.mmorpg.utils.ReflectUtils;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
@@ -18,6 +20,10 @@ public class HibernateEntityProvider<T extends IEntity, ID extends Serializable>
     private Class<T> entityClass;
     private String keyGenerator;
 
+    @Autowired
+    public void setSessionFactoryValue(SessionFactory sessionFactory){
+        this.setSessionFactory(sessionFactory);
+    }
     public HibernateEntityProvider() {
         this.entityClass = (Class<T>) ReflectUtils.getSuperGenericType(getClass());
         Field[] declaredFields = entityClass.getDeclaredFields();

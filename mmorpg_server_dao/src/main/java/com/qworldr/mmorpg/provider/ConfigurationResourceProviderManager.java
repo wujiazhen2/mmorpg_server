@@ -1,11 +1,8 @@
-package com.qworldr.mmorpg;
+package com.qworldr.mmorpg.provider;
 
 import com.qworldr.mmorpg.enu.ReaderType;
 import com.qworldr.mmorpg.meta.ResourceFormat;
 import com.qworldr.mmorpg.meta.ResourceMetaData;
-import com.qworldr.mmorpg.provider.ConfigurationResourceProvider;
-import com.qworldr.mmorpg.provider.ProviderProxyFactory;
-import com.qworldr.mmorpg.provider.ResourceProvider;
 import com.qworldr.mmorpg.reader.ReaderManager;
 import com.qworldr.mmorpg.utils.ReflectUtils;
 import org.slf4j.Logger;
@@ -14,6 +11,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.core.Ordered;
@@ -86,6 +84,7 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
         MetadataReader metadataReader;
         Class resourceClass;
         Class keyClass=null;
+        ResourceProvider resourceProviderProxy;
         for (Resource resource : resources) {
             metadataReader = metadataReaderFactory.getMetadataReader(resource);
             if (!metadataReader.getAnnotationMetadata().hasAnnotation(com.qworldr.mmorpg.anno.Resource.class.getName())) {
@@ -106,7 +105,7 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
             if(keyClass==null){
                 throw new IllegalArgumentException(String.format("%s资源类没有id字段，请通过@Id标识id字段",resourceClass.getName()));
             }
-            ResourceProvider resourceProviderProxy = ProviderProxyFactory.getInstance().createResourceProviderProxy(provideClass.getName(), resourceClass,ReflectUtils.wrapType(keyClass));
+            resourceProviderProxy = (ResourceProvider) beanFactory.createBean(ProviderProxyFactory.getInstance().defineGenericClass(provideClass.getName(), resourceClass,ReflectUtils.wrapType(keyClass)), AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, false);
             //给provider注入ResourceMetaData
             injectResourceMetaData(resourceFormat, resourceMetaDataField, resourceClass, resourceProviderProxy);
             //注册进Spring容器

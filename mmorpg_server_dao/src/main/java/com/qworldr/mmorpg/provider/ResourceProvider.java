@@ -3,8 +3,8 @@ package com.qworldr.mmorpg.provider;
 import java.util.List;
 import java.util.Map;
 
-public interface ResourceProvider<T, ID> extends DataProvider<T, ID> {
+public abstract class ResourceProvider<T, ID> implements DataProvider<T, ID> {
 
-    Map<ID,T> asMap();
-    void reload() ;
+    public abstract Map<ID,T> asMap();
+    abstract void reload() ;
 }

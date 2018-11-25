@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractResourceProvider<T, ID> implements ResourceProvider<T, ID> {
+public abstract class AbstractResourceProvider<T, ID> extends ResourceProvider<T, ID> {
     protected Class<T> entityClass;
     protected ResourceMetaData resourceMetaData;
     protected volatile Map<ID, T> resourceMap = new HashMap<>();
@@ -18,7 +18,7 @@ public abstract class AbstractResourceProvider<T, ID> implements ResourceProvide
     }
 
     @Override
-    public void reload() {
+     void reload() {
         try {
             if (resourceMetaData.getResources() == null || resourceMetaData.getResources().length == 0) {
                 throw new FileNotFoundException(resourceMetaData.getPath());
@@ -28,7 +28,6 @@ public abstract class AbstractResourceProvider<T, ID> implements ResourceProvide
         }
         resourceMap = ImmutableMap.copyOf(loadAll(resourceMetaData));
         afterLoad();
-
     }
 
     @Override
