@@ -42,7 +42,7 @@
 
     <!-- session工厂 -->
     <bean id="sessionFactory"
-          class="com.qworldr.mmorpg.EntityProviderSessionFactoryBean">
+          class="com.qworldr.mmorpg.provider.EntityProviderSessionFactoryBean">
         <property name="entityProviderName" value="com.qworldr.mmorpg.provider.CacheEntityProvider"></property>
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
@@ -54,7 +54,7 @@
         </property>
     </bean>
 
-    <bean id="resourceProviderManager" class="com.qworldr.mmorpg.ConfigurationResourceProviderManager">
+    <bean id="resourceProviderManager" class="com.qworldr.mmorpg.provider.ConfigurationResourceProviderManager">
         <property name="suffix" value="xlsx"/>
         <property name="path" value="resource"/>
         <property name="readerType" value="EXCEL"/>

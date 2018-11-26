@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ConfigurationResourceProviderManager implements InitializingBean, InstantiationAwareBeanPostProcessor, PriorityOrdered, BeanFactoryAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationResourceProviderManager.class);
+    public static final String CLASSPATH="classpath*:";
     public static final String CLASS = "/*.class";
     public static final Class provideClass = ConfigurationResourceProvider.class;
     public static final String RESOURCE_META_DATA = "resourceMetaData";
@@ -80,7 +81,7 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
         //扫包资源类，加载资源文件
         ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(patternResolver);
-        Resource[] resources = patternResolver.getResources(scanPackage.replaceAll("\\.", "/")+ CLASS);
+        Resource[] resources = patternResolver.getResources(CLASSPATH+scanPackage.replaceAll("\\.", "/")+ CLASS);
         MetadataReader metadataReader;
         Class resourceClass;
         Class keyClass=null;
