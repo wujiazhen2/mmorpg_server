@@ -8,6 +8,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.ByteToMessageCodec;
+import io.netty.util.ReferenceCountUtil;
 
 import java.util.List;
 
@@ -39,20 +40,24 @@ public class PacketCodec extends ByteToMessageCodec {
     }
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List out) throws Exception {
-        int len = in.readInt();
-        if(in.readableBytes()<len-4){
-            in.readableBytes();
-            return;
+        try {
+            int len = in.readInt();
+            if (in.readableBytes() < len - 4) {
+                in.readableBytes();
+                return;
+            }
+            short protocalId = in.readShort();
+            byte[] data = new byte[len - 6];
+            in.readBytes(data);
+            Codec codec = CodecManager.getInstance().getCodec(protocalId);
+            if (codec == null) {
+                throw new ProtocalNotExists(String.format("协议号 %d 不存在", protocalId));
+            }
+            Object decode = codec.decode(data);
+            out.add(decode);
+        }finally {
+            ReferenceCountUtil.release(in);
         }
-        short protocalId = in.readShort();
-        byte[] data= new byte[len-6];
-        in.readBytes(data);
-        Codec codec = CodecManager.getInstance().getCodec(protocalId);
-        if(codec==null){
-            throw new ProtocalNotExists(String.format("协议号 %d 不存在",protocalId));
-        }
-        Object decode = codec.decode(data);
-        out.add(decode);
     }
 
 
