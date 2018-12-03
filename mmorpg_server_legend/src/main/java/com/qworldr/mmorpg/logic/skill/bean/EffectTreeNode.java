@@ -1,6 +1,6 @@
 package com.qworldr.mmorpg.logic.skill.bean;
 
-import com.qworldr.mmorpg.logic.behaviortree.enu.NodeType;
+import com.qworldr.mmorpg.common.behaviortree.enu.NodeType;
 import com.qworldr.mmorpg.logic.skill.enu.EffectType;
 
 import java.util.List;

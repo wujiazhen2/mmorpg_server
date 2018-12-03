@@ -1,6 +1,6 @@
-package com.qworldr.mmorpg.logic.behaviortree.node;
+package com.qworldr.mmorpg.common.behaviortree.node;
 
-import com.qworldr.mmorpg.logic.behaviortree.enu.NodeStatus;
+import com.qworldr.mmorpg.common.behaviortree.enu.NodeStatus;
 
 /**
  * @Author wujiazhen

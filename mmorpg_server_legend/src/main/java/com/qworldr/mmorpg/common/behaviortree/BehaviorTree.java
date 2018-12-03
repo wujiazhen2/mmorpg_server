@@ -1,6 +1,6 @@
-package com.qworldr.mmorpg.logic.behaviortree;
+package com.qworldr.mmorpg.common.behaviortree;
 
-import com.qworldr.mmorpg.logic.behaviortree.node.BTreeNode;
+import com.qworldr.mmorpg.common.behaviortree.node.BTreeNode;
 
 /**
  * @Author wujiazhen

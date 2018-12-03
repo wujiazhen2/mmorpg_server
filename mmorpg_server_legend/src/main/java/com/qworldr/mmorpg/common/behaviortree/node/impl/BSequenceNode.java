@@ -1,8 +1,8 @@
-package com.qworldr.mmorpg.logic.behaviortree.node.impl;
+package com.qworldr.mmorpg.common.behaviortree.node.impl;
 
-import com.qworldr.mmorpg.logic.behaviortree.enu.NodeStatus;
-import com.qworldr.mmorpg.logic.behaviortree.node.BCompositeNode;
-import com.qworldr.mmorpg.logic.behaviortree.node.NodeContext;
+import com.qworldr.mmorpg.common.behaviortree.enu.NodeStatus;
+import com.qworldr.mmorpg.common.behaviortree.node.BCompositeNode;
+import com.qworldr.mmorpg.common.behaviortree.node.NodeContext;
 
 
 /**

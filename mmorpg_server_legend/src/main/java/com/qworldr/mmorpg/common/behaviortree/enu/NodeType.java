@@ -1,8 +1,8 @@
-package com.qworldr.mmorpg.logic.behaviortree.enu;
+package com.qworldr.mmorpg.common.behaviortree.enu;
 
-import com.qworldr.mmorpg.logic.behaviortree.node.BCompositeNode;
-import com.qworldr.mmorpg.logic.behaviortree.node.impl.BSelectorNode;
-import com.qworldr.mmorpg.logic.behaviortree.node.impl.BSequenceNode;
+import com.qworldr.mmorpg.common.behaviortree.node.BCompositeNode;
+import com.qworldr.mmorpg.common.behaviortree.node.impl.BSelectorNode;
+import com.qworldr.mmorpg.common.behaviortree.node.impl.BSequenceNode;
 
 /**
  * @Author wujiazhen

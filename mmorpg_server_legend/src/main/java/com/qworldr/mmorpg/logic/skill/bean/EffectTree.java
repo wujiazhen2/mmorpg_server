@@ -1,7 +1,7 @@
 package com.qworldr.mmorpg.logic.skill.bean;
 
-import com.qworldr.mmorpg.logic.behaviortree.BehaviorTree;
-import com.qworldr.mmorpg.logic.behaviortree.node.BTreeNode;
+import com.qworldr.mmorpg.common.behaviortree.BehaviorTree;
+import com.qworldr.mmorpg.common.behaviortree.node.BTreeNode;
 
 /**
  * @Author wujiazhen

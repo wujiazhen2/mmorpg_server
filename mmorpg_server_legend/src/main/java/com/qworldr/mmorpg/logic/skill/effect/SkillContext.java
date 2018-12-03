@@ -1,6 +1,6 @@
 package com.qworldr.mmorpg.logic.skill.effect;
 
-import com.qworldr.mmorpg.logic.behaviortree.node.NodeContext;
+import com.qworldr.mmorpg.common.behaviortree.node.NodeContext;
 import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.object.BiologyObject;
 

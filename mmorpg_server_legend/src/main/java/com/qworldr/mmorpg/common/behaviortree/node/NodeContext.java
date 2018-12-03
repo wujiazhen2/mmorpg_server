@@ -1,4 +1,4 @@
-package com.qworldr.mmorpg.logic.behaviortree.node;
+package com.qworldr.mmorpg.common.behaviortree.node;
 
 import com.qworldr.mmorpg.logic.map.object.BiologyObject;
 

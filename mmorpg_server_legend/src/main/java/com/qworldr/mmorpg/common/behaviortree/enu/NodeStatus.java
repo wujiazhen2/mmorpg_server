@@ -1,4 +1,4 @@
-package com.qworldr.mmorpg.logic.behaviortree.enu;
+package com.qworldr.mmorpg.common.behaviortree.enu;
 
 /**
  * @Author wujiazhen

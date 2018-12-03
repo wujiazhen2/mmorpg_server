@@ -1,8 +1,8 @@
 package com.qworldr.mmorpg.logic.skill.effect;
 
-import com.qworldr.mmorpg.logic.behaviortree.enu.NodeStatus;
-import com.qworldr.mmorpg.logic.behaviortree.node.BActionNode;
-import com.qworldr.mmorpg.logic.behaviortree.node.NodeContext;
+import com.qworldr.mmorpg.common.behaviortree.enu.NodeStatus;
+import com.qworldr.mmorpg.common.behaviortree.node.BActionNode;
+import com.qworldr.mmorpg.common.behaviortree.node.NodeContext;
 
 /**
  * @Author wujiazhen

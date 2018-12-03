@@ -1,10 +1,8 @@
-package com.qworldr.mmorpg.logic.behaviortree;
+package com.qworldr.mmorpg.common.behaviortree;
 
-import com.qworldr.mmorpg.logic.behaviortree.node.BCompositeNode;
-import com.qworldr.mmorpg.logic.behaviortree.node.BLeafNode;
-import com.qworldr.mmorpg.logic.behaviortree.node.BTreeNode;
+import com.qworldr.mmorpg.common.behaviortree.node.BCompositeNode;
+import com.qworldr.mmorpg.common.behaviortree.node.BTreeNode;
 
-import javax.swing.tree.TreeNode;
 import java.util.Stack;
 
 /**
