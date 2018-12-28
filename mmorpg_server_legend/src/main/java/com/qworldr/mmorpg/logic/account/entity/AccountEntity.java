@@ -30,18 +30,6 @@ public class AccountEntity implements IEntity<String> {
     @Column(length = 64)
     private String pwd;
 
-    @Type(type = TypeName.JSON)
-    private List<Integer> ids;
-
-
-    public List<Integer> getIds() {
-        return ids;
-    }
-
-    public void setIds(List<Integer> ids) {
-        this.ids = ids;
-    }
-
     public String getAccount() {
         return account;
     }
