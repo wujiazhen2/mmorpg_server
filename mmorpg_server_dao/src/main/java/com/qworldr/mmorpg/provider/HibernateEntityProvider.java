@@ -80,16 +80,6 @@ public class HibernateEntityProvider<T extends IEntity, ID extends Serializable>
         return t;
     }
 
-    @Override
-    public void saveOrUpdate(T entity) {
-        this.getHibernateTemplate().execute(session -> {
-            Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(entity);
-            session.flush();
-            transaction.commit();
-            return entity;
-        });
-    }
 
     @Override
     public void save(final T entity) {

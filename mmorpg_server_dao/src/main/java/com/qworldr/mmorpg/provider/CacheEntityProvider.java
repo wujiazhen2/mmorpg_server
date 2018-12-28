@@ -21,20 +21,10 @@ import java.io.Serializable;
 public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> extends HibernateEntityProvider<T, ID> {
     private static DispatcherExecutor dispatcherExecutor=new HashDispatcherThreadPool(Runtime.getRuntime().availableProcessors()*2);
     private LoadingCache<ID,T> cache =Caffeine.newBuilder().writer(new CacheWriter<ID, T>(){
+
         @Override
         public void write(@Nonnull ID key, @Nonnull T value) {
-            dispatcherExecutor.submit(new DispatcherTask() {
-                @Override
-                public int getDispatchCode() {
-                    return Math.abs(key.hashCode());
-                }
-
-                @Override
-                public void run() {
-                    //TODO 延时更新，将操作合并，减少对数据库的访问。--服务器挂了导致数据丢，通过日志记录操作，可以通过日志还原??
-                    CacheEntityProvider.super.saveOrUpdate(value);
-                }
-            });
+            //这里处理难以区分是保存还是删除，
         }
         @Override
         public void delete(@Nonnull ID key, @Nullable T value, @Nonnull RemovalCause cause) {
@@ -51,6 +41,7 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
             });
         }
     }).maximumSize(10_000).softValues().build(super::get);
+
     @Override
     public T get(ID id) {
         T t = cache.get(id);
@@ -65,17 +56,39 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
             throw new GeneratorException(String.format("类型转化错误,id生产策略 %s 生产id和实体id类型不一致"));
         }
         cache.put(entity.getId(),entity);
+        //数据库保存
+        dispatcherExecutor.submit(new DispatcherTask() {
+            @Override
+            public int getDispatchCode() {
+                return Math.abs(entity.getId().hashCode());
+            }
+
+            @Override
+            public void run() {
+                //TODO 延时更新，将操作合并，减少对数据库的访问。--服务器挂了导致数据丢，通过日志记录操作，可以通过日志还原??
+                CacheEntityProvider.super.save(entity);
+            }
+        });
     }
 
     @Override
     public void update(T entity) {
         cache.put(entity.getId(),entity);
+        //数据库更新
+        dispatcherExecutor.submit(new DispatcherTask() {
+            @Override
+            public int getDispatchCode() {
+                return Math.abs(entity.getId().hashCode());
+            }
+
+            @Override
+            public void run() {
+                //TODO 延时更新，将操作合并，减少对数据库的访问。--服务器挂了导致数据丢，通过日志记录操作，可以通过日志还原??
+                CacheEntityProvider.super.update(entity);
+            }
+        });
     }
 
-    @Override
-    public void saveOrUpdate(T entity) {
-        cache.put(entity.getId(),entity);
-    }
 
     @Override
     public void delete(ID id) {
