@@ -3,7 +3,7 @@ package com.qworldr.mmorpg.common.behaviortree.node;
 import com.qworldr.mmorpg.common.behaviortree.enu.NodeStatus;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 行为树条件节点基类
  */
 public abstract class BConditionNode extends BLeafNode {

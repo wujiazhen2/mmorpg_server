@@ -8,7 +8,7 @@ import com.qworldr.mmorpg.logic.map.Position;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Protocal(ProtocalId.PlayerMoveResp)
 public class PlayerMoveResp {

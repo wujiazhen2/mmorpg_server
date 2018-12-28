@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class HeartBeatManager {
     private BiologyObject own;

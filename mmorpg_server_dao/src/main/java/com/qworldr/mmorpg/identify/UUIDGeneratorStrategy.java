@@ -1,9 +1,14 @@
 package com.qworldr.mmorpg.identify;
 
-import org.hibernate.id.UUIDGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
+
+/**
+ * uuid的主键生成策略
+ *
+ * @author wujiazhen
+ */
 @Component
 public class UUIDGeneratorStrategy implements GeneratorStrategy<String> {
     @Override

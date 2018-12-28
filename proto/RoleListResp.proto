@@ -1,0 +1,12 @@
+
+message RoleListResp {
+    repeated PlayerInfo playerInfos = 1;
+}
+message PlayerInfo {
+    optional int64 playerId = 1;
+    optional int32 level = 2;
+    optional RoleType role = 3;
+    optional int32 sex = 4;
+    optional string name = 5;
+    optional Position position = 6;
+}

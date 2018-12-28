@@ -8,7 +8,7 @@ import com.qworldr.mmorpg.session.TcpSession;
 import java.util.Map;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class PacketUtils {
 

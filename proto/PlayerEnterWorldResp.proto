@@ -1,0 +1,6 @@
+
+message PlayerEnterWorldResp {
+    optional int32 sceneId = 1;
+    optional int32 x = 2;
+    optional int32 y = 3;
+}

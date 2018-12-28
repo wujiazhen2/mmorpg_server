@@ -6,7 +6,7 @@ import com.qworldr.mmorpg.logic.skill.enu.EffectType;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 效果树配置节点
  */
 public class EffectTreeNode {

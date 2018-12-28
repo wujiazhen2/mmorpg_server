@@ -1,0 +1,4 @@
+
+message RegisterAccountResp {
+    optional Status status = 1;
+}

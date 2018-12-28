@@ -8,6 +8,12 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @param <T>  资源类类型
+ * @param <ID> 资源类ID类型
+ * @author wujiazhen
+ * 资源提供者抽象类，实现类实现loadAll方法来实现加载文件的逻辑
+ */
 public abstract class AbstractResourceProvider<T, ID> extends ResourceProvider<T, ID> {
     protected Class<T> entityClass;
     protected ResourceMetaData resourceMetaData;
@@ -18,7 +24,7 @@ public abstract class AbstractResourceProvider<T, ID> extends ResourceProvider<T
     }
 
     @Override
-     void reload() {
+    protected void reload() {
         try {
             if (resourceMetaData.getResources() == null || resourceMetaData.getResources().length == 0) {
                 throw new FileNotFoundException(resourceMetaData.getPath());

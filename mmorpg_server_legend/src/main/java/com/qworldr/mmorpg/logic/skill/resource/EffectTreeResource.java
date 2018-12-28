@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Resource
 public class EffectTreeResource  implements IAfterLoad {

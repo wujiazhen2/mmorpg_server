@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 角色初始化数据
  */
 @Resource

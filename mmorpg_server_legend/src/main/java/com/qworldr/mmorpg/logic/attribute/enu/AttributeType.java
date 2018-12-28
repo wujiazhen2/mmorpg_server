@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.logic.player.Player;
 import java.util.Arrays;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 属性类型
  *
  */

@@ -24,7 +24,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class ProtoBufFileGenerator {
     public static final String PATH = "proto";

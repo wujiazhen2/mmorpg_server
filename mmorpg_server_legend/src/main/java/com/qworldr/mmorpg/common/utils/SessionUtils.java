@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.session.Session;
 import com.qworldr.mmorpg.session.TcpSession;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class SessionUtils {
 

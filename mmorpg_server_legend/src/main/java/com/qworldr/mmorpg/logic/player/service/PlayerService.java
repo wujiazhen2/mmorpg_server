@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Service
 public class PlayerService {

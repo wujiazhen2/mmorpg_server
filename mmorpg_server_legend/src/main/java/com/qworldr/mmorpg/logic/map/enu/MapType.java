@@ -6,7 +6,7 @@ import com.qworldr.mmorpg.logic.map.resource.MapGridResource;
 import com.qworldr.mmorpg.logic.map.resource.MapResource;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 地图类型
  */
 public enum MapType {

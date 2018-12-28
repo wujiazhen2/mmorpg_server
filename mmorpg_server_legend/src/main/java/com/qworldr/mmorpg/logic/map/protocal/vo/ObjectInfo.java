@@ -8,7 +8,7 @@ import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.logic.player.enu.RoleType;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class ObjectInfo {
     @Protobuf

@@ -9,7 +9,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class WebSocketGameServer  extends GameServer{
 

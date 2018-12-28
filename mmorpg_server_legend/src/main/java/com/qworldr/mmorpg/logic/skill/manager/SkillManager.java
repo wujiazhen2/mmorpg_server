@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Component
 public class SkillManager {

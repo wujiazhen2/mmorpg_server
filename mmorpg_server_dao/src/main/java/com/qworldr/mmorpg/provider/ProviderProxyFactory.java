@@ -26,20 +26,21 @@ public class ProviderProxyFactory extends ClassLoader {
 
     /**
      * 创建实现泛型的代理类，是superType的子类
+     *
      * @param superType
      * @param entity
      * @param key
      * @return
      */
     public EntityProvider createEntityProviderProxy(String superType, Class entity, Class key) {
-        return (EntityProvider)createProxyInstance(superType, entity, key);
+        return (EntityProvider) createProxyInstance(superType, entity, key);
     }
 
     public ResourceProvider createResourceProviderProxy(String superType, Class entity, Class key) {
-        return (ResourceProvider)createProxyInstance(superType, entity, key);
+        return (ResourceProvider) createProxyInstance(superType, entity, key);
     }
 
-    public Object createProxyInstance(String superType, Class entity, Class key){
+    public Object createProxyInstance(String superType, Class entity, Class key) {
         Class<?> aClass = defineGenericClass(superType, entity, key);
         Object o = null;
         try {
@@ -47,7 +48,7 @@ public class ProviderProxyFactory extends ClassLoader {
         } catch (Exception e) {
             LOGGER.error(String.format("%s<%s,%s>实例化失败", superType, entity.getName(), key.getName()), e);
         }
-        return  o;
+        return o;
     }
 
 

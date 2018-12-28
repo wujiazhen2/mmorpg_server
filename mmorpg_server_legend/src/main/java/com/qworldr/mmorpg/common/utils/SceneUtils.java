@@ -9,7 +9,7 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class SceneUtils {
     public final static int regionX;

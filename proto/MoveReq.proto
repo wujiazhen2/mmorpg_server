@@ -1,0 +1,9 @@
+
+message MoveReq {
+    optional Position position = 1;
+    repeated Position path = 2;
+}
+message Position {
+    optional int32 x = 1;
+    optional int32 y = 2;
+}

@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class SnowflakeIdentifyGeneratorStrategyTest  {
 

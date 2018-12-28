@@ -1,0 +1,8 @@
+
+message LoginResp {
+    optional Status status = 1;
+}
+message Status {
+    optional int32 code = 1;
+    optional int32 messageId = 2;
+}

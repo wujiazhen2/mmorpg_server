@@ -1,7 +1,8 @@
 package com.qworldr.mmorpg.provider;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
+ * 用于创建实体
  */
 public interface ICreator<T,ID> {
 

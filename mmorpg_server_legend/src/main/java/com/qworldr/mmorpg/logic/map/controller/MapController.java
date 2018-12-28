@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @SocketController
 public class MapController {

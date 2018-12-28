@@ -7,7 +7,7 @@ import com.qworldr.mmorpg.common.protocal.ProtocalId;
 import com.qworldr.mmorpg.logic.player.enu.RoleType;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Protocal(ProtocalId.CreateRoleReq)
 public class CreateRoleReq {

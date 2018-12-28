@@ -1,7 +1,7 @@
 package com.qworldr.mmorpg.logic.map;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class Grid {
     public static final int BLOCK=1;

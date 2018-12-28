@@ -6,7 +6,7 @@ import com.qworldr.mmorpg.logic.map.enu.MapType;
 import javax.persistence.Id;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 地图资源
  */
 @Resource

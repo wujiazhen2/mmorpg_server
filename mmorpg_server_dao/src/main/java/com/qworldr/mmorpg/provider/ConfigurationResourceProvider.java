@@ -15,7 +15,7 @@ import java.util.Map;
 public class ConfigurationResourceProvider<T,ID>  extends  AbstractResourceProvider<T,ID>{
     private static  final Logger LOGGER = LoggerFactory.getLogger(ConfigurationResourceProvider.class);
     @Override
-    protected Map<ID, T> loadAll(ResourceMetaData resourceMetaData)  {
+    protected final Map<ID, T> loadAll(ResourceMetaData resourceMetaData) {
         Map<ID, T> data = null;
         try {
             data = (Map<ID, T>) ReaderManager.getInstance().read(resourceMetaData);

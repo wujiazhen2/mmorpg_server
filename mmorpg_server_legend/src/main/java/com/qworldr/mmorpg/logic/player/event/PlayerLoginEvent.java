@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.logic.player.Player;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class PlayerLoginEvent extends PlayerEvent {
 

@@ -6,7 +6,7 @@ import com.qworldr.mmorpg.common.behaviortree.node.NodeContext;
 
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 组合节点之一 Sequence节点
  * 顺序节点(Sequence),它从左向右依次执行所有节点，只要节点返回Success，就继续执行后续节点，
  * 当一个节点返回Fail或 Running 时，停止执行后续节点。向父节点返回 Fail 或 Running，

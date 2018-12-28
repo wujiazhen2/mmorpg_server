@@ -14,7 +14,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class MoveManager {
     private BiologyObject own;

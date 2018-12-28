@@ -9,7 +9,7 @@ import com.qworldr.mmorpg.logic.map.Position;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Protocal(ProtocalId.MoveReq)
 public class  MoveReq {

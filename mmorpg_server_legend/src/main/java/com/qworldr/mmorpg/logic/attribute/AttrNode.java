@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 属性树节点
  */
 public class AttrNode {

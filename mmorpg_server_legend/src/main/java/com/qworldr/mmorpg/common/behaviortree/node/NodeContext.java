@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.logic.map.object.BiologyObject;
 import java.util.Map;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class NodeContext {
 

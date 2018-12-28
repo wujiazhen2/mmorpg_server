@@ -7,7 +7,7 @@ import com.qworldr.mmorpg.common.protocal.ProtocalId;
 import com.qworldr.mmorpg.logic.player.protocal.vo.PlayerInfo;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Protocal(ProtocalId.RegionLeaveResp)
 public class RegionLevelResp {

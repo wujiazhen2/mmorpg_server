@@ -6,7 +6,7 @@ import com.qworldr.mmorpg.common.behaviortree.node.BTreeNode;
 import java.util.Stack;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class BehaviorTreeBuilder {
     private Stack<BCompositeNode> compositeNodes;

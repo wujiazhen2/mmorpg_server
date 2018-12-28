@@ -1,0 +1,4 @@
+
+message RegionEnterResp {
+    repeated ObjectInfo objectInfos = 1;
+}

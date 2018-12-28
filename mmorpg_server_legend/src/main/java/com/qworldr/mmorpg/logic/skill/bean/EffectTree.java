@@ -4,7 +4,7 @@ import com.qworldr.mmorpg.common.behaviortree.BehaviorTree;
 import com.qworldr.mmorpg.common.behaviortree.node.BTreeNode;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 效果树
  */
 public class EffectTree extends BehaviorTree {

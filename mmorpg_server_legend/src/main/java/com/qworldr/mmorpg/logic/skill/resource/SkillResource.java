@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Resource
 public class SkillResource {

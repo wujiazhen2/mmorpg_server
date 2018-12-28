@@ -4,7 +4,7 @@ import com.qworldr.mmorpg.logic.player.Player;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  *  玩家事件，事件源是玩家
  */
 public class PlayerEvent extends ApplicationEvent {

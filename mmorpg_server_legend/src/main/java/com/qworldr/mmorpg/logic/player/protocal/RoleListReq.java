@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.annotation.Protocal;
 import com.qworldr.mmorpg.common.protocal.ProtocalId;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Protocal(ProtocalId.RoleListReq)
 @ProtobufClass

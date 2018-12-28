@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 import java.util.EventListener;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Component
 public class EventPublisher  implements ApplicationEventPublisher ,ApplicationEventPublisherAware {

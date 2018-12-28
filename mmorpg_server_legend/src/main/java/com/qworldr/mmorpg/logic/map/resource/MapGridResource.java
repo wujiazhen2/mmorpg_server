@@ -7,7 +7,7 @@ import com.qworldr.mmorpg.logic.map.Grid;
 import javax.persistence.Id;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 地图表格
  */
 @Resource(value = "*",reader = ReaderType.MAP,suffix = "map",path = "resource/map")

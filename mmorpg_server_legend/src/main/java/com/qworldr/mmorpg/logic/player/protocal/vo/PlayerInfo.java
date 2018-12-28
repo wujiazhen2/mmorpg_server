@@ -6,7 +6,7 @@ import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.player.enu.RoleType;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class PlayerInfo {
     @Protobuf

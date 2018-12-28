@@ -9,7 +9,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 雪花算法生成主键
  */
 @Component

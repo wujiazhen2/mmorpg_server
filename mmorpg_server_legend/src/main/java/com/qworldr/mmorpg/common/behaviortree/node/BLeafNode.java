@@ -3,7 +3,7 @@ package com.qworldr.mmorpg.common.behaviortree.node;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public abstract class BLeafNode extends BTreeNode {
     @Override

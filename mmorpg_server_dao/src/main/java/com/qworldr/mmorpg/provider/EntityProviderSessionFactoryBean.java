@@ -20,7 +20,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
+/**
+ * @author wujiazhen
+ */
 public class EntityProviderSessionFactoryBean extends LocalSessionFactoryBean implements InstantiationAwareBeanPostProcessor, PriorityOrdered {
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityProviderSessionFactoryBean.class);
     public static final String DEFAULT_ENTITYPROVIER = HibernateEntityProvider.class.getName();

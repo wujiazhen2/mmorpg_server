@@ -3,6 +3,7 @@ package com.qworldr.mmorpg.logic.account.entity;
 import com.qworldr.mmorpg.anno.Generator;
 import com.qworldr.mmorpg.entity.IEntity;
 import com.qworldr.mmorpg.type.JsonType;
+import com.qworldr.mmorpg.type.TypeName;
 import org.hibernate.annotations.*;
 
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ public class AccountEntity implements IEntity<String> {
     @Column(length = 64)
     private String pwd;
 
-    @Type(type = "json")
+    @Type(type = TypeName.JSON)
     private List<Integer> ids;
 
 

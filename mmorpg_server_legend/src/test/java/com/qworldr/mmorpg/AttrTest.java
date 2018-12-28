@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class AttrTest {
     AttributeManager attributeManager;

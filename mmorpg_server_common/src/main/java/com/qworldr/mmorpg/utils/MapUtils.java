@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class MapUtils {
 

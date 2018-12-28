@@ -11,7 +11,7 @@ import com.qworldr.mmorpg.logic.player.protocal.vo.PlayerInfo;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Protocal(ProtocalId.RegionEnterResp)
 public class RegionEnterResp {

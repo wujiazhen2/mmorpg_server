@@ -8,7 +8,7 @@ import com.qworldr.mmorpg.logic.map.protocal.vo.ObjectInfo;
 import com.qworldr.mmorpg.logic.player.protocal.vo.PlayerInfo;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Protocal(ProtocalId.ObjectEnterSyncResp)
 public class ObjectEnterSyncResp {

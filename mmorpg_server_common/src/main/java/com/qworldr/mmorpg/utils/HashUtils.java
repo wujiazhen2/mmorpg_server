@@ -1,7 +1,7 @@
 package com.qworldr.mmorpg.utils;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class HashUtils {
 

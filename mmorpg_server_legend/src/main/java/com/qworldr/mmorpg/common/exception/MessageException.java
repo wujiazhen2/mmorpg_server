@@ -4,7 +4,7 @@ import com.qworldr.mmorpg.common.constants.StatusCode;
 import com.qworldr.mmorpg.common.resp.Status;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class MessageException extends RuntimeException {
     private int messageId;

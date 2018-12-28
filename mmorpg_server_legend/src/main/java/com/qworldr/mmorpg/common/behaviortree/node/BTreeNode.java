@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.common.behaviortree.enu.NodeStatus;
 import java.util.List;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 行为树基础节点
  */
 public abstract class BTreeNode {

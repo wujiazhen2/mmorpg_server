@@ -1,0 +1,26 @@
+
+message ObjectEnterSyncResp {
+    optional ObjectInfo objectInfo = 1;
+}
+message ObjectInfo {
+    optional int64 objectId = 1;
+    optional int32 level = 2;
+    optional RoleType role = 3;
+    optional int32 sex = 4;
+    optional string name = 5;
+    optional Position position = 6;
+    optional ObjectType objectType = 7;
+}
+enum ObjectType {
+    PLAYER = 0;
+    MONSTER = 1;
+    NPC = 2;
+    PLACESKILL = 3;
+    GOODS = 4;
+}
+enum RoleType {
+    WARRIOR = 0;
+    HUNTER = 1;
+    TAOIST = 2;
+}
+ 

@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.object.BiologyObject;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class SkillContext extends NodeContext {
     private BiologyObject target;

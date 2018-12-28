@@ -1,6 +1,7 @@
 package com.qworldr.mmorpg.logic.skill.entity;
 
 import com.qworldr.mmorpg.entity.IEntity;
+import com.qworldr.mmorpg.type.TypeName;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
@@ -8,13 +9,13 @@ import javax.persistence.Id;
 import java.util.Map;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Entity
 public class SkillEntity implements IEntity<Long> {
     @Id
     private long playerId;
-    @Type(type = "json")
+    @Type(type = TypeName.JSON)
     public Map<Integer,Integer> skillIds;
 
     public long getPlayerId() {

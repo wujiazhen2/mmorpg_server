@@ -1,7 +1,7 @@
 package com.qworldr.mmorpg.common.behaviortree.enu;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 行为树节点执行状态
  */
 public enum NodeStatus {

@@ -5,13 +5,21 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * 数据库实体提供接口
+ *
+ * @param <T>
+ * @param <ID>
+ * @author wujiazhen
+ */
 @Repository
 public interface EntityProvider<T extends IEntity, ID> extends DataProvider<T, ID> {
     T get(ID id);
 
     List<T> load();
 
-    T loadAndCreate(ID id,ICreator<T,ID> creator);
+    T loadAndCreate(ID id, ICreator<T,ID> creator);
+
     void saveOrUpdate(T entity);
 
     void save(T entity);

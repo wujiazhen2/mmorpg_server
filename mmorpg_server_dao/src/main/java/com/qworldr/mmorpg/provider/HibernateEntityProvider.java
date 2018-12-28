@@ -16,6 +16,12 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * @param <T>  实体类型
+ * @param <ID> 实体ID类型
+ *             hibernate数据库操作基类实现
+ * @author wujiazhen
+ */
 public class HibernateEntityProvider<T extends IEntity, ID extends Serializable> extends HibernateDaoSupport implements EntityProvider<T, ID> {
     private Class<T> entityClass;
     private String keyGenerator;
@@ -24,6 +30,7 @@ public class HibernateEntityProvider<T extends IEntity, ID extends Serializable>
     public void setSessionFactoryValue(SessionFactory sessionFactory){
         this.setSessionFactory(sessionFactory);
     }
+
     public HibernateEntityProvider() {
         this.entityClass = (Class<T>) ReflectUtils.getSuperGenericType(getClass());
         Field[] declaredFields = entityClass.getDeclaredFields();

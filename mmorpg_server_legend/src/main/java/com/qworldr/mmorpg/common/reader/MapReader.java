@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Component
 public class MapReader implements Reader {

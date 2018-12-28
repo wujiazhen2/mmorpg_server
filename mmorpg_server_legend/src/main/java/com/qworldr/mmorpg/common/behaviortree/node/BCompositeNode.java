@@ -1,7 +1,7 @@
 package com.qworldr.mmorpg.common.behaviortree.node;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 行为树组合节点基类
  */
 public abstract class BCompositeNode extends BTreeNode {

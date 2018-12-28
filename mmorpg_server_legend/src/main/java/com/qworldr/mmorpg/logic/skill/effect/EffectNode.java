@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.common.behaviortree.node.BActionNode;
 import com.qworldr.mmorpg.common.behaviortree.node.NodeContext;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public abstract class EffectNode extends BActionNode {
 

@@ -1,0 +1,6 @@
+
+message CreateRoleReq {
+    optional RoleType role = 1;
+    optional int32 sex = 2;
+    optional string playerName = 3;
+}

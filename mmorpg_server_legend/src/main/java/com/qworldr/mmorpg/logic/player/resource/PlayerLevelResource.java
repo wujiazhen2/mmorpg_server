@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.anno.Resource;
 import javax.persistence.Id;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Resource
 public class PlayerLevelResource {

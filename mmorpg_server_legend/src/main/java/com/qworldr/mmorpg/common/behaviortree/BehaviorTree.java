@@ -3,7 +3,7 @@ package com.qworldr.mmorpg.common.behaviortree;
 import com.qworldr.mmorpg.common.behaviortree.node.BTreeNode;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public class BehaviorTree {
 

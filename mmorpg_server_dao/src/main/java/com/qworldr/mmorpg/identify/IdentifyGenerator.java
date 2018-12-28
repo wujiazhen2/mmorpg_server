@@ -9,14 +9,20 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
+/**
+ * @author wujiazhen
+ * 主键id生成，管理主键生成策略
+ */
 @Component
 public class IdentifyGenerator implements ApplicationContextAware {
     private Map<String, GeneratorStrategy> keyStrategy=Maps.newHashMap();
     private ApplicationContext applicationContext;
     private static IdentifyGenerator identifyGenerator;
+
     public static IdentifyGenerator getInstance(){
         return identifyGenerator;
     }
+
     @PostConstruct
     public void init(){
         Map<String, GeneratorStrategy> beansOfType = applicationContext.getBeansOfType(GeneratorStrategy.class);

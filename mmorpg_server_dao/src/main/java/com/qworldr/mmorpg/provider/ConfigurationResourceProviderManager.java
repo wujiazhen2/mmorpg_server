@@ -34,6 +34,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author wujizhen
+ * 资源提供者管理类。随Spring容器启动，为所有不存在ResourceProvider的Resource类(@Resource注解标注的类就是资源类)创建对应的ResourceProvider并注册进
+ * Spring容器。ResourceProvider可以通过@Autowire进行注入使用，通过参数泛型进行区分。
+ */
 public class ConfigurationResourceProviderManager implements InitializingBean, InstantiationAwareBeanPostProcessor, PriorityOrdered, BeanFactoryAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationResourceProviderManager.class);
     public static final String CLASSPATH="classpath*:";
@@ -46,6 +51,11 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
     private String scanPackage;
     private ReaderType readerType;
 
+    /**
+     * 为了让afterPropertiesSet在Spring autowire之前执行
+     *
+     * @return
+     */
     @Override
     public int getOrder() {
         return Ordered.LOWEST_PRECEDENCE - 3;

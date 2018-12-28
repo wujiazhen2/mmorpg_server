@@ -7,7 +7,7 @@ import com.qworldr.mmorpg.common.protocal.ProtocalId;
 import com.qworldr.mmorpg.common.resp.Status;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 @Protocal(ProtocalId.PlayerEnterWorldResp)
 public class PlayerEnterWorldResp {

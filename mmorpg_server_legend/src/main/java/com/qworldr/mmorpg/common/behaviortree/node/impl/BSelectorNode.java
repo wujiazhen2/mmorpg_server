@@ -6,7 +6,7 @@ import com.qworldr.mmorpg.common.behaviortree.node.NodeContext;
 
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  * 组合节点之一 Selector节点
  * 选择节点(Select)，遍历方式为从左到右依次执行所有子节点，只要节点返回 Fail，
  * 就继续执行后续节点，直到一个节点返回Success或Running为止，停止执行后续节点。如果有一

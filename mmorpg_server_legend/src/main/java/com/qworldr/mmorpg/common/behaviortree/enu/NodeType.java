@@ -5,7 +5,7 @@ import com.qworldr.mmorpg.common.behaviortree.node.impl.BSelectorNode;
 import com.qworldr.mmorpg.common.behaviortree.node.impl.BSequenceNode;
 
 /**
- * @Author wujiazhen
+ * @author wujiazhen
  */
 public enum  NodeType {
 

@@ -18,6 +18,11 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author wujiazhen
+ * @date 2018-12-28
+ * 将客户端请求的协议分发的对应的处理方法处理。
+ */
 @Component
 @ChannelHandler.Sharable
 public class DispatchHandler extends ChannelInboundHandlerAdapter implements BeanFactoryAware {
@@ -26,6 +31,7 @@ public class DispatchHandler extends ChannelInboundHandlerAdapter implements Bea
     private InvokerManager invokerManager;
     private DispatcherExecutor dispatcherExecutor;
     private BeanFactory beanFactory;
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         InvokerDefinition invokerDefintion = invokerManager.getInvokerDefintion(msg.getClass());

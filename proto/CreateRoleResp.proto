@@ -1,0 +1,5 @@
+
+message CreateRoleResp {
+    optional Status status = 1;
+    optional int64 id = 2;
+}
