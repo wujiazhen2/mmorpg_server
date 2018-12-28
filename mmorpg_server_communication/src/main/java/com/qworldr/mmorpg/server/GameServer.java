@@ -32,10 +32,11 @@ public class GameServer implements IServer {
     private LimitFlowHandler limitFlowHandler;
     @Autowired
     private SessionHandler sessionHandler;
-    public void start(int port) throws ServerOpenException {
+
+    @Override
+    public ChannelFuture start(int port) throws ServerOpenException {
         if(dispatcherExecutor==null){
-            LOGGER.error("GameServer.dispatcherExecutor不能为null");
-            return;
+            throw new ServerOpenException("GameServer.dispatcherExecutor不能为null");
         }
         dispatchHandler.setDispatcherExecutor(dispatcherExecutor);
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -48,7 +49,7 @@ public class GameServer implements IServer {
         try {
             future = serverBootstrap.bind().sync();
             LOGGER.debug("game server started ----- port:{}", port);
-            future.channel().closeFuture().sync();
+            return future;
         } catch (InterruptedException e) {
             throw new ServerOpenException(e);
         }

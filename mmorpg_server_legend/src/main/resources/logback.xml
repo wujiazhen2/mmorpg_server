@@ -8,10 +8,13 @@
             <pattern>%cn %d{hh:MM:ss} [%20logger{0}] - %message%n</pattern>
         </encoder>
     </appender>
-    <logger name="com.baidu.bjf.remoting.protobuf.ProtobufProxy" level="error"  additivity="false">
-
+    <logger name="com.baidu.bjf.remoting.protobuf.ProtobufProxy" level="ERROR" additivity="false">
+        <appender-ref ref="STDOUT"/>
     </logger>
-    <root level="debug">
+    <logger name="com.qworldr" level="debug" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

@@ -23,6 +23,7 @@ import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.Id;
@@ -70,6 +71,8 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
         //先初始化Readermanager;
         ReaderManager bean = beanFactory.getBean(ReaderManager.class);
         bean.init();
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         ResourceFormat resourceFormat = new ResourceFormat(suffix, path, readerType);
         //反射注入resourceMeta 和reader
         Field resourceMetaDataField = ReflectionUtils.findField(provideClass,RESOURCE_META_DATA);
@@ -129,6 +132,9 @@ public class ConfigurationResourceProviderManager implements InitializingBean, I
         do {
             flag = executorService.awaitTermination(2000, TimeUnit.MILLISECONDS);
         }while(!flag);
+
+        stopWatch.stop();
+        LOGGER.debug("资源加载完毕，耗时{}s", stopWatch.getTotalTimeSeconds());
         //TODO 热更
     }
 

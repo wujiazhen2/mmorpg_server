@@ -34,7 +34,7 @@ public class EntityProviderSessionFactoryBean extends LocalSessionFactoryBean im
         super.afterPropertiesSet();
         Map<String, EntityProvider> beansOfType = beanFactory.getBeansOfType(EntityProvider.class);
         Set<Class> classes = new HashSet<>();
-
+        classes.add(IEntity.class);
         beansOfType.values().forEach(entityProvider -> {
             Class<?> genericType = ReflectUtils.getGenericType(entityProvider.getClass());
             if (genericType != null) {
@@ -45,7 +45,7 @@ public class EntityProviderSessionFactoryBean extends LocalSessionFactoryBean im
         Collection<Class<?>> annotatedClasses = metadataSources.getAnnotatedClasses();
         annotatedClasses.forEach(clazz -> {
             //已有该泛型实现类，不用再生成代理类
-            if (classes.contains(clazz)) {
+            if (classes.contains(clazz) || clazz.isInterface()) {
                 return;
             }
             Object o = null;
