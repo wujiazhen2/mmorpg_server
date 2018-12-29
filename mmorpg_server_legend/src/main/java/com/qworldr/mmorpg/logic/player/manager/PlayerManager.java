@@ -27,16 +27,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class PlayerManager implements IdentityProvider<Player> {
-    private BiMap<Session,Player> sessionPlayerMap = Maps.synchronizedBiMap(HashBiMap.create());
+    private BiMap<Session, Player> sessionPlayerMap = Maps.synchronizedBiMap(HashBiMap.create());
     @Autowired
-    private EntityProvider<PlayerEntity,Long> playerEntityProvider;
+    private EntityProvider<PlayerEntity, Long> playerEntityProvider;
     @Autowired
-    private ResourceProvider<PlayerLevelResource,Integer> playerLevelResourceResourceProvider;
+    private ResourceProvider<PlayerLevelResource, Integer> playerLevelResourceResourceProvider;
     @Autowired
-    private ResourceProvider<PlayerInitializationResource,RoleType> playerInitializationResourceProvider;
+    private ResourceProvider<PlayerInitializationResource, RoleType> playerInitializationResourceProvider;
     @Autowired
     private EventPublisher eventPublisher;
-    public PlayerEntity createPlayerEnttiy(String account, String name, RoleType role, int sex){
+
+    public PlayerEntity createPlayerEnttiy(String account, String name, RoleType role, int sex) {
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setAccount(account);
         playerEntity.setRole(role);
@@ -56,20 +57,31 @@ public class PlayerManager implements IdentityProvider<Player> {
     }
 
 
-    public void loginPlayer(Session session,Player player){
-        sessionPlayerMap.put(session,player);
+    public void loginPlayer(Session session, Player player) {
+        sessionPlayerMap.put(session, player);
         player.setSession((TcpSession) session);
         //发布玩家登录事件
         eventPublisher.publishEvent(new PlayerLoginEvent(player));
     }
-    public Session getSession(Player player){
+
+    public Session getSession(Player player) {
         Session session = sessionPlayerMap.inverse().get(player);
 
         return session;
     }
 
-    public Player getPlayer(Session session){
-        return  sessionPlayerMap.get(session);
+    public Player getPlayer(Session session) {
+        return sessionPlayerMap.get(session);
+    }
+
+    public void logout(Session session) {
+        Player player = sessionPlayerMap.get(session);
+        if (player != null) {
+            //退出登录，通知玩家离开区域
+            player.notifyLeaveRegion();
+            player.setSession(null);
+            sessionPlayerMap.remove(session);
+        }
     }
 
     @Override
@@ -77,11 +89,14 @@ public class PlayerManager implements IdentityProvider<Player> {
         return getPlayer(session);
     }
 
+    /**
+     * tcp链接断开时触发
+     *
+     * @param session
+     */
     @Override
     public void clearIdentity(Session session) {
-        Player player = sessionPlayerMap.get(session);
-        player.setSession(null);
-        sessionPlayerMap.remove(session);
+        logout(session);
     }
 
 

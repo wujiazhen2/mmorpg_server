@@ -1,7 +1,10 @@
 package com.qworldr.mmorpg.provider;
 
 
-import com.github.benmanes.caffeine.cache.*;
+import com.github.benmanes.caffeine.cache.CacheWriter;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
+import com.github.benmanes.caffeine.cache.RemovalCause;
 import com.qworldr.mmorpg.entity.IEntity;
 import com.qworldr.mmorpg.exception.GeneratorException;
 import com.qworldr.mmorpg.identify.IdentifyGenerator;
@@ -15,17 +18,19 @@ import java.io.Serializable;
 
 /**
  * hibernate加上本地cache缓存
+ *
  * @param <T>
  * @param <ID>
  */
-public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> extends HibernateEntityProvider<T, ID> {
-    private static DispatcherExecutor dispatcherExecutor=new HashDispatcherThreadPool(Runtime.getRuntime().availableProcessors()*2);
-    private LoadingCache<ID,T> cache =Caffeine.newBuilder().writer(new CacheWriter<ID, T>(){
+public class CacheEntityProvider<T extends IEntity<ID>, ID extends Serializable> extends HibernateEntityProvider<T, ID> {
+    private static DispatcherExecutor dispatcherExecutor = new HashDispatcherThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+    private LoadingCache<ID, T> cache = Caffeine.newBuilder().writer(new CacheWriter<ID, T>() {
 
         @Override
         public void write(@Nonnull ID key, @Nonnull T value) {
             //这里处理难以区分是保存还是删除，
         }
+
         @Override
         public void delete(@Nonnull ID key, @Nullable T value, @Nonnull RemovalCause cause) {
             dispatcherExecutor.submit(new DispatcherTask() {
@@ -50,12 +55,18 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
 
     @Override
     public void save(T entity) {
-        try {
-            entity.setId((ID) IdentifyGenerator.getInstance().getGeneratorStrategy(getKeyGenerator()).generatorKey());
-        }catch (Exception e){
-            throw new GeneratorException(String.format("类型转化错误,id生产策略 %s 生产id和实体id类型不一致"));
+        if (getKeyGenerator() != null) {
+            try {
+                entity.setId((ID) IdentifyGenerator.getInstance().getGeneratorStrategy(getKeyGenerator()).generatorKey());
+            } catch (Exception e) {
+                throw new GeneratorException(String.format("类型转化错误,id生产策略 %s 生产id和实体id类型不一致", entity.getId().getClass()));
+            }
+        } else {
+            if (entity.getId() == null) {
+                throw new RuntimeException(String.format("实体%s没有id生成策略，也没有设置id。", entity.getClass()));
+            }
         }
-        cache.put(entity.getId(),entity);
+        cache.put(entity.getId(), entity);
         //数据库保存
         dispatcherExecutor.submit(new DispatcherTask() {
             @Override
@@ -73,7 +84,7 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
 
     @Override
     public void update(T entity) {
-        cache.put(entity.getId(),entity);
+        cache.put(entity.getId(), entity);
         //数据库更新
         dispatcherExecutor.submit(new DispatcherTask() {
             @Override
@@ -103,7 +114,7 @@ public class CacheEntityProvider<T extends IEntity<ID>,ID extends Serializable> 
     @Override
     public T loadAndCreate(ID id, ICreator<T, ID> creator) {
         T t = get(id);
-        if(t!=null){
+        if (t != null) {
             return t;
         }
         T t1 = creator.create(id);

@@ -16,6 +16,7 @@ public class MonsterResource {
      */
     private MonsterType type;
 
+    private int hp;
     /**
      * 杀死获得经验
      */
@@ -25,4 +26,24 @@ public class MonsterResource {
      * 小弟
      */
     private Map<Integer,Integer>  footmen;
+
+    public int getId() {
+        return id;
+    }
+
+    public MonsterType getType() {
+        return type;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public Map<Integer, Integer> getFootmen() {
+        return footmen;
+    }
 }

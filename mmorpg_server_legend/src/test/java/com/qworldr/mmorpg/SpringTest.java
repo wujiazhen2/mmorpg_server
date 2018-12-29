@@ -17,8 +17,10 @@ public class SpringTest {
     private PlayerService playerService;
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
         System.out.println(playerService);
+
+        Thread.sleep(1000000000);
     }
 
 }

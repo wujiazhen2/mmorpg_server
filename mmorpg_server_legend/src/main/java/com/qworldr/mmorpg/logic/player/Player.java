@@ -69,14 +69,11 @@ public class Player extends BiologyObject {
     public void notifyIntoRegion() {
         super.notifyIntoRegion();
         // 进去区域后，获取区域内情况
-        //1. 玩家
-        Map<Long, Player> players = this.getRegion().getPlayers();
+        Map<Long, MapObject> mapObjects = this.getRegion().getMapObjects();
         List<ObjectInfo> objectInfos = new ArrayList<>();
-        players.forEach((k,player)->{
-            PlayerEntity playerEntity = player.getPlayerEntity();
-            objectInfos.add(ObjectInfo.valueOf(player));
+        mapObjects.forEach((k, mapObject) -> {
+            objectInfos.add(mapObject.buildObjectInfo());
         });
-        // TODO 怪物，物品，NPC,.....
         RegionEnterResp regionEnterResp=new RegionEnterResp();
         regionEnterResp.setObjectInfos(objectInfos);
         PacketUtils.sendPacket(session,regionEnterResp);
@@ -85,18 +82,26 @@ public class Player extends BiologyObject {
     @Override
     public void see(MapObject mapObject) {
         super.see(mapObject);
-
         //看到对象，发送包给客户端同步
-        ObjectInfo objectInfo=null;
-        //TODO 暂时只处理玩家，还有怪物，物品。。。。。
-        if(mapObject instanceof Player){
-             objectInfo = ObjectInfo.valueOf((Player) mapObject);
-        }
+        ObjectInfo objectInfo = mapObject.buildObjectInfo();
         if(objectInfo!=null){
             ObjectEnterSyncResp objectEnterSyncResp = new ObjectEnterSyncResp();
             objectEnterSyncResp.setObjectInfo(objectInfo);
             PacketUtils.sendPacket(this,objectEnterSyncResp);
         }
+    }
+
+    @Override
+    public ObjectInfo buildObjectInfo() {
+        ObjectInfo objectInfo = new ObjectInfo();
+        objectInfo.setObjectId(this.getId());
+        objectInfo.setName(this.getPlayerEntity().getName());
+        objectInfo.setLevel(this.getPlayerEntity().getLevel());
+        objectInfo.setRole(this.getPlayerEntity().getRole());
+        objectInfo.setSex(this.getPlayerEntity().getSex());
+        objectInfo.setObjectType(this.getType());
+        objectInfo.setPosition(this.getPosition());
+        return objectInfo;
     }
 
     public SkillEntity getSkillEntity() {

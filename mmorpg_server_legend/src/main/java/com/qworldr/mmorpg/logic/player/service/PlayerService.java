@@ -37,6 +37,8 @@ public class PlayerService {
     private EntityProvider<PlayerEntity, Long> playerEntityProvider;
     @Autowired
     private SceneManager sceneManager;
+
+
     public CreateRoleResp createRole(TcpSession session, CreateRoleReq req) {
         PlayerEntity playerEnttiy = playerManager.createPlayerEnttiy(SessionUtils.getAccount(session), req.getPlayerName(), req.getRole(), req.getSex());
         CreateRoleResp createRoleResp = new CreateRoleResp();

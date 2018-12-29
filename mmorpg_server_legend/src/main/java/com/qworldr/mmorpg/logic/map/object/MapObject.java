@@ -4,6 +4,7 @@ import com.qworldr.mmorpg.common.utils.PacketUtils;
 import com.qworldr.mmorpg.logic.map.Position;
 import com.qworldr.mmorpg.logic.map.Region;
 import com.qworldr.mmorpg.logic.map.protocal.RegionLevelResp;
+import com.qworldr.mmorpg.logic.map.protocal.vo.ObjectInfo;
 import com.qworldr.mmorpg.logic.player.Player;
 
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Objects;
 /**
  * 地图上的对象
  */
-public  class  MapObject {
+public class MapObject {
     /**
      * 地图上对象Id
      */
@@ -21,17 +22,17 @@ public  class  MapObject {
     private int mapId;
 
     /**
-     *  对象地图上的位置
+     * 对象地图上的位置
      */
     private Position position;
     /**
-     *  对象所处的场景消息区域
+     * 对象所处的场景消息区域
      */
     private Region region;
     /**
-     *  对象是否可视化
+     * 对象是否可视化
      */
-    private boolean visible=true;
+    private boolean visible = true;
 
     /**
      * 对象类型
@@ -101,20 +102,32 @@ public  class  MapObject {
     }
 
 
-    public void notifyLeaveRegion(){
+    public void notifyLeaveRegion() {
         // 广播离开协议包
         RegionLevelResp regionLevelResp = new RegionLevelResp();
         regionLevelResp.setObjectId(this.getId());
-        PacketUtils.sendRegionPacket(this,regionLevelResp);
+        PacketUtils.sendRegionPacket(this, regionLevelResp);
     }
 
     public void notifyIntoRegion() {
-        Map<Long, Player> players = region.getPlayers();
-
-        players.forEach((k,player)->{
-            if(!player.equals(this)) {
-                player.see(this);
+        /**
+         * 触发区域内生物看到新进入区域的对象
+         */
+        Map<Long, MapObject> mapObjects = region.getMapObjects();
+        mapObjects.forEach((k, mapObject) -> {
+            if (!mapObject.equals(this) && mapObject instanceof BiologyObject) {
+                ((BiologyObject) mapObject).see(this);
             }
         });
+    }
+
+    /**
+     * 用于返回封装对象信息，进出区域时传递给区域对象。
+     * 后续对象必须覆盖这个方法
+     *
+     * @return 对象信息
+     */
+    public ObjectInfo buildObjectInfo() {
+        return new ObjectInfo();
     }
 }
