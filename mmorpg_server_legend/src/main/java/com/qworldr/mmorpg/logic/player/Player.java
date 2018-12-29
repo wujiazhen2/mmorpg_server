@@ -72,6 +72,9 @@ public class Player extends BiologyObject {
         Map<Long, MapObject> mapObjects = this.getRegion().getMapObjects();
         List<ObjectInfo> objectInfos = new ArrayList<>();
         mapObjects.forEach((k, mapObject) -> {
+            if (mapObject.equals(this)) {
+                return;
+            }
             objectInfos.add(mapObject.buildObjectInfo());
         });
         RegionEnterResp regionEnterResp=new RegionEnterResp();

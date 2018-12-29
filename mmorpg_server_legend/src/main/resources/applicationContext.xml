@@ -10,11 +10,6 @@
         <context:include-filter type="annotation" expression="com.qworldr.mmorpg.annotation.Protocal"/>
     </context:component-scan>
 
-
-    <!-- 处理线程池-->
-    <bean name="hashDispatcherThreadPool" class="com.qworldr.mmorpg.thread.HashDispatcherThreadPool">
-        <constructor-arg value="8"/>
-    </bean>
     <!-- 游戏服务器-->
     <bean class="com.qworldr.mmorpg.server.WebSocketGameServer" >
         <property name="dispatcherExecutor" ref="hashDispatcherThreadPool"></property>

@@ -3,9 +3,14 @@ package com.qworldr.mmorpg.logic.map;
 import com.google.common.collect.Maps;
 import com.qworldr.mmorpg.common.identify.SnowflakeIdentifyGeneratorStrategy;
 import com.qworldr.mmorpg.logic.map.resource.MapGridResource;
+import com.qworldr.mmorpg.logic.map.resource.MapMonsterResource;
+import com.qworldr.mmorpg.logic.map.resource.MapMonsterResourceProvider;
 import com.qworldr.mmorpg.logic.map.resource.MapResource;
+import com.qworldr.mmorpg.logic.monster.Monster;
+import com.qworldr.mmorpg.logic.monster.manager.MonsterManager;
 import com.qworldr.mmorpg.logic.player.Player;
 import com.qworldr.mmorpg.provider.ResourceProvider;
+import com.qworldr.mmorpg.thread.HashDispatcherThreadPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,10 +31,18 @@ public class SceneManager {
     private ResourceProvider<MapGridResource, Integer> mapGridResourceProvider;
     @Autowired
     private ResourceProvider<MapResource, Integer> mapResourceProvider;
+    @Autowired
+    private MapMonsterResourceProvider mapMonsterResourceProvider;
     private Map<Integer, List<Scene>> scenes = Maps.newConcurrentMap();
     private Map<Integer, AtomicInteger> map2SceneSeq = Maps.newConcurrentMap();
     private static SceneManager sceneManager;
-
+    @Autowired
+    private MonsterManager monsterManager;
+    /**
+     * 线程分发,目前还没使用。只是为了保证hashDispathcherThreadPool比SceneManager先初始化。
+     */
+    @Autowired
+    private HashDispatcherThreadPool hashDispatcherThreadPool;
     public static SceneManager getInstance() {
         return sceneManager;
     }
@@ -50,8 +63,20 @@ public class SceneManager {
     public Scene createSence(int mapId, MapResource mapResource) {
         // 生成场景对象
         Scene scene = mapResource.getMapType().createScene(mapId, mapResource);
+        //生成场景上的怪物
+        creaateMonsterInSence(scene);
         registerScene(mapId, scene);
         return scene;
+    }
+
+    public void creaateMonsterInSence(Scene scene) {
+        List<MapMonsterResource> mapMonsterResources = mapMonsterResourceProvider.getMapMonsterResources(scene.getMapId());
+        mapMonsterResources.forEach(e -> {
+            Monster monster = monsterManager.createMonster(e.getMonsterId());
+            monster.setPosition(e.getPosition());
+            monster.setMapId(e.getMapId());
+            scene.enter(monster);
+        });
     }
 
     public void registerScene(int mapId, Scene scene) {
