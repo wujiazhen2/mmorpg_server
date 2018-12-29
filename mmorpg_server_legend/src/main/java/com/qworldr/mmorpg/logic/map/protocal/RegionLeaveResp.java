@@ -10,7 +10,7 @@ import com.qworldr.mmorpg.logic.player.protocal.vo.PlayerInfo;
  * @author wujiazhen
  */
 @Protocal(ProtocalId.RegionLeaveResp)
-public class RegionLevelResp {
+public class RegionLeaveResp {
     @Protobuf
     private Long objectId;
 
