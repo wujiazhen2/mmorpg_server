@@ -9,14 +9,14 @@ import java.util.List;
  * @author wujiazhen
  * 效果树配置节点
  */
-public class EffectTreeNode {
+public class EffectNodeResource {
     private NodeType nodeType;
     private int effectId;
     private EffectType effectType;
-    private List<EffectTreeNode> childs;
+    private List<EffectNodeResource> childs;
 
 
-    public List<EffectTreeNode> getChilds() {
+    public List<EffectNodeResource> getChilds() {
         return childs;
     }
 

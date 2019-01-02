@@ -1,9 +1,12 @@
 package com.qworldr.mmorpg.common.behaviortree.node;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * @author wujiazhen
  * 行为树组合节点基类
  */
+@NotThreadSafe
 public abstract class BCompositeNode extends BTreeNode {
     /**
      * 用于记录当前正在RUNNING状态的子节点，默认是0。

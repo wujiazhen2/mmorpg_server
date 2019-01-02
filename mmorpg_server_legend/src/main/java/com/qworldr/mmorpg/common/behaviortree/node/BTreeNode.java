@@ -18,7 +18,7 @@ public abstract class BTreeNode {
     private NodeStatus status;
 
     public NodeStatus tick(NodeContext params) {
-        //当前节点状态为null,说明这个tick
+        //当前节点状态为null,说明这个tick第一次运行
         if (status == null) {
             init(params);
         }

@@ -1,4 +1,4 @@
-package com.qworldr.mmorpg.logic.skill.bean;
+package com.qworldr.mmorpg.logic.skill.tree;
 
 import com.qworldr.mmorpg.common.behaviortree.BehaviorTree;
 import com.qworldr.mmorpg.common.behaviortree.node.BTreeNode;

@@ -1,8 +1,8 @@
 package com.qworldr.mmorpg.logic.skill.resource;
 
 import com.qworldr.mmorpg.anno.Resource;
-import com.qworldr.mmorpg.logic.skill.bean.EffectTree;
-import com.qworldr.mmorpg.logic.skill.bean.EffectTreeNode;
+import com.qworldr.mmorpg.logic.skill.bean.EffectNodeResource;
+import com.qworldr.mmorpg.logic.skill.tree.EffectTree;
 import com.qworldr.mmorpg.provider.IAfterLoad;
 
 import javax.persistence.Id;
@@ -16,7 +16,7 @@ public class EffectTreeResource  implements IAfterLoad {
     @Id
     private int id;
 
-    private EffectTreeNode effectTreeNode;
+    private EffectNodeResource effectTreeNode;
 
     /**
      * 资源文件加载完全后,在加载函数中处理

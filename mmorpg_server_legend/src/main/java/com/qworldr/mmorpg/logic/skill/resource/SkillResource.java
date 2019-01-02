@@ -19,7 +19,6 @@ public class SkillResource {
     private int level;
     /**
      *  效果id, 应该类似行为树，技能释放通过树逻辑执行各个效果
-     *  {js}
      */
     private int effectTreeId;
 

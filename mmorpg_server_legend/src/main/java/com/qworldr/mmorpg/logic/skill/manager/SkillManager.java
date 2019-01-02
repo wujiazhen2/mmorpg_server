@@ -20,6 +20,7 @@ public class SkillManager {
     private EntityProvider<SkillEntity,Long>  skillEntityProvider;
     @Autowired
     private ResourceProvider<PlayerInitializationResource, RoleType>  playerInitializationResourceProvider;
+
     @Autowired
     private ResourceProvider<SkillResource,Integer> skillResourceProvider;
     public SkillEntity getSkillEntity(Player player) {
