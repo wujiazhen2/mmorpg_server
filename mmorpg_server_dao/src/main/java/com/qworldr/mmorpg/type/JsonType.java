@@ -1,6 +1,7 @@
 package com.qworldr.mmorpg.type;
 
 import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
@@ -8,10 +9,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.lang.reflect.Field;
+import java.sql.*;
 import java.util.Objects;
 
 public class JsonType implements UserType {
@@ -38,10 +37,17 @@ public class JsonType implements UserType {
     @Override
     public Object nullSafeGet(ResultSet resultSet, String[] strings, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException, SQLException {
         String json = resultSet.getString(strings[0]);
+        String columnName = resultSet.getMetaData().getColumnName(resultSet.findColumn(strings[0]));
         if (StringUtils.isEmpty(json)) {
             return null;
         }
-        return JSONUtils.parse(json);
+        Field field;
+        try {
+            field = o.getClass().getDeclaredField(columnName);
+        } catch (NoSuchFieldException e) {
+            throw  new RuntimeException();
+        }
+        return JSON.parseObject(json,field.getGenericType());
     }
 
     @Override
